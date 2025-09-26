@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Roofing Experts | [company]</title>
+  <link rel="icon" href="/core/images/krs/klaus-favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-primary: #d2161f;
+      --brand-primary-dark: #a10f18;
+      --brand-secondary: #00405b;
+      --bg-light: #f6f4f3;
+      --bg-card: #ffffff;
+      --text-main: #1e2430;
+      --text-muted: #5b6473;
+      --border-soft: #e2e5ea;
+      --shadow-soft: 0 18px 30px rgba(20, 33, 61, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Catamaran', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-main);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.75rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 1rem;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .button.primary {
+      background: var(--brand-primary);
+      color: #fff;
+      box-shadow: 0 12px 18px rgba(210, 22, 31, 0.25);
+    }
+
+    .button.primary:hover {
+      background: var(--brand-primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .button.outline {
+      border-color: rgba(255, 255, 255, 0.45);
+      color: #fff;
+      background: transparent;
+    }
+
+    .button.outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background: rgba(246, 244, 243, 0.9);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .top-contact {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.65rem 5vw;
+      background: var(--brand-secondary);
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .top-contact p {
+      margin: 0;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .top-contact .contact-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .top-contact .phone {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.15rem 5vw;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand img {
+      width: 200px;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.35rem;
+    }
+
+    .nav-toggle span,
+    .nav-toggle span::after,
+    .nav-toggle span::before {
+      display: block;
+      background: var(--text-main);
+      height: 3px;
+      width: 24px;
+      border-radius: 999px;
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-toggle span::before,
+    .nav-toggle span::after {
+      content: '';
+      position: absolute;
+      left: 0;
+    }
+
+    .nav-toggle span::before {
+      top: -7px;
+    }
+
+    .nav-toggle span::after {
+      top: 7px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-weight: 600;
+    }
+
+    .nav-menu a {
+      color: var(--text-main);
+      position: relative;
+      padding-bottom: 0.25rem;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: var(--brand-primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-menu a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .page-section {
+      padding: clamp(3rem, 6vw, 6rem) 5vw;
+    }
+
+    .section-header {
+      max-width: 740px;
+      margin-bottom: clamp(2rem, 5vw, 3rem);
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 1.12;
+    }
+
+    .section-header p {
+      margin: 1rem 0 0;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(2rem, 5vw, 3.5rem);
+      align-items: center;
+      padding: clamp(3rem, 7vw, 6.5rem) 5vw clamp(2rem, 5vw, 4rem);
+      background: linear-gradient(160deg, rgba(10, 27, 51, 0.9), rgba(10, 27, 51, 0.6)), url('https://cdn.treehouseinternetgroup.com/cms_images/4157/20_roofing_set_10_after.jpg') center/cover no-repeat;
+      color: #fff;
+      border-radius: 0 0 36px 36px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(140deg, rgba(210, 22, 31, 0.2), transparent 55%);
+      pointer-events: none;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-text h1 {
+      margin: 0 0 1.25rem;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      line-height: 1.05;
+    }
+
+    .hero-text .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      letter-spacing: 0.12em;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .hero-text p {
+      margin: 0 0 1.75rem;
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hero-highlights {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .hero-highlight {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 1.25rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-highlight h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .hero-highlight p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .trust-bar {
+      background: #fff;
+      padding: clamp(1.5rem, 4vw, 2.75rem) 5vw;
+      display: grid;
+      gap: 2rem;
+      align-items: center;
+      box-shadow: var(--shadow-soft);
+      border-radius: 28px;
+      margin: -2.75rem 5vw 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .trust-bar h3 {
+      margin: 0;
+      font-size: 1.35rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .trust-logos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .trust-logos img {
+      filter: grayscale(100%);
+      opacity: 0.9;
+      transition: opacity 0.2s ease;
+    }
+
+    .trust-logos img:hover {
+      opacity: 1;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border-radius: 22px;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      border: 1px solid rgba(20, 33, 61, 0.04);
+    }
+
+    .service-card h3 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .service-card p {
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    .service-pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+
+    .service-pill {
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(210, 22, 31, 0.1);
+      color: var(--brand-primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .process {
+      background: linear-gradient(140deg, #fff, #f9f6f5);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .process-step {
+      background: #fff;
+      border-radius: 18px;
+      padding: 1.75rem;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .process-step span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(210, 22, 31, 0.12);
+      color: var(--brand-primary);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .process-step h3 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .process-step p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+
+    .coverage {
+      background: #fff;
+    }
+
+    .coverage-intro {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+      margin-bottom: clamp(2rem, 5vw, 3rem);
+    }
+
+    .coverage-stats {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .coverage-stat {
+      flex: 1 1 160px;
+      background: var(--bg-light);
+      padding: 1.25rem 1.5rem;
+      border-radius: 18px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .coverage-stat h4 {
+      margin: 0;
+      font-size: 1.85rem;
+      color: var(--brand-primary);
+    }
+
+    .coverage-groups {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    details.coverage-panel {
+      background: var(--bg-light);
+      border-radius: 18px;
+      border: 1px solid var(--border-soft);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+
+    details.coverage-panel[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1.2rem 1.5rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    summary::marker {
+      display: none;
+    }
+
+    summary::after {
+      content: '';
+      width: 14px;
+      height: 14px;
+      border-right: 2px solid var(--text-main);
+      border-bottom: 2px solid var(--text-main);
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+    }
+
+    .coverage-panel .panel-content {
+      padding: 0 1.5rem 1.5rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .coverage-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .coverage-tags li {
+      background: #fff;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid rgba(210, 22, 31, 0.2);
+      color: var(--brand-primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .coverage-cities {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+
+    .testimonials {
+      background: var(--bg-light);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .testimonial-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 2rem;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 1rem;
+    }
+
+    .testimonial-card p {
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    .testimonial-card .name {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .cta-band {
+      background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-dark));
+      color: #fff;
+      text-align: center;
+      padding: clamp(3rem, 7vw, 4.5rem) 5vw;
+      border-radius: 32px;
+      margin: clamp(3rem, 7vw, 5rem) 5vw;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .cta-band h2 {
+      margin: 0 0 1rem;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .cta-band p {
+      margin: 0 0 1.75rem;
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    footer.site-footer {
+      background: #101521;
+      color: rgba(255, 255, 255, 0.8);
+      padding: clamp(2.5rem, 5vw, 3.5rem) 5vw;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-grid h4 {
+      margin: 0 0 0.75rem;
+      color: #fff;
+      font-size: 1.1rem;
+      letter-spacing: 0.03em;
+    }
+
+    .footer-grid p,
+    .footer-grid ul {
+      margin: 0;
+      list-style: none;
+      padding: 0;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 0.95rem;
+    }
+
+    .footer-grid li + li {
+      margin-top: 0.25rem;
+    }
+
+    .footer-cta {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 960px) {
+      .nav-toggle {
+        display: inline-flex;
+      }
+
+      nav {
+        position: absolute;
+        top: 100%;
+        right: 5vw;
+        left: 5vw;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: var(--shadow-soft);
+        padding: 1.5rem;
+        transform: translateY(-10px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+      }
+
+      nav.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .nav-menu {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+
+      .nav-menu a {
+        font-size: 1.05rem;
+      }
+
+      .button.primary.nav-cta {
+        width: 100%;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        border-radius: 0 0 28px 28px;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-highlights {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-bar {
+        margin: -3rem 5vw 0;
+      }
+
+      summary {
+        font-size: 1.05rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .top-contact {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-text h1 {
+        font-size: 2.1rem;
+      }
+
+      .coverage-stat h4 {
+        font-size: 1.5rem;
+      }
+
+      .cta-band {
+        margin: 3rem 1.5rem;
+      }
+
+      footer.site-footer {
+        padding: 2.5rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="top-contact">
+      <p>Emergency repairs & same-week installs across [territory]</p>
+      <div class="contact-actions">
+        <a class="phone" href="tel:1-844-268-0860">1-844-268-0860</a>
+        <a class="button outline" href="#estimate">Book Free Estimate</a>
+      </div>
+    </div>
+    <div class="nav-bar">
+      <a class="brand" href="/">
+        <img src="https://cdn.treehouseinternetgroup.com/cms_images/966/KlausLarsenRoofing_2019_4C.svg" alt="[company] Roofing" width="215" height="95">
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span></span>
+        <span class="sr-only">Menu</span>
+      </button>
+      <nav id="primary-nav">
+        <ul class="nav-menu">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#process">Why Us</a></li>
+          <li><a href="#coverage">Service Area</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a class="button primary nav-cta" href="#estimate">Get Estimate</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-text">
+        <span class="eyebrow">Roofing the right way</span>
+        <h1>Roofs built to weather every [territory] storm.</h1>
+        <p>
+          From the first phone call to our post-install walkthrough, [company] delivers detail-obsessed installations, transparent communication, and warranties that stand behind every shingle.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#estimate">Schedule My Free Inspection</a>
+          <a class="button outline" href="tel:1-844-268-0860">Talk to a Roofing Specialist</a>
+        </div>
+        <div class="hero-highlights">
+          <div class="hero-highlight">
+            <h3>Owens Corning Platinum</h3>
+            <p>Exclusive access to top-tier materials, extended warranties, and certified crews.</p>
+          </div>
+          <div class="hero-highlight">
+            <h3>Same-Week Appointments</h3>
+            <p>Fast response for leaks, storm damage, and time-sensitive replacements.</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="https://cdn.treehouseinternetgroup.com/cms_images/4157/txhill-main-lp.jpg" alt="Local crew installing a new roof">
+      </div>
+    </section>
+
+    <aside class="trust-bar">
+      <h3>Trusted by homeowners, builders, and insurers across [territory]</h3>
+      <div class="trust-logos">
+        <img src="https://cdn.treehouseinternetgroup.com/cms_images/4157/owens-corning-logo.svg" alt="Owens Corning">
+        <img src="https://cdn.treehouseinternetgroup.com/cms_images/4157/homeadvisor-elite.svg" alt="HomeAdvisor Elite">
+        <img src="https://cdn.treehouseinternetgroup.com/cms_images/4157/bbb-a-plus.svg" alt="BBB A+">
+        <img src="https://cdn.treehouseinternetgroup.com/cms_images/4157/gaf-logo.svg" alt="GAF">
+        <img src="https://cdn.treehouseinternetgroup.com/cms_images/4157/nari-logo.svg" alt="NARI">
+      </div>
+    </aside>
+
+    <section class="page-section" id="services">
+      <div class="section-header">
+        <h2>Roofing solutions tailored to your home</h2>
+        <p>
+          Every roof we build starts with a diagnostic inspection and ends with a spotless cleanup. Choose the service that fits your home—our project managers handle the rest.
+        </p>
+      </div>
+      <div class="services-grid">
+        <article class="service-card">
+          <h3>Architectural Roof Replacements</h3>
+          <p>Premium shingle systems, designer options, and ventilation upgrades that protect curb appeal and property value.</p>
+          <div class="service-pill-list">
+            <span class="service-pill">Lifetime Warranties</span>
+            <span class="service-pill">Platinum Certified</span>
+            <span class="service-pill">Financing Available</span>
+          </div>
+        </article>
+        <article class="service-card">
+          <h3>Leak & Storm Repair Specialists</h3>
+          <p>Rapid-response crews stop active leaks, replace failing flashing, and document storm damage for insurance claims.</p>
+          <div class="service-pill-list">
+            <span class="service-pill">Emergency Service</span>
+            <span class="service-pill">Insurance Support</span>
+            <span class="service-pill">Targeted Repairs</span>
+          </div>
+        </article>
+        <article class="service-card">
+          <h3>Full Exterior Protection Plans</h3>
+          <p>Bundle gutters, skylights, and attic insulation to maximize efficiency and keep water moving where it should.</p>
+          <div class="service-pill-list">
+            <span class="service-pill">Skylight Upgrades</span>
+            <span class="service-pill">K-Style & Seamless</span>
+            <span class="service-pill">Attic Breathability</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="page-section process" id="process">
+      <div class="section-header">
+        <h2>The [company] way: clear communication at every step</h2>
+        <p>
+          Your dedicated project manager keeps you informed from inspection to wrap-up. No surprises, just craftsmanship you can see.
+        </p>
+      </div>
+      <div class="process-steps">
+        <article class="process-step">
+          <span>01</span>
+          <h3>Diagnostic Inspection</h3>
+          <p>We document every square foot—photos, drone footage, and moisture readings—so you know exactly what your roof needs.</p>
+        </article>
+        <article class="process-step">
+          <span>02</span>
+          <h3>Customized Proposal</h3>
+          <p>Side-by-side options with financing, warranty comparisons, and timeline expectations delivered within 24 hours.</p>
+        </article>
+        <article class="process-step">
+          <span>03</span>
+          <h3>On-Time Installation</h3>
+          <p>Certified crews arrive with materials staged, protect your landscaping, and stay on-site until the punch list is complete.</p>
+        </article>
+        <article class="process-step">
+          <span>04</span>
+          <h3>Lifetime Follow-Through</h3>
+          <p>Final walkthrough, magnetic sweep, and warranty registration handled for you—plus annual check-ins to keep your roof performing.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="page-section coverage" id="coverage">
+      <div class="section-header">
+        <h2>Where we work</h2>
+        <p>
+          From coastal shorelines to inland suburbs, our installers live where they work. Explore the counties and boroughs we service, and reach out if you are just outside—chances are we’re already nearby.
+        </p>
+      </div>
+      <div class="coverage-intro">
+        <div>
+          <div class="coverage-stats">
+            <div class="coverage-stat">
+              <h4>35+</h4>
+              <p>Years protecting homes in [territory]</p>
+            </div>
+            <div class="coverage-stat">
+              <h4>4</h4>
+              <p>States covered with dedicated local crews</p>
+            </div>
+            <div class="coverage-stat">
+              <h4>65+</h4>
+              <p>Communities scheduled every month</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p>
+            Don’t see your town? Call us—we’re constantly expanding our route trucks and can usually fit you in within the week.
+          </p>
+          <a class="button primary" href="#estimate">Check Availability</a>
+        </div>
+      </div>
+      <div class="coverage-groups">
+        <details class="coverage-panel" open>
+          <summary>New Jersey</summary>
+          <div class="panel-content">
+            <ul class="coverage-tags">
+              <li>Middlesex County</li>
+              <li>Union County</li>
+              <li>Somerset County</li>
+              <li>Monmouth County</li>
+              <li>Mercer County</li>
+            </ul>
+            <ul class="coverage-cities">
+              <li>Edison, Woodbridge, New Brunswick, Princeton, Piscataway, Old Bridge</li>
+              <li>Shoreline experts serving Long Branch, Asbury Park, and Atlantic Highlands</li>
+            </ul>
+          </div>
+        </details>
+        <details class="coverage-panel">
+          <summary>New York City & Boroughs</summary>
+          <div class="panel-content">
+            <ul class="coverage-tags">
+              <li>Brooklyn</li>
+              <li>Queens</li>
+              <li>Bronx</li>
+              <li>Manhattan</li>
+            </ul>
+            <ul class="coverage-cities">
+              <li>Flatbush, Park Slope, Astoria, Bayside, Riverdale, Harlem, Chelsea, Upper West Side</li>
+              <li>Brownstone, townhouse, and multifamily specialists</li>
+            </ul>
+          </div>
+        </details>
+        <details class="coverage-panel">
+          <summary>Staten Island & Hudson Valley</summary>
+          <div class="panel-content">
+            <ul class="coverage-tags">
+              <li>Staten Island</li>
+              <li>Westchester County</li>
+              <li>Rockland County</li>
+            </ul>
+            <ul class="coverage-cities">
+              <li>Tottenville, Great Kills, New Dorp, Scarsdale, White Plains, Nyack</li>
+              <li>Historic home specialists with slate and copper capabilities</li>
+            </ul>
+          </div>
+        </details>
+        <details class="coverage-panel">
+          <summary>Pennsylvania</summary>
+          <div class="panel-content">
+            <ul class="coverage-tags">
+              <li>Bucks County</li>
+              <li>Delaware County</li>
+              <li>Philadelphia</li>
+            </ul>
+            <ul class="coverage-cities">
+              <li>Newtown, Yardley, Bensalem, Media, Havertown, Center City, Manayunk</li>
+              <li>Rowhome-friendly crews with steep-slope and flat roofing expertise</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="page-section testimonials" id="testimonials">
+      <div class="section-header">
+        <h2>Homeowners notice the difference</h2>
+        <p>
+          5-star reviews from clients who wanted more than a quick patch. Read what they say after the dust settles.
+        </p>
+      </div>
+      <div class="testimonial-grid">
+        <article class="testimonial-card">
+          <p>“From inspection to install took less than two weeks. They sent photos throughout the day and left our yard cleaner than they found it.”</p>
+          <p class="name">Maya R. — Princeton, NJ</p>
+        </article>
+        <article class="testimonial-card">
+          <p>“They caught ventilation issues our previous roofer missed. Energy bills dropped and we finally feel confident every time it rains.”</p>
+          <p class="name">David S. — Staten Island, NY</p>
+        </article>
+        <article class="testimonial-card">
+          <p>“Insurance claim was painless. The project manager handled the adjuster meeting and we had a brand new roof in three days.”</p>
+          <p class="name">Linh T. — Yardley, PA</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta-band" id="estimate">
+      <h2>Ready for a roof you don't have to worry about?</h2>
+      <p>Schedule your free, no-pressure inspection today. We'll document the condition, craft a custom plan, and hold your spot on the calendar.</p>
+      <div class="hero-actions" style="justify-content: center;">
+        <a class="button primary" href="tel:1-844-268-0860">Call 1-844-268-0860</a>
+        <a class="button outline" href="mailto:info@[company].com">Request Estimate by Email</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <h4>[company]</h4>
+        <p>High-performance roofing experts serving [territory] with precision installs, real-time communication, and craftsmanship that lasts.</p>
+      </div>
+      <div>
+        <h4>Visit Our Showroom</h4>
+        <p>1234 Local Avenue<br>[City], [State] [ZIP]</p>
+        <p>Mon–Fri: 8am – 6pm<br>Sat: 9am – 1pm</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:1-844-268-0860">1-844-268-0860</a></li>
+          <li><a href="mailto:info@[company].com">info@[company].com</a></li>
+          <li>Emergency Service Available 24/7</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Helpful Links</h4>
+        <ul>
+          <li><a href="#services">Our Services</a></li>
+          <li><a href="#coverage">Service Area</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#estimate">Schedule Estimate</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-cta">
+      <span>© <span id="year"></span> [company]. All rights reserved.</span>
+      <a class="button primary" href="#estimate">Book Your Free Estimate</a>
+    </div>
+  </footer>
+
+  <script>
+    const navToggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('header nav');
+    const yearEl = document.getElementById('year');
+
+    function toggleNav() {
+      const isOpen = nav.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen);
+    }
+
+    navToggle.addEventListener('click', toggleNav);
+
+    document.addEventListener('click', (event) => {
+      if (!nav.contains(event.target) && !navToggle.contains(event.target) && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    navLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    const now = new Date();
+    if (yearEl) {
+      yearEl.textContent = now.getFullYear();
+    }
+  </script>
+</body>
+</html>
