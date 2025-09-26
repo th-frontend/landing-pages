@@ -229,6 +229,17 @@ header {
 img.system-img.flex-width {
     border-radius: 8em 0 0 0;
 }
+.system-media {
+  width: 100%;
+}
+
+.system-video {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0 8em 0 0;
+  display: block;
+}
 .hero-text,
 .services-text {
   display: flex;
@@ -599,6 +610,96 @@ width: 100%;
   .card-title {
     padding: 15px;
     font-size: 1.2rem;
+  }
+}
+
+/* Gutter highlight */
+.gutter-highlight {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  align-items: center;
+  background-color: var(--tertiary-color);
+}
+
+.gutter-text {
+  max-width: 32rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.gutter-text h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.gutter-text p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.gutter-media {
+  width: 100%;
+}
+
+.gutter-video {
+  width: 100%;
+  max-width: 64em;
+  height: auto;
+  border-radius: 8em 0 0 0;
+  object-fit: cover;
+  display: block;
+}
+
+.gutter-text a {
+  align-self: center;
+}
+
+.gutter-text button {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 1rem 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 1.1rem;
+}
+
+.gutter-text button:hover {
+  background-color: var(--secondary-color);
+}
+
+@media (min-width: 1025px) {
+  .gutter-highlight {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    padding: 4rem 0;
+  }
+
+  .gutter-text {
+    text-align: left;
+    align-items: flex-start;
+    max-width: 28rem;
+  }
+
+  .gutter-text h2 {
+    font-size: 2.5rem;
+  }
+
+  .gutter-text p {
+    font-size: 1.2rem;
+  }
+
+  .gutter-text a {
+    align-self: flex-start;
   }
 }
 
@@ -1897,6 +1998,27 @@ textarea {
       </div>
 
     </section>
+    <section class="gutter-highlight" id="gutters">
+      <div class="gutter-media">
+        <video class="gutter-video" controls preload="metadata"
+          poster="https://cdn.treehouseinternetgroup.com/cms_core/images/gs/ppc-landing-page-template/clog-free_gutter_barn.png"
+          aria-label="Gutter system moving rainwater away from the home">
+          <source src="../gutters/gutter-1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <noscript>
+          <img src="https://cdn.treehouseinternetgroup.com/cms_core/images/gs/ppc-landing-page-template/clog-free_gutter_barn.png"
+            alt="Completed gutter system" class="gutter-video">
+        </noscript>
+      </div>
+      <div class="gutter-text">
+        <h2>Protect Your Roof Investment With Seamless Gutters</h2>
+        <p>
+          Our team installs Gutter Shutter alongside your new roof to carry water, ice, and debris safely away from the foundation. Built-in gutter guards stop clogs before they start, so you focus on curb appeal instead of cleanups.
+        </p>
+        <a href="#sign-up"><button>Ask about gutter protection</button></a>
+      </div>
+    </section>
     <section class="reviews" id="reviews">
       <h2>Neighbors Who Recommend [company]</h2>
       <div class="review-cards">
@@ -2022,9 +2144,19 @@ textarea {
           </div>
         </div>
       </div>
-      <img class="system-img flex-width"
-        src="https://cdn.treehouseinternetgroup.com/cms_images/4157/txhill-main-lp.jpg"
-        alt="KRS">
+      <div class="system-media flex-width">
+        <video class="system-video" controls preload="metadata"
+          poster="https://cdn.treehouseinternetgroup.com/cms_images/4157/txhill-main-lp.jpg"
+          aria-label="Drone footage of a roofing project">
+          <source src="roof-2.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <noscript>
+          <img class="system-img flex-width"
+            src="https://cdn.treehouseinternetgroup.com/cms_images/4157/txhill-main-lp.jpg"
+            alt="Completed roofing project">
+        </noscript>
+      </div>
     </section>
 
     <section class="faq" id="faq">
