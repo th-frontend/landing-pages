@@ -355,29 +355,110 @@
 
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 2rem;
     }
 
     .service-card {
       background: var(--bg-card);
-      border-radius: 22px;
-      padding: 2.5rem 2rem;
+      border-radius: 26px;
+      overflow: hidden;
       box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(20, 33, 61, 0.05);
       display: flex;
       flex-direction: column;
-      gap: 1.1rem;
-      border: 1px solid rgba(20, 33, 61, 0.04);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 36px rgba(20, 33, 61, 0.14);
+    }
+
+    .service-card-media {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+    }
+
+    .service-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .service-card:hover .service-card-media img {
+      transform: scale(1.05);
+    }
+
+    .service-card-badge {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      background: rgba(16, 21, 33, 0.85);
+      color: #fff;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .service-card-body {
+      padding: 2rem;
+      display: grid;
+      gap: 1rem;
+      height: 100%;
     }
 
     .service-card h3 {
       margin: 0;
-      font-size: 1.35rem;
+      font-size: 1.4rem;
+      line-height: 1.2;
     }
 
     .service-card p {
       margin: 0;
       color: var(--text-muted);
+    }
+
+    .service-highlight-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .service-highlight-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .service-highlight-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-dark));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .service-highlight-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .service-pill-list {
@@ -457,6 +538,14 @@
       flex-wrap: wrap;
     }
 
+
+    .coverage-image {
+      width: 100%;
+      height: auto;
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border-soft);
+    }
     .coverage-stat {
       flex: 1 1 160px;
       background: var(--bg-light);
@@ -789,11 +878,11 @@
     <aside class="trust-bar">
       <h3>Trusted by homeowners, builders, and insurers across [territory]</h3>
       <div class="trust-logos">
-        <img src="https://placehold.co/160x60?text=Logo+One" alt="Placeholder partner logo 1">
-        <img src="https://placehold.co/160x60?text=Logo+One" alt="Placeholder partner logo 2">
-        <img src="https://placehold.co/160x60?text=Logo+One" alt="Placeholder partner logo 3">
-        <img src="https://placehold.co/160x60?text=Logo+One" alt="Placeholder partner logo 4">
-        <img src="https://placehold.co/160x60?text=Logo+One" alt="Placeholder partner logo 5">
+        <img src="https://via.placeholder.com/160x60?text=Logo+One" alt="Placeholder partner logo 1">
+        <img src="https://via.placeholder.com/160x60?text=Logo+Two" alt="Placeholder partner logo 2">
+        <img src="https://via.placeholder.com/160x60?text=Logo+Three" alt="Placeholder partner logo 3">
+        <img src="https://via.placeholder.com/160x60?text=Logo+Four" alt="Placeholder partner logo 4">
+        <img src="https://via.placeholder.com/160x60?text=Logo+Five" alt="Placeholder partner logo 5">
       </div>
     </aside>
 
@@ -806,30 +895,102 @@
       </div>
       <div class="services-grid">
         <article class="service-card">
-          <h3>Architectural Roof Replacements</h3>
-          <p>Premium shingle systems, designer options, and ventilation upgrades that protect curb appeal and property value.</p>
-          <div class="service-pill-list">
-            <span class="service-pill">Lifetime Warranties</span>
-            <span class="service-pill">Platinum Certified</span>
-            <span class="service-pill">Financing Available</span>
+          <div class="service-card-media">
+            <img src="https://via.placeholder.com/640x480?text=Roof+Replacement" alt="Crew installing architectural shingles on a residential roof">
+            <span class="service-card-badge">Full Replacement</span>
+          </div>
+          <div class="service-card-body">
+            <h3>Architectural Roof Replacements</h3>
+            <p>Premium shingle systems, designer options, and ventilation upgrades that protect curb appeal and property value.</p>
+            <ul class="service-highlight-list">
+              <li>
+                <span class="service-highlight-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12l4 4 10-10"></path>
+                  </svg>
+                </span>
+                Tear-off, decking repair, and ice/water barrier included.
+              </li>
+              <li>
+                <span class="service-highlight-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12l4 4 10-10"></path>
+                  </svg>
+                </span>
+                Designer color palettes to match your exterior.
+              </li>
+            </ul>
+            <div class="service-pill-list">
+              <span class="service-pill">Lifetime Warranties</span>
+              <span class="service-pill">Platinum Certified</span>
+              <span class="service-pill">Financing Available</span>
+            </div>
           </div>
         </article>
         <article class="service-card">
-          <h3>Leak & Storm Repair Specialists</h3>
-          <p>Rapid-response crews stop active leaks, replace failing flashing, and document storm damage for insurance claims.</p>
-          <div class="service-pill-list">
-            <span class="service-pill">Emergency Service</span>
-            <span class="service-pill">Insurance Support</span>
-            <span class="service-pill">Targeted Repairs</span>
+          <div class="service-card-media">
+            <img src="https://via.placeholder.com/640x480?text=Roof+Repair" alt="Technician repairing shingles after a storm">
+            <span class="service-card-badge">Rapid Repairs</span>
+          </div>
+          <div class="service-card-body">
+            <h3>Leak & Storm Repair Specialists</h3>
+            <p>Rapid-response crews stop active leaks, replace failing flashing, and document storm damage for insurance claims.</p>
+            <ul class="service-highlight-list">
+              <li>
+                <span class="service-highlight-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12l4 4 10-10"></path>
+                  </svg>
+                </span>
+                24/7 emergency tarping and leak mitigation.
+              </li>
+              <li>
+                <span class="service-highlight-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12l4 4 10-10"></path>
+                  </svg>
+                </span>
+                Photo documentation for insurance adjusters.
+              </li>
+            </ul>
+            <div class="service-pill-list">
+              <span class="service-pill">Emergency Service</span>
+              <span class="service-pill">Insurance Support</span>
+              <span class="service-pill">Targeted Repairs</span>
+            </div>
           </div>
         </article>
         <article class="service-card">
-          <h3>Full Exterior Protection Plans</h3>
-          <p>Bundle gutters, skylights, and attic insulation to maximize efficiency and keep water moving where it should.</p>
-          <div class="service-pill-list">
-            <span class="service-pill">Skylight Upgrades</span>
-            <span class="service-pill">K-Style & Seamless</span>
-            <span class="service-pill">Attic Breathability</span>
+          <div class="service-card-media">
+            <img src="https://via.placeholder.com/640x480?text=Exterior+Protection" alt="Gutters and skylight upgrades on a home">
+            <span class="service-card-badge">Total Protection</span>
+          </div>
+          <div class="service-card-body">
+            <h3>Full Exterior Protection Plans</h3>
+            <p>Bundle gutters, skylights, and attic insulation to maximize efficiency and keep water moving where it should.</p>
+            <ul class="service-highlight-list">
+              <li>
+                <span class="service-highlight-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12l4 4 10-10"></path>
+                  </svg>
+                </span>
+                Seamless gutters sized for local rainfall.
+              </li>
+              <li>
+                <span class="service-highlight-icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12l4 4 10-10"></path>
+                  </svg>
+                </span>
+                Skylight upgrades and attic insulation packages.
+              </li>
+            </ul>
+            <div class="service-pill-list">
+              <span class="service-pill">Skylight Upgrades</span>
+              <span class="service-pill">K-Style & Seamless</span>
+              <span class="service-pill">Attic Breathability</span>
+            </div>
           </div>
         </article>
       </div>
@@ -875,6 +1036,9 @@
       </div>
       <div class="coverage-intro">
         <div>
+          <img class="coverage-image" src="https://placehold.co/300x300?text=Logo+One" alt="Map of New Jersey service coverage">
+        </div>
+        <div>
           <div class="coverage-stats">
             <div class="coverage-stat">
               <h4>35+</h4>
@@ -890,6 +1054,8 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="coverage-intro">
         <div>
           <p>
             Don’t see your town? Call us—we’re constantly expanding our route trucks and can usually fit you in within the week.
