@@ -214,6 +214,18 @@ header {
     object-fit: cover;
     border-radius: 0 8em 0 0;
 }
+.hero-media {
+  width: 100%;
+}
+
+.hero-video {
+  width: 100%;
+  max-width: 64em;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0 8em 0 0;
+  display: block;
+}
 img.system-img.flex-width {
     border-radius: 8em 0 0 0;
 }
@@ -264,6 +276,10 @@ img.system-img.flex-width {
   }
 
   .hero img {
+    height: auto;
+  }
+
+  .hero-video {
     height: auto;
   }
 
@@ -1803,8 +1819,18 @@ textarea {
 
   <main>
     <section class="hero">
-      <img src="https://cdn.treehouseinternetgroup.com/cms_images/4157/20_roofing_set_10_after.jpg" class="flex-width"
-        alt="[company] local roofing crew">
+      <div class="hero-media flex-width">
+        <video class="hero-video" controls preload="metadata"
+          poster="https://cdn.treehouseinternetgroup.com/cms_images/4157/20_roofing_set_10_after.jpg"
+          aria-label="Drone footage of a completed roofing project">
+          <source src="roof-1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <noscript>
+          <img src="https://cdn.treehouseinternetgroup.com/cms_images/4157/20_roofing_set_10_after.jpg"
+            class="flex-width" alt="[company] local roofing crew">
+        </noscript>
+      </div>
       <div class="hero-text flex-width">
         <h1>Choose the Local Roofing Team [territory] Homeowners Recommend.</h1>
         <p>
