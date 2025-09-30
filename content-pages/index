@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Service Area – Connecticut & Westchester County</title>
+  <meta name="description" content="Find out if we serve your city. Search by city or ZIP and filter by service." />
+  <style>
+    :root{
+      --bg: #f8fafc;         /* page background */
+      --panel: #ffffff;       /* cards/panels */
+      --muted: #475569;       /* secondary text */
+      --text: #0f172a;        /* primary text */
+      --brand: #0b5bd3;       /* primary blue */
+      --brand-2: #1473e6;     /* blue hover */
+      --ok: #16a34a;          /* success */
+      --warning:#b45309;      /* warning */
+      --radius: 12px;
+      --shadow: 0 10px 24px rgba(2,8,23,.06);
+      --shadow-soft: 0 6px 18px rgba(2,8,23,.05);
+      --gap: clamp(14px, 2.2vw, 22px);
+      --container: min(1100px, 94vw);
+      --border: #e2e8f0;
+      --chip: #f1f5f9;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text); background:var(--bg);
+      letter-spacing:.2px;
+    }
+    .container{width:var(--container); margin-inline:auto;}
+
+    /* ---------- HERO ---------- */
+    .hero{position:relative; padding: clamp(28px,5vw,54px) 0; background:linear-gradient(180deg, #ffffff 0%, #f5f7fb 100%);} 
+    .hero .shell{display:grid; grid-template-columns: 1.2fr .8fr; gap:var(--gap); align-items:center;}
+    @media (max-width: 900px){ .hero .shell{grid-template-columns:1fr;}}
+    .h1{font-size: clamp(28px, 4.2vw, 44px); line-height:1.1; margin:0 0 10px; color:#0b2149;}
+    .hero p{color:var(--muted); margin:10px 0 20px; font-size:clamp(14px,1.25vw,16px)}
+    .badges{display:flex; gap:10px; flex-wrap:wrap; margin: 10px 0 22px}
+    .badge{background:var(--chip); border:1px solid var(--border); color:#0f172a; padding:8px 10px; border-radius:999px; font-size:13px}
+    .cta-row{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{border:0; padding:12px 16px; border-radius:10px; font-weight:700; cursor:pointer; box-shadow:var(--shadow-soft);}
+    .btn-primary{background:var(--brand); color:#fff}
+    .btn-primary:hover{background:var(--brand-2)}
+    .btn-ghost{background:#ffffff; color:var(--brand); border:1px solid var(--brand)}
+    .hero-card{background:#ffffff; border:1px solid var(--border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow);} 
+    .hero-stat{display:grid; grid-template-columns: auto 1fr; gap:12px; align-items:center; margin: 10px 0}
+    .hero-stat .dot{width:10px; height:10px; border-radius:50%; background:var(--ok)}
+
+    /* ---------- FINDER BAR ---------- */
+    .finder{position:sticky; top:0; z-index:40; backdrop-filter:saturate(120%) blur(6px); background:#ffffffcc; border-bottom:1px solid var(--border); box-shadow:0 6px 14px rgba(2,8,23,.04);} 
+    .finder .shell{display:grid; grid-template-columns: 1.2fr .9fr .6fr auto; gap:10px; padding:12px 0;}
+    @media (max-width: 900px){ .finder .shell{grid-template-columns:1fr;}}
+    .input, select{width:100%; background:#ffffff; border:1px solid var(--border); color:var(--text); border-radius:10px; padding:12px 14px; font-size:15px}
+    .input:focus, select:focus{outline:2px solid rgba(20,115,230,.25)}
+    .submit{white-space:nowrap}
+
+    /* ---------- LAYOUT: MAP + FILTERS + RESULTS ---------- */
+    .section{padding: clamp(26px, 3.6vw, 40px) 0}
+    .grid{display:grid; grid-template-columns: 320px 1fr; gap:var(--gap)}
+    @media (max-width: 1100px){ .grid{grid-template-columns:1fr;}}
+
+    .panel{background: var(--panel); border:1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow)}
+
+    /* Filter panel */
+    .filters{padding:14px}
+    .filters h3{margin:6px 0 10px; font-size:14px; color:#0b2149; letter-spacing:.3px}
+    .chips{display:flex; flex-wrap:wrap; gap:8px}
+    .chip{border:1px solid var(--border); background:var(--chip); padding:8px 10px; border-radius:999px; font-size:13px; cursor:pointer}
+    .chip.is-on{border-color:#bfdbfe; outline:2px solid rgba(20,115,230,.25)}
+    .filters .sep{height:1px; background:var(--border); margin:14px 0}
+
+    /* Map panel */
+    .map{min-height: 420px; border-radius: var(--radius); overflow:hidden; background:#eef4ff}
+    .map .placeholder{display:grid; place-items:center; color:#1e3a8a; height:100%; border:1px dashed #93c5fd}
+
+    /* Results */
+    .results-header{display:flex; align-items:center; justify-content:space-between; gap:10px; margin: 0 0 12px}
+    .results-header h2{margin:0; font-size:18px; color:#0b2149}
+    .results-tools{display:flex; gap:8px; align-items:center}
+    .select{background:#ffffff; border:1px solid var(--border); color:var(--text); border-radius:10px; padding:8px 10px;}
+
+    .results{display:grid; grid-template-columns: repeat(3, 1fr); gap:var(--gap)}
+    @media (max-width: 1000px){ .results{grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width: 650px){ .results{grid-template-columns: 1fr;} }
+
+    .card{background: #ffffff; border:1px solid var(--border); border-radius: var(--radius); padding:14px; display:flex; flex-direction:column; gap:8px; transition: transform .2s ease, box-shadow .2s ease}
+    .card:hover{transform: translateY(-2px); box-shadow: var(--shadow)}
+    .city{font-weight:700; color:#0b2149}
+    .county{color:var(--muted); font-size:14px}
+    .services{display:flex; flex-wrap:wrap; gap:6px}
+    .tag{background:var(--chip); border:1px solid var(--border); border-radius:999px; padding:6px 8px; font-size:12px}
+    .card .row{display:flex; gap:10px; margin-top:6px}
+
+    /* ---------- PROOF SECTION ---------- */
+    .proof{display:grid; grid-template-columns:1fr 1fr; gap:var(--gap)}
+    @media (max-width: 900px){ .proof{grid-template-columns:1fr}}
+    .proof-card{background:#ffffff; border:1px solid var(--border); border-radius:var(--radius); padding:16px}
+    .proof small{color:var(--muted)}
+
+    /* ---------- FAQ ---------- */
+    details{background:#ffffff; border:1px solid var(--border); border-radius:var(--radius); padding:14px;}
+    details + details{margin-top:10px}
+    summary{cursor:pointer; font-weight:600}
+
+    /* ---------- FOOTER CTA STRIP ---------- */
+    .cta-strip{position:sticky; bottom:0; z-index:30; background:linear-gradient(90deg, rgba(20,115,230,.08), rgba(11,91,211,.08)); border-top:1px solid var(--border);} 
+    .cta-strip .shell{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 0}
+    .cta-strip strong{font-size:15px}
+
+    /* ---------- UTIL ---------- */
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container shell">
+      <div>
+        <h1 class="h1">We service all of Connecticut & Westchester County, NY</h1>
+        <p>Same-day estimates. Lifetime, transferable warranties. Evening & weekend appointments.</p>
+        <div class="badges">
+          <span class="badge">Licensed & Insured</span>
+          <span class="badge">Financing Available</span>
+          <span class="badge">4.9★ Average Rating</span>
+        </div>
+        <div class="cta-row">
+          <a href="#quote" class="btn btn-primary">Get a Free Estimate</a>
+          <a href="#results" class="btn btn-ghost">See Cities We Serve</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="coverage summary">
+        <div class="hero-stat"><span class="dot" aria-hidden="true"></span><div>
+          <strong>Coverage</strong><br><small class="muted">We service the entire state of Connecticut and all of Westchester County, NY</small>
+        </div></div>
+        <div class="hero-stat"><span class="dot" style="background:var(--brand)" aria-hidden="true"></span><div>
+          <strong>Popular Services</strong><br><small class="muted">Basement Waterproofing • Foundation Repair • Crawl Space Repair • Concrete Leveling</small>
+        </div></div>
+      </aside>
+    </div>
+  </header>
+
+  <!-- FINDER BAR -->
+  <div class="finder" role="region" aria-label="Service area finder">
+    <div class="container shell">
+      <label class="sr-only" for="q-city">City or ZIP</label>
+      <input class="input" id="q-city" name="q-city" placeholder="Search your city or ZIP…" inputmode="search" autocomplete="postal-code" />
+
+      <label class="sr-only" for="q-service">Service</label>
+      <select id="q-service" class="select" name="q-service">
+        <option value="">All services</option>
+        <option>Basement Waterproofing</option>
+        <option>Foundation Repair</option>
+        <option>Crawl Space Repair</option>
+        <option>Concrete Leveling</option>
+        <option>Basement Finishing</option>
+      </select>
+
+      <label class="sr-only" for="q-county">County</label>
+      <select id="q-county" class="select" name="q-county">
+        <option value="">All counties</option>
+        <option>Fairfield</option>
+        <option>Hartford</option>
+        <option>Litchfield</option>
+        <option>Middlesex</option>
+        <option>New Haven</option>
+        <option>New London</option>
+        <option>Tolland</option>
+        <option>Windham</option>
+        <option>Westchester, NY</option>
+      </select>
+
+      <button class="btn btn-primary submit">Check Availability</button>
+    </div>
+  </div>
+
+  <!-- MAP + FILTERS + RESULTS -->
+  <main class="section container grid" id="results" aria-live="polite" aria-busy="false">
+    <!-- Filters -->
+    <aside class="panel filters" aria-label="Filters">
+      <h3>Filter by Service</h3>
+      <div class="chips">
+        <button class="chip is-on">All</button>
+        <button class="chip">Basement Waterproofing</button>
+        <button class="chip">Foundation Repair</button>
+        <button class="chip">Crawl Space</button>
+        <button class="chip">Concrete</button>
+        <button class="chip">Finishing</button>
+      </div>
+      <div class="sep"></div>
+      <h3>Filter by County</h3>
+      <div class="chips">
+        <button class="chip is-on">All CT</button>
+        <button class="chip">Fairfield</button>
+        <button class="chip">Hartford</button>
+        <button class="chip">Litchfield</button>
+        <button class="chip">Middlesex</button>
+        <button class="chip">New Haven</button>
+        <button class="chip">New London</button>
+        <button class="chip">Tolland</button>
+        <button class="chip">Windham</button>
+        <button class="chip">Westchester, NY</button>
+      </div>
+      <div class="sep"></div>
+      <h3>Sort</h3>
+      <div class="chips">
+        <button class="chip is-on">A → Z</button>
+        <button class="chip">Most Requested</button>
+        <button class="chip">Closest</button>
+      </div>
+    </aside>
+
+    <!-- Map + Results -->
+    <section>
+      <div class="map panel" aria-label="Interactive map">
+        <div class="placeholder">
+          <p><strong>Interactive Map Placeholder</strong><br><small class="muted">(Drop Leaflet here; set fixed height to avoid CLS)</small></p>
+        </div>
+      </div>
+
+      <div class="results-header" style="margin-top:12px">
+        <h2>Cities we serve <span class="muted">(128)</span></h2>
+        <div class="results-tools">
+          <label class="sr-only" for="sort">Sort</label>
+          <select id="sort" class="select"><option>A → Z</option><option>Most requested</option><option>Closest</option></select>
+        </div>
+      </div>
+
+      <div class="results" id="city-results">
+        <!-- Example card -->
+        <article class="card">
+          <div class="city">Stamford, CT</div>
+          <div class="county">Fairfield County</div>
+          <div class="services">
+            <span class="tag">Waterproofing</span>
+            <span class="tag">Foundation Repair</span>
+            <span class="tag">Concrete Leveling</span>
+          </div>
+          <div class="row">
+            <a class="btn btn-primary" href="#quote">Free Estimate</a>
+            <a class="btn btn-ghost" href="#projects">Local Projects</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="city">West Hartford, CT</div>
+          <div class="county">Hartford County</div>
+          <div class="services">
+            <span class="tag">Crawl Space</span>
+            <span class="tag">Waterproofing</span>
+          </div>
+          <div class="row">
+            <a class="btn btn-primary" href="#quote">Free Estimate</a>
+            <a class="btn btn-ghost" href="#projects">Local Projects</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="city">White Plains, NY</div>
+          <div class="county">Westchester County</div>
+          <div class="services">
+            <span class="tag">Foundation Repair</span>
+            <span class="tag">Waterproofing</span>
+            <span class="tag">Concrete</span>
+          </div>
+          <div class="row">
+            <a class="btn btn-primary" href="#quote">Free Estimate</a>
+            <a class="btn btn-ghost" href="#projects">Local Projects</a>
+          </div>
+        </article>
+        <!-- Duplicate the card markup for more cities or render server-side -->
+      </div>
+    </section>
+  </main>
+
+  <!-- PROOF SECTION -->
+  <section class="section container">
+    <div class="proof">
+      <div class="proof-card">
+        <strong>Recent jobs near you</strong>
+        <p class="muted">Norwalk, CT – Sump system & water guard • Aug 23, 2025</p>
+        <p class="muted">Danbury, CT – Foundation piering • Aug 20, 2025</p>
+        <p class="muted">Scarsdale, NY – Concrete leveling • Aug 12, 2025</p>
+      </div>
+      <div class="proof-card">
+        <strong>Reviews from your area</strong>
+        <p>“Incredible crew. Dry basement after the first storm.” <small class="muted">– New Haven, CT</small></p>
+        <p>“Professional, on time, and clean.” <small class="muted">– Greenwich, CT</small></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section container" aria-label="FAQ">
+    <details>
+      <summary>Do you service my town?</summary>
+      <p class="muted">We service every city and town in Connecticut plus Westchester County, NY. Use the search bar to confirm and book an appointment.</p>
+    </details>
+    <details>
+      <summary>Do you offer emergency service?</summary>
+      <p class="muted">Emergency availability may be limited to existing waterproofing customers. Please call to confirm current availability.</p>
+    </details>
+    <details>
+      <summary>What services are available in Westchester County?</summary>
+      <p class="muted">Basement waterproofing, foundation repair, crawl space repair, and concrete leveling are available throughout Westchester County, NY.</p>
+    </details>
+  </section>
+
+  <!-- FOOTER CTA STRIP -->
+  <div class="cta-strip" role="region" aria-label="Book estimate">
+    <div class="container shell">
+      <strong>Evening & weekend appointments available</strong>
+      <div class="cta-row">
+        <a class="btn btn-ghost" href="tel:1-203-405-4120">Call 1‑203‑405‑4120</a>
+        <a class="btn btn-primary" id="quote" href="#">Get a Free Estimate</a>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    IMPLEMENTATION NOTES
+    - Replace Map placeholder with Leaflet; keep fixed min-height to avoid CLS.
+    - Render city cards server-side (PHP) or client-side (JSON). Use URL params to persist filters.
+    - Add GTM dataLayer push on search/filters:
+      dataLayer.push({ event:'serviceArea_search', city, zip, service });
+    - Add JSON-LD with Service + areaServed (CT + US-NY-Westchester) if desired.
+  -->
+</body>
+</html>
