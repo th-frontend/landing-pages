@@ -113,6 +113,8 @@
     .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
     .muted{color:var(--muted)}
   </style>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4WxB6S+qLzzFZ8aN2r1Zx+QvG2ZkG5rYwG8Z7Z1t8M=" crossorigin=""/>
 </head>
 <body>
   <!-- HERO -->
@@ -215,13 +217,12 @@
     <!-- Map + Results -->
     <section>
       <div class="map panel" aria-label="Interactive map">
-        <div class="placeholder">
-          <p><strong>Interactive Map Placeholder</strong><br><small class="muted">(Drop Leaflet here; set fixed height to avoid CLS)</small></p>
-        </div>
+        <div id="map" style="height:420px"></div>
+      </div>
       </div>
 
       <div class="results-header" style="margin-top:12px">
-        <h2>Cities we serve <span class="muted">(128)</span></h2>
+        <h2>Cities we serve <span class="muted">(<span id="count">0</span>)</span></h2>
         <div class="results-tools">
           <label class="sr-only" for="sort">Sort</label>
           <select id="sort" class="select"><option>A → Z</option><option>Most requested</option><option>Closest</option></select>
@@ -325,5 +326,206 @@
       dataLayer.push({ event:'serviceArea_search', city, zip, service });
     - Add JSON-LD with Service + areaServed (CT + US-NY-Westchester) if desired.
   -->
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    // --- Mock dataset (replace with server data) ---
+    const CITY_DATA = [
+      // Fairfield County
+      { id: 1, city: 'Stamford', state:'CT', county:'Fairfield', lat:41.0534, lng:-73.5387, services:['Basement Waterproofing','Foundation Repair','Concrete Leveling'] },
+      { id: 2, city: 'Norwalk', state:'CT', county:'Fairfield', lat:41.1177, lng:-73.4079, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id: 3, city: 'Danbury', state:'CT', county:'Fairfield', lat:41.3948, lng:-73.4540, services:['Foundation Repair','Concrete Leveling'] },
+      { id: 4, city: 'Bridgeport', state:'CT', county:'Fairfield', lat:41.1792, lng:-73.1894, services:['Basement Waterproofing','Foundation Repair'] },
+      { id: 5, city: 'Fairfield', state:'CT', county:'Fairfield', lat:41.1408, lng:-73.2640, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id: 6, city: 'Greenwich', state:'CT', county:'Fairfield', lat:41.0262, lng:-73.6282, services:['Basement Waterproofing','Concrete Leveling'] },
+      { id: 7, city: 'Westport', state:'CT', county:'Fairfield', lat:41.1415, lng:-73.3579, services:['Basement Waterproofing','Foundation Repair'] },
+      { id: 8, city: 'Darien', state:'CT', county:'Fairfield', lat:41.0784, lng:-73.4693, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id: 9, city: 'New Canaan', state:'CT', county:'Fairfield', lat:41.1468, lng:-73.4948, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:10, city: 'Trumbull', state:'CT', county:'Fairfield', lat:41.2429, lng:-73.2007, services:['Basement Waterproofing','Concrete Leveling'] },
+      { id:11, city: 'Shelton', state:'CT', county:'Fairfield', lat:41.3165, lng:-73.0932, services:['Foundation Repair','Crawl Space Repair'] },
+
+      // Hartford County
+      { id:12, city: 'Hartford', state:'CT', county:'Hartford', lat:41.7658, lng:-72.6734, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:13, city: 'West Hartford', state:'CT', county:'Hartford', lat:41.7620, lng:-72.7420, services:['Crawl Space Repair','Basement Waterproofing'] },
+      { id:14, city: 'East Hartford', state:'CT', county:'Hartford', lat:41.7634, lng:-72.6120, services:['Basement Waterproofing','Concrete Leveling'] },
+      { id:15, city: 'New Britain', state:'CT', county:'Hartford', lat:41.6612, lng:-72.7795, services:['Foundation Repair','Concrete Leveling'] },
+      { id:16, city: 'Bristol', state:'CT', county:'Hartford', lat:41.6718, lng:-72.9493, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id:17, city: 'Manchester', state:'CT', county:'Hartford', lat:41.7759, lng:-72.5215, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:18, city: 'Glastonbury', state:'CT', county:'Hartford', lat:41.7123, lng:-72.6080, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id:19, city: 'Enfield', state:'CT', county:'Hartford', lat:41.9762, lng:-72.5918, services:['Foundation Repair','Concrete Leveling'] },
+      { id:20, city: 'Bloomfield', state:'CT', county:'Hartford', lat:41.8265, lng:-72.7301, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:21, city: 'Windsor', state:'CT', county:'Hartford', lat:41.8526, lng:-72.6437, services:['Basement Waterproofing','Concrete Leveling'] },
+
+      // New Haven County
+      { id:22, city: 'New Haven', state:'CT', county:'New Haven', lat:41.3083, lng:-72.9279, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:23, city: 'Waterbury', state:'CT', county:'New Haven', lat:41.5582, lng:-73.0515, services:['Foundation Repair','Concrete Leveling'] },
+      { id:24, city: 'Milford', state:'CT', county:'New Haven', lat:41.2307, lng:-73.0640, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id:25, city: 'West Haven', state:'CT', county:'New Haven', lat:41.2707, lng:-72.9460, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:26, city: 'Hamden', state:'CT', county:'New Haven', lat:41.3959, lng:-72.8968, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id:27, city: 'Meriden', state:'CT', county:'New Haven', lat:41.5382, lng:-72.8070, services:['Foundation Repair','Concrete Leveling'] },
+      { id:28, city: 'Wallingford', state:'CT', county:'New Haven', lat:41.4570, lng:-72.8231, services:['Basement Waterproofing','Crawl Space Repair'] },
+
+      // Middlesex County
+      { id:29, city: 'Middletown', state:'CT', county:'Middlesex', lat:41.5623, lng:-72.6506, services:['Basement Waterproofing','Crawl Space Repair','Concrete Leveling'] },
+      { id:30, city: 'Cromwell', state:'CT', county:'Middlesex', lat:41.5951, lng:-72.6454, services:['Foundation Repair','Concrete Leveling'] },
+      { id:31, city: 'Old Saybrook', state:'CT', county:'Middlesex', lat:41.2915, lng:-72.3762, services:['Basement Waterproofing','Crawl Space Repair'] },
+
+      // New London County
+      { id:32, city: 'New London', state:'CT', county:'New London', lat:41.3557, lng:-72.0995, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:33, city: 'Norwich', state:'CT', county:'New London', lat:41.5243, lng:-72.0759, services:['Foundation Repair','Concrete Leveling'] },
+      { id:34, city: 'Groton', state:'CT', county:'New London', lat:41.3501, lng:-72.0782, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id:35, city: 'Waterford', state:'CT', county:'New London', lat:41.3418, lng:-72.1356, services:['Basement Waterproofing','Foundation Repair'] },
+
+      // Litchfield County
+      { id:36, city: 'Torrington', state:'CT', county:'Litchfield', lat:41.8007, lng:-73.1212, services:['Foundation Repair','Concrete Leveling'] },
+      { id:37, city: 'New Milford', state:'CT', county:'Litchfield', lat:41.5770, lng:-73.4085, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id:38, city: 'Litchfield', state:'CT', county:'Litchfield', lat:41.7473, lng:-73.1887, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:39, city: 'Thomaston', state:'CT', county:'Litchfield', lat:41.6737, lng:-73.0743, services:['Foundation Repair','Concrete Leveling'] },
+
+      // Tolland County
+      { id:40, city: 'Vernon', state:'CT', county:'Tolland', lat:41.8665, lng:-72.4495, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:41, city: 'Tolland', state:'CT', county:'Tolland', lat:41.8715, lng:-72.3687, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id:42, city: 'Ellington', state:'CT', county:'Tolland', lat:41.9037, lng:-72.4698, services:['Foundation Repair','Concrete Leveling'] },
+
+      // Windham County
+      { id:43, city: 'Windham', state:'CT', county:'Windham', lat:41.6998, lng:-72.1570, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:44, city: 'Putnam', state:'CT', county:'Windham', lat:41.9151, lng:-71.9087, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id:45, city: 'Killingly', state:'CT', county:'Windham', lat:41.8415, lng:-71.8870, services:['Foundation Repair','Concrete Leveling'] },
+
+      // Westchester County, NY
+      { id:46, city: 'White Plains', state:'NY', county:'Westchester', lat:41.0330, lng:-73.7629, services:['Foundation Repair','Concrete Leveling','Basement Waterproofing'] },
+      { id:47, city: 'Yonkers', state:'NY', county:'Westchester', lat:40.9312, lng:-73.8988, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:48, city: 'New Rochelle', state:'NY', county:'Westchester', lat:40.9115, lng:-73.7824, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id:49, city: 'Mount Vernon', state:'NY', county:'Westchester', lat:40.9126, lng:-73.8371, services:['Foundation Repair','Concrete Leveling'] },
+      { id:50, city: 'Port Chester', state:'NY', county:'Westchester', lat:41.0018, lng:-73.6657, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:51, city: 'Rye', state:'NY', county:'Westchester', lat:40.9807, lng:-73.6837, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id:52, city: 'Scarsdale', state:'NY', county:'Westchester', lat:40.9884, lng:-73.7970, services:['Basement Waterproofing','Foundation Repair'] },
+      { id:53, city: 'Mamaroneck', state:'NY', county:'Westchester', lat:40.9487, lng:-73.7325, services:['Basement Waterproofing','Concrete Leveling'] },
+      { id:54, city: 'Ossining', state:'NY', county:'Westchester', lat:41.1629, lng:-73.8615, services:['Foundation Repair','Concrete Leveling'] },
+      { id:55, city: 'Peekskill', state:'NY', county:'Westchester', lat:41.2901, lng:-73.9204, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id:56, city: 'Tarrytown', state:'NY', county:'Westchester', lat:41.0762, lng:-73.8585, services:['Basement Waterproofing','Foundation Repair'] }
+    ];
+
+    // --- Map setup ---
+    const map = L.map('map', { scrollWheelZoom: false });
+    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const markers = L.layerGroup().addTo(map);
+
+    // Fit map to CT + Westchester bounds
+    const bounds = L.latLngBounds([
+      [40.9, -74.1], // SW (near NYC)
+      [42.05, -71.6] // NE (CT/MA/RI)
+    ]);
+    map.fitBounds(bounds, { padding: [10,10] });
+
+    // --- DOM refs ---
+    const elCity = document.getElementById('q-city');
+    const elService = document.getElementById('q-service');
+    const elCounty = document.getElementById('q-county');
+    const elSubmit = document.querySelector('.finder .submit');
+    const resultsWrap = document.getElementById('city-results');
+
+    // Utility: normalize text
+    const norm = s => (s||'').toString().toLowerCase();
+
+    // Debounce
+    function debounce(fn, ms=200){ let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn.apply(this,args), ms); }; }
+
+    // Render markers + cards
+    function render(){
+      const q = norm(elCity.value);
+      const service = elService.value;
+      let county = elCounty.value;
+      if(county === 'All counties') county = '';
+
+      const filtered = CITY_DATA.filter(r=>{
+        const matchesText = !q || norm(r.city).includes(q) || (r.state && norm(r.state).includes(q));
+        const matchesService = !service || r.services.includes(service);
+        const matchesCounty = !county || norm(r.county) === norm(county.replace(', NY',''));
+        return matchesText && matchesService && matchesCounty;
+      });
+
+      // Update markers
+      markers.clearLayers();
+      filtered.forEach(r=>{
+        const m = L.marker([r.lat, r.lng]).bindPopup(`
+          <strong>${r.city}, ${r.state}</strong><br/>
+          <small>${r.county} County</small><br/>
+          <div style="margin-top:6px">
+            ${r.services.map(s=>`<span style=\"display:inline-block;border:1px solid #e2e8f0;background:#f8fafc;border-radius:999px;padding:2px 6px;margin:2px;font-size:11px\">${s}</span>`).join(' ')}
+          </div>
+          <a href="#quote" style="display:inline-block;margin-top:8px;background:#0b5bd3;color:#fff;padding:6px 10px;border-radius:8px;text-decoration:none;font-weight:700">Free Estimate</a>
+        `);
+        markers.addLayer(m);
+      });
+
+      // Fit bounds to filtered markers (if any)
+      if(filtered.length){
+        const b = L.latLngBounds(filtered.map(r=>[r.lat, r.lng]));
+        map.fitBounds(b.pad(0.2));
+      } else {
+        map.fitBounds(bounds);
+      }
+
+      // Update results list
+      resultsWrap.innerHTML = filtered.map(r=>{
+        const tags = r.services.map(s=>`<span class=\"tag\">${s.includes('Basement')? 'Waterproofing' : s}</span>`).join('');
+        return `
+          <article class=\"card\">
+            <div class=\"city\">${r.city}, ${r.state}</div>
+            <div class=\"county\">${r.county} County</div>
+            <div class=\"services\">${tags}</div>
+            <div class=\"row\">
+              <a class=\"btn btn-primary\" href=\"#quote\">Free Estimate</a>
+              <a class=\"btn btn-ghost\" href=\"#projects\">Local Projects</a>
+            </div>
+          </article>`;
+      }).join('');
+
+      // Update count
+      const countEl = document.getElementById('count');
+      if(countEl) countEl.textContent = filtered.length.toString();
+
+      // Analytics hook
+      if(window.dataLayer){
+        window.dataLayer.push({
+          event:'serviceArea_filter',
+          value:{ query:q, service, county }
+        });
+      }
+    }
+
+    // Wire up finder bar
+    const run = ()=>render();
+    elService.addEventListener('change', run);
+    elCounty.addEventListener('change', run);
+    elCity.addEventListener('input', debounce(run, 250));
+    elSubmit.addEventListener('click', (e)=>{ e.preventDefault(); render(); });
+
+    // Wire up chip filters to reflect into selects
+    document.querySelectorAll('.filters .chip').forEach(chip=>{
+      chip.addEventListener('click', ()=>{
+        const label = chip.textContent.trim();
+        // Toggle UI state
+        const siblings = chip.parentElement.querySelectorAll('.chip');
+        siblings.forEach(c=>c.classList.remove('is-on'));
+        chip.classList.add('is-on');
+        // Map label to select
+        if(['Basement Waterproofing','Foundation Repair','Crawl Space','Concrete','Finishing','All'].includes(label)){
+          elService.value = label === 'All' ? '' : (label === 'Crawl Space' ? 'Crawl Space Repair' : (label === 'Concrete' ? 'Concrete Leveling' : (label === 'Finishing' ? 'Basement Finishing' : label)));
+        }
+        if(['All CT','Fairfield','Hartford','Litchfield','Middlesex','New Haven','New London','Tolland','Windham','Westchester, NY'].includes(label)){
+          elCounty.value = label === 'All CT' ? '' : label;
+        }
+        render();
+      });
+    });
+
+    // Initial render
+    render();
+  </script>
 </body>
 </html>
