@@ -101,12 +101,6 @@
       gap: 18px;
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
     .hero-map-card {
       background: var(--surface);
       border-radius: var(--radius);
@@ -127,6 +121,12 @@
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid rgba(17, 58, 106, 0.18);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .btn {
@@ -229,23 +229,102 @@
 
     @media (min-width: 940px) {
       .coverage-grid {
-        grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
       }
     }
 
-    .map-card,
-    .list-card {
+    .list-card,
+    .showcase-card {
       background: var(--surface);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: clamp(20px, 3vw, 28px);
     }
 
-    #coverageMap {
-      height: 340px;
+    .showcase-card {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .showcase-card[hidden] {
+      display: none;
+    }
+
+    .showcase-header {
+      display: grid;
+      gap: 6px;
+    }
+
+    .showcase-header h2 {
+      margin: 0;
+      font-size: clamp(20px, 2.6vw, 26px);
+      color: var(--brand);
+    }
+
+    .showcase-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .showcase-media {
+      display: grid;
+      gap: 12px;
+    }
+
+    .showcase-media img {
+      width: 100%;
       border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(16, 58, 106, 0.18);
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 24px rgba(16, 26, 53, 0.12);
+    }
+
+    .showcase-list {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .showcase-list li {
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-left: 3px solid rgba(214, 31, 44, 0.45);
+      padding-left: 12px;
+    }
+
+    .showcase-list strong {
+      font-weight: 700;
+      color: var(--brand);
+      margin-right: 6px;
+    }
+
+    .showcase-list a {
+      color: var(--brand);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .showcase-list a:hover,
+    .showcase-list a:focus-visible {
+      text-decoration: underline;
+    }
+
+    .showcase-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.88rem;
+    }
+
+    .showcase-cta svg {
+      width: 16px;
+      height: 16px;
     }
 
     .list-header {
@@ -626,14 +705,14 @@
           <span>4.9 out of 5 homeowner reviews</span>
         </div>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#finder">Check coverage</a>
+          <a class="btn btn-primary" href="#finder">Free estimate</a>
           <a class="btn btn-ghost" href="tel:1-203-723-1372">Call 1-203-723-1372</a>
         </div>
       </div>
       <aside class="hero-map-card" aria-label="Coverage highlight">
         <strong style="font-size:1.05rem">Coverage snapshot</strong>
-        <p>Shaded counties show our daily service area across Connecticut and Westchester County, NY.</p>
-        <div class="hero-map" id="heroCoverageMap" role="presentation"></div>
+        <p>View our daily service footprint across Connecticut and Westchester County, NY.</p>
+        <div class="hero-map" id="heroCoverageMap" role="presentation" aria-hidden="true"></div>
       </aside>
     </div>
   </header>
@@ -679,14 +758,8 @@
     </div>
   </section>
 
-  <section class="coverage" aria-label="Coverage map and city list">
+  <section class="coverage" aria-label="Coverage results and project highlights">
     <div class="container coverage-grid">
-      <aside class="map-card">
-        <h2 style="margin-top:0">Coverage map</h2>
-        <p style="color:var(--muted); margin-top:6px">Explore a live view of recent service appointments across Connecticut and Westchester County.</p>
-        <div id="coverageMap" role="presentation"></div>
-      </aside>
-
       <section class="list-card" aria-live="polite">
         <div class="list-header">
           <h2 style="margin:0">Cities we serve</h2>
@@ -694,6 +767,21 @@
         </div>
         <div id="countyList"></div>
       </section>
+      <aside class="showcase-card" id="searchShowcase" aria-live="polite" hidden>
+        <div class="showcase-header">
+          <h2>Project highlights</h2>
+          <p>Enter a city or ZIP to see reviews and recent projects in your area.</p>
+        </div>
+        <div class="showcase-media" id="showcaseMedia"></div>
+        <ul class="showcase-list" id="showcaseList"></ul>
+        <a class="showcase-cta" id="showcaseLink" href="#" rel="noopener" target="_blank" hidden>
+          <span class="showcase-cta-label">View more on ConnecticutBasementSystems.com</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17l9.2-9.2"></path>
+            <path d="M9 7h7v7"></path>
+          </svg>
+        </a>
+      </aside>
     </div>
   </section>
 
@@ -735,7 +823,7 @@
             </svg>
           </span>
           <h3>Truly local coverage</h3>
-          <p>Teams are staged in every county shown on the map, so travel time is short and repeat visits are easy.</p>
+          <p>Teams are staged in every county we serve, so travel time is short and repeat visits are easy.</p>
         </article>
       </div>
     </div>
@@ -901,48 +989,193 @@
       item.reviewSnippet = meta.reviewSnippet || '';
     });
 
-    const countyListEl = document.getElementById('countyList');
-    const resultCountEl = document.getElementById('resultCount');
-    const form = document.getElementById('coverageForm');
-    const markerRefs = new Map();
-    let activeMarker = null;
+    const showcaseData = new Map([
+      ['DEFAULT', {
+        heading: 'Project highlights',
+        summary: 'Enter a city or ZIP to see reviews and recent projects in your area.',
+        image: {
+          src: 'https://cdn.treehouseinternetgroup.com/cms_images/7/customer-handshake.jpg',
+          alt: 'Connecticut Basement Systems inspector meeting with a homeowner'
+        },
+        bullets: [
+          { type: 'Review', text: '4.9/5 average rating from homeowners across Connecticut and Westchester County.', href: 'https://www.connecticutbasementsystems.com/about-us/reviews.html' },
+          { type: 'Project', text: 'See waterproofing, foundation, and crawl space transformations across the region.', href: 'https://www.connecticutbasementsystems.com/about-us/before-after.html' }
+        ],
+        cta: { label: 'Explore all reviews & galleries', href: 'https://www.connecticutbasementsystems.com/about-us/photo-gallery.html' }
+      }],
+      ['Stamford, CT', {
+        heading: 'Stamford projects & reviews',
+        summary: 'Coastal neighborhoods rely on WaterGuard and TripleSafe systems to stay ahead of tidal groundwater.',
+        image: {
+          src: 'https://cdn.treehouseinternetgroup.com/cdn-cgi/image/format=auto/cms_images/7/bw-new-srv.jpg',
+          alt: 'Basement waterproofing system installation in Stamford, Connecticut'
+        },
+        bullets: [
+          { type: 'Review', text: '"Finished on time and spotless cleanup." - Stamford, CT', href: 'https://www.connecticutbasementsystems.com/about-us/reviews.html' },
+          { type: 'Project', text: 'WaterGuard and TripleSafe install near Harbor Point.', href: 'https://www.connecticutbasementsystems.com/basement-waterproofing/photo-gallery.html' },
+          { type: 'Before & After', text: 'Fairfield County basement transformation gallery.', href: 'https://www.connecticutbasementsystems.com/about-us/before-after.html' }
+        ],
+        cta: { label: 'See Stamford waterproofing results', href: 'https://www.connecticutbasementsystems.com/basement-waterproofing/photo-gallery.html' }
+      }],
+      ['Hartford, CT', {
+        heading: 'Hartford structural highlights',
+        summary: 'Historic homes downtown benefit from push pier stabilization and vapor protection.',
+        image: {
+          src: 'https://cdn.treehouseinternetgroup.com/cdn-cgi/image/format=auto/cms_images/7/fr-new-srv.jpg',
+          alt: 'Foundation pier system being installed in Hartford, Connecticut'
+        },
+        bullets: [
+          { type: 'Review', text: '"Crew respected our 1920s home and kept the site clean." - Hartford, CT', href: 'https://www.connecticutbasementsystems.com/about-us/reviews.html' },
+          { type: 'Case Study', text: 'Foundation pier installation supporting a Capitol Ave duplex.', href: 'https://www.connecticutbasementsystems.com/about-us/case-studies.html' },
+          { type: 'Project', text: 'Browse Hartford County foundation repair photos.', href: 'https://www.connecticutbasementsystems.com/foundation-repair/photo-gallery.html' }
+        ],
+        cta: { label: 'Review Hartford foundation projects', href: 'https://www.connecticutbasementsystems.com/foundation-repair/photo-gallery.html' }
+      }],
+      ['New Haven, CT', {
+        heading: 'New Haven project snapshots',
+        summary: 'Campus-area homes choose insulated wall panels and SaniDry systems to protect finished space.',
+        image: {
+          src: 'https://cdn.treehouseinternetgroup.com/cdn-cgi/image/format=auto/cms_images/7/tbf-new-srv.jpg',
+          alt: 'Finished basement system installed in New Haven, Connecticut'
+        },
+        bullets: [
+          { type: 'Review', text: '"Professional, on time, and clean." - New Haven, CT', href: 'https://www.connecticutbasementsystems.com/about-us/reviews.html' },
+          { type: 'Project', text: 'Total Basement Finishing remodel off Chapel Street.', href: 'https://www.connecticutbasementsystems.com/basement-finishing/photo-gallery.html' },
+          { type: 'Before & After', text: 'See basement finishing transformations across New Haven County.', href: 'https://www.connecticutbasementsystems.com/about-us/before-after.html' }
+        ],
+        cta: { label: 'See New Haven finishing ideas', href: 'https://www.connecticutbasementsystems.com/basement-finishing/photo-gallery.html' }
+      }],
+      ['Danbury, CT', {
+        heading: 'Danbury project highlights',
+        summary: 'Hillside properties around Candlewood Lake count on SmartJack supports and drainage upgrades.',
+        image: {
+          src: 'https://cdn.treehouseinternetgroup.com/cdn-cgi/image/format=auto/cms_images/7/sp-new-srv.jpg',
+          alt: 'SmartJack support installation for a home near Danbury, Connecticut'
+        },
+        bullets: [
+          { type: 'Review', text: '"Resolved cracks quickly and kept us informed." - Danbury, CT', href: 'https://www.connecticutbasementsystems.com/about-us/reviews.html' },
+          { type: 'Case Study', text: 'SmartJack and CleanSpace upgrade in Fairfield County.', href: 'https://www.connecticutbasementsystems.com/about-us/case-studies.html' },
+          { type: 'Project', text: 'See Danbury-area structural repair photos.', href: 'https://www.connecticutbasementsystems.com/foundation-repair/photo-gallery.html' }
+        ],
+        cta: { label: 'View Danbury structural projects', href: 'https://www.connecticutbasementsystems.com/foundation-repair/photo-gallery.html' }
+      }],
+      ['New London, CT', {
+        heading: 'New London crawl space stories',
+        summary: 'Coastal humidity control starts with CleanSpace encapsulation and SaniDry dehumidifiers.',
+        image: {
+          src: 'https://cdn.treehouseinternetgroup.com/cdn-cgi/image/format=auto/cms_images/7/cs-new-srv.jpg',
+          alt: 'Crew encapsulating a crawl space near New London, Connecticut'
+        },
+        bullets: [
+          { type: 'Review', text: '"Team knew exactly what to do." - New London, CT', href: 'https://www.connecticutbasementsystems.com/about-us/reviews.html' },
+          { type: 'Project', text: 'CleanSpace encapsulation along the Thames River.', href: 'https://www.connecticutbasementsystems.com/crawl-space-repair/photo-gallery.html' },
+          { type: 'Before & After', text: 'Crawl space makeovers in New London County.', href: 'https://www.connecticutbasementsystems.com/about-us/before-after.html' }
+        ],
+        cta: { label: 'Explore New London crawl space work', href: 'https://www.connecticutbasementsystems.com/crawl-space-repair/photo-gallery.html' }
+      }],
+      ['White Plains, NY', {
+        heading: 'White Plains projects & reviews',
+        summary: 'Westchester homeowners lean on perimeter drainage and structural reinforcements for peace of mind.',
+        image: {
+          src: 'https://cdn.treehouseinternetgroup.com/cms_images/7/wcu_inspection_1.jpg',
+          alt: 'Technician inspecting a basement in White Plains, New York'
+        },
+        bullets: [
+          { type: 'Review', text: '"Walked us through every step." - White Plains, NY', href: 'https://www.connecticutbasementsystems.com/about-us/reviews.html' },
+          { type: 'Project', text: 'Waterproofing system upgrade near downtown White Plains.', href: 'https://www.connecticutbasementsystems.com/basement-waterproofing/photo-gallery.html' },
+          { type: 'Case Study', text: 'See Westchester County repair stories.', href: 'https://www.connecticutbasementsystems.com/about-us/case-studies.html' }
+        ],
+        cta: { label: 'View White Plains waterproofing projects', href: 'https://www.connecticutbasementsystems.com/basement-waterproofing/photo-gallery.html' }
+      }],
+      ['Yonkers, NY', {
+        heading: 'Yonkers structural spotlights',
+        summary: 'Brick foundations and brownstones stay supported with push piers and carbon armor reinforcement.',
+        image: {
+          src: 'https://cdn.treehouseinternetgroup.com/cdn-cgi/image/format=auto/cms_images/7/fr-new-srv.jpg',
+          alt: 'Foundation reinforcement system installed in Yonkers, New York'
+        },
+        bullets: [
+          { type: 'Review', text: '"Tight timeline met without issue." - Yonkers, NY', href: 'https://www.connecticutbasementsystems.com/about-us/reviews.html' },
+          { type: 'Project', text: 'Foundation wall stabilization near Getty Square.', href: 'https://www.connecticutbasementsystems.com/foundation-repair/photo-gallery.html' },
+          { type: 'Case Study', text: 'See Yonkers and Bronxville repair case studies.', href: 'https://www.connecticutbasementsystems.com/about-us/case-studies.html' }
+        ],
+        cta: { label: 'Review Yonkers foundation work', href: 'https://www.connecticutbasementsystems.com/foundation-repair/photo-gallery.html' }
+      }]
+    ]);
+
+    const zipToCity = new Map([
+      ['06902', 'Stamford, CT'],
+      ['06905', 'Stamford, CT'],
+      ['06103', 'Hartford, CT'],
+      ['06106', 'Hartford, CT'],
+      ['06510', 'New Haven, CT'],
+      ['06511', 'New Haven, CT'],
+      ['06810', 'Danbury, CT'],
+      ['06811', 'Danbury, CT'],
+      ['06320', 'New London, CT'],
+      ['06385', 'New London, CT'],
+      ['10601', 'White Plains, NY'],
+      ['10605', 'White Plains, NY'],
+      ['10701', 'Yonkers, NY'],
+      ['10710', 'Yonkers, NY']
+    ]);
+
+    const showcaseCard = document.getElementById('searchShowcase');
+    const showcaseHeader = showcaseCard ? showcaseCard.querySelector('.showcase-header h2') : null;
+    const showcaseSubhead = showcaseCard ? showcaseCard.querySelector('.showcase-header p') : null;
+    const showcaseMedia = document.getElementById('showcaseMedia');
+    const showcaseList = document.getElementById('showcaseList');
+    const showcaseLink = document.getElementById('showcaseLink');
+    const showcaseLinkLabel = showcaseLink ? showcaseLink.querySelector('.showcase-cta-label') : null;
+    const defaultShowcaseHeading = showcaseHeader ? showcaseHeader.textContent : 'Project highlights';
+    const defaultShowcaseSummary = showcaseSubhead ? showcaseSubhead.textContent : '';
+
+    const heroCoverageMapEl = document.getElementById('heroCoverageMap');
 
     const ctBounds = [[40.98, -73.73], [42.05, -71.78]];
     const westchesterBounds = [[40.88, -74.1], [41.37, -73.3]];
-    const coverageBounds = L.latLngBounds(ctBounds[0], ctBounds[1]).extend(westchesterBounds[0]).extend(westchesterBounds[1]);
 
-    const heroMap = L.map('heroCoverageMap', {
-      scrollWheelZoom: false,
-      dragging: false,
-      tap: false,
-      doubleClickZoom: false,
-      boxZoom: false,
-      keyboard: false
-    });
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(heroMap);
-    L.rectangle(ctBounds, {
-      color: '#d61f2c',
-      weight: 1.5,
-      fillColor: '#d61f2c',
-      fillOpacity: 0.08
-    }).addTo(heroMap);
-    L.rectangle(westchesterBounds, {
-      color: '#d61f2c',
-      weight: 1.2,
-      dashArray: '6',
-      fillColor: '#d61f2c',
-      fillOpacity: 0.06
-    }).addTo(heroMap);
-    heroMap.fitBounds(coverageBounds, { padding: [12, 12] });
+    function initHeroCoverageMap() {
+      if (!heroCoverageMapEl || typeof L === 'undefined') return;
 
-    const resultsMap = L.map('coverageMap', { scrollWheelZoom: false, tap: false }).setView([41.5, -72.7], 8);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(resultsMap);
-    const markerGroup = L.layerGroup().addTo(resultsMap);
+      const coverageBounds = L.latLngBounds(ctBounds[0], ctBounds[1])
+        .extend(westchesterBounds[0])
+        .extend(westchesterBounds[1]);
 
+      const heroMap = L.map(heroCoverageMapEl, {
+        scrollWheelZoom: false,
+        dragging: false,
+        tap: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false,
+        zoomControl: false,
+        attributionControl: false
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(heroMap);
+
+      L.rectangle(ctBounds, {
+        color: '#d61f2c',
+        weight: 1.5,
+        fillColor: '#d61f2c',
+        fillOpacity: 0.08
+      }).addTo(heroMap);
+
+      L.rectangle(westchesterBounds, {
+        color: '#d61f2c',
+        weight: 1.2,
+        dashArray: '6',
+        fillColor: '#d61f2c',
+        fillOpacity: 0.06
+      }).addTo(heroMap);
+
+      heroMap.fitBounds(coverageBounds, { padding: [16, 16] });
+    }
+
+    const countyListEl = document.getElementById('countyList');
+    const resultCountEl = document.getElementById('resultCount');
+    const form = document.getElementById('coverageForm');
     function groupCities(data) {
       return data.reduce((acc, item) => {
         const key = item.county;
@@ -1012,11 +1245,6 @@
               </div>
             `.trim();
 
-            row.addEventListener('mouseenter', () => focusCityOnMap(city.id));
-            row.addEventListener('focus', () => focusCityOnMap(city.id));
-            row.addEventListener('mouseleave', resetMapFocus);
-            row.addEventListener('blur', resetMapFocus);
-
             cityGrid.append(row);
           });
 
@@ -1042,38 +1270,155 @@
       return sorted.length ? sorted[0][0] : 'Basement Waterproofing';
     }
 
-    function focusCityOnMap(cityId) {
-      const marker = markerRefs.get(cityId);
-      if (!marker) return;
-      const latLng = marker.getLatLng();
-      const zoomLevel = Math.max(resultsMap.getZoom(), 9);
-      resultsMap.setView(latLng, zoomLevel, { animate: true });
-      marker.openPopup();
-      activeMarker = marker;
+    function resetShowcase() {
+      if (!showcaseCard || !showcaseMedia || !showcaseList || !showcaseLink) return;
+      showcaseMedia.innerHTML = '';
+      showcaseMedia.hidden = true;
+      showcaseList.innerHTML = '';
+      showcaseLink.hidden = true;
+      showcaseLink.href = '#';
+      if (showcaseLinkLabel) {
+        showcaseLinkLabel.textContent = 'View more on ConnecticutBasementSystems.com';
+      }
+      if (showcaseHeader) {
+        showcaseHeader.textContent = defaultShowcaseHeading;
+      }
+      if (showcaseSubhead) {
+        showcaseSubhead.textContent = defaultShowcaseSummary;
+      }
     }
 
-    function resetMapFocus() {
-      if (activeMarker) {
-        activeMarker.closePopup();
-        activeMarker = null;
+    function renderShowcase(data) {
+      if (!showcaseCard || !showcaseMedia || !showcaseList || !showcaseLink) return;
+      showcaseCard.hidden = false;
+
+      if (showcaseHeader) {
+        showcaseHeader.textContent = data.heading || defaultShowcaseHeading;
       }
+      if (showcaseSubhead) {
+        showcaseSubhead.textContent = data.summary || defaultShowcaseSummary;
+      }
+
+      showcaseMedia.innerHTML = '';
+      if (data.image && data.image.src) {
+        const img = document.createElement('img');
+        img.src = data.image.src;
+        if (data.image.alt) {
+          img.alt = data.image.alt;
+        }
+        img.loading = 'lazy';
+        showcaseMedia.append(img);
+        showcaseMedia.hidden = false;
+      } else {
+        showcaseMedia.hidden = true;
+      }
+
+      showcaseList.innerHTML = '';
+      if (Array.isArray(data.bullets) && data.bullets.length) {
+        data.bullets.forEach(item => {
+          const li = document.createElement('li');
+          if (item.type) {
+            const strong = document.createElement('strong');
+            strong.textContent = item.type;
+            li.append(strong);
+          }
+          const node = document.createElement(item.href ? 'a' : 'span');
+          node.textContent = item.text;
+          if (item.href) {
+            node.href = item.href;
+            node.target = '_blank';
+            node.rel = 'noopener';
+          }
+          li.append(node);
+          showcaseList.append(li);
+        });
+      } else {
+        const li = document.createElement('li');
+        li.textContent = 'Call 1-203-723-1372 for recent project details in your neighborhood.';
+        showcaseList.append(li);
+      }
+
+      if (data.cta && data.cta.href) {
+        showcaseLink.hidden = false;
+        showcaseLink.href = data.cta.href;
+        showcaseLink.target = data.cta.target || '_blank';
+        if (showcaseLinkLabel) {
+          showcaseLinkLabel.textContent = data.cta.label || 'See more projects';
+        }
+      } else {
+        showcaseLink.hidden = true;
+        showcaseLink.href = '#';
+        if (showcaseLinkLabel) {
+          showcaseLinkLabel.textContent = 'View more on ConnecticutBasementSystems.com';
+        }
+      }
+    }
+
+    function resolveShowcaseKey(rawSearch, results) {
+      const trimmed = (rawSearch || '').trim();
+      if (!trimmed) return 'DEFAULT';
+
+      const digits = trimmed.replace(/[^0-9]/g, '');
+      if (digits.length >= 5) {
+        const zipMatch = zipToCity.get(digits);
+        if (zipMatch) {
+          return zipMatch;
+        }
+      }
+
+      const normalized = trimmed.toLowerCase();
+      for (const [key] of showcaseData.entries()) {
+        if (key === 'DEFAULT') continue;
+        if (key.toLowerCase().includes(normalized)) {
+          return key;
+        }
+      }
+
+      for (const item of results) {
+        const candidate = `${item.city}, ${item.state}`;
+        if (showcaseData.has(candidate)) {
+          return candidate;
+        }
+      }
+
+      return 'DEFAULT';
+    }
+
+    function updateShowcase(rawSearch, results) {
+      if (!showcaseCard) return;
+      const trimmed = (rawSearch || '').trim();
+      if (!trimmed) {
+        showcaseCard.hidden = true;
+        resetShowcase();
+        return;
+      }
+
+      const key = resolveShowcaseKey(trimmed, results);
+      const data = showcaseData.get(key) || showcaseData.get('DEFAULT');
+      renderShowcase(data);
     }
 
     function applyFilters(event) {
       if (event) event.preventDefault();
-      const search = (form.city.value || '').trim().toLowerCase();
+      const rawSearch = (form.city.value || '').trim();
+      const search = rawSearch.toLowerCase();
+      const digits = rawSearch.replace(/[^0-9]/g, '');
+      const zipTarget = digits.length >= 5 ? zipToCity.get(digits) : '';
+      const targetedCityKey = zipTarget ? zipTarget.toLowerCase() : '';
       const service = form.service.value || '';
       const county = form.county.value || '';
 
       const filtered = coverageData.filter(item => {
-        const matchesSearch = !search || `${item.city} ${item.state}`.toLowerCase().includes(search);
+        const cityKey = `${item.city}, ${item.state}`.toLowerCase();
+        const matchesZipCity = targetedCityKey && cityKey === targetedCityKey;
+        const matchesSearch = !search || `${item.city} ${item.state}`.toLowerCase().includes(search) || matchesZipCity;
         const matchesService = !service || item.services.includes(service);
         const matchesCounty = !county || item.county.toLowerCase() === county.toLowerCase();
         return matchesSearch && matchesService && matchesCounty;
       });
 
       renderList(filtered);
-      updateMap(filtered);
+      updateShowcase(rawSearch, filtered);
     }
 
     form.addEventListener('submit', applyFilters);
@@ -1081,41 +1426,9 @@
     form.service.addEventListener('change', applyFilters);
     form.county.addEventListener('change', applyFilters);
 
-    function updateMap(data) {
-      markerGroup.clearLayers();
-      markerRefs.clear();
-      resetMapFocus();
-
-      if (!data.length) {
-        resultsMap.fitBounds(coverageBounds, { padding: [24, 24] });
-        return;
-      }
-
-      data.forEach(item => {
-        if (typeof item.lat !== 'number' || typeof item.lng !== 'number') return;
-        const marker = L.marker([item.lat, item.lng]);
-        const popupServices = item.services.join(', ');
-        const popupMeta = item.responseTime ? `<br><em>Typical response: ${item.responseTime}</em>` : '';
-        marker.bindPopup(`<strong>${item.city}, ${item.state}</strong><br>${popupServices}${popupMeta}`);
-        markerGroup.addLayer(marker);
-        markerRefs.set(item.id, marker);
-      });
-
-      const layers = markerGroup.getLayers();
-      if (!layers.length) {
-        resultsMap.fitBounds(coverageBounds, { padding: [24, 24] });
-        return;
-      }
-
-      if (layers.length === 1) {
-        resultsMap.setView(layers[0].getLatLng(), 10);
-      } else {
-        resultsMap.fitBounds(markerGroup.getBounds().pad(0.08), { padding: [24, 24] });
-      }
-    }
-
+    initHeroCoverageMap();
     renderList(coverageData);
-    updateMap(coverageData);
+    resetShowcase();
   </script>
 </body>
 </html>
