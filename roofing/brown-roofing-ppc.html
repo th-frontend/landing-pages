@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <style>
     :root {
       --brand-primary: #ec232b;
@@ -215,7 +216,7 @@
 
     .hero {
       position: relative;
-      padding: clamp(3rem, 7vw, 6rem) 5vw clamp(2rem, 6vw, 4rem);
+      padding: clamp(2.5rem, 6vw, 5.5rem) 5vw clamp(1.5rem, 5vw, 3rem);
       background: linear-gradient(140deg, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.35)),
         url('https://cdn.treehouseinternetgroup.com/cms_images/1253/brown-roofing-5-21-25_bg.jpg') center/cover no-repeat;
       color: #fff;
@@ -230,9 +231,9 @@
 
     .hero-inner {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.85fr);
       gap: clamp(2rem, 6vw, 4rem);
-      align-items: start;
+      align-items: stretch;
       position: relative;
       z-index: 1;
     }
@@ -309,10 +310,14 @@
 
     .hero-form {
       background: rgba(255, 255, 255, 0.98);
-      border-radius: 22px;
-      padding: clamp(1.75rem, 4vw, 2.4rem);
+      border-radius: 20px;
+      padding: clamp(1.5rem, 3.2vw, 2rem);
       color: var(--text-main);
-      box-shadow: 0 30px 45px rgba(13, 23, 42, 0.2);
+      box-shadow: 0 20px 36px rgba(13, 23, 42, 0.18);
+      max-width: 420px;
+      margin-inline: auto;
+      display: grid;
+      gap: 1.25rem;
     }
 
     .hero-form h2 {
@@ -325,9 +330,117 @@
       color: var(--text-muted);
     }
 
-    form.lead-form {
+    .hero-form .form-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-form .form-brand img {
+      max-width: 200px;
+      height: auto;
+      display: block;
+    }
+
+    .step-indicator {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .step-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(31, 45, 58, 0.08);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .step-number {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(31, 45, 58, 0.16);
+      color: var(--brand-secondary);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .step-label {
+      font-weight: 600;
+    }
+
+    .step-pill.is-active {
+      background: rgba(236, 35, 43, 0.18);
+      color: var(--brand-primary);
+    }
+
+    .step-pill.is-active .step-number {
+      background: var(--brand-primary);
+      color: #fff;
+    }
+
+    .step-pill.is-complete {
+      background: rgba(31, 45, 58, 0.14);
+      color: var(--brand-secondary);
+    }
+
+    .step-pill.is-complete .step-number {
+      background: var(--brand-secondary);
+      color: #fff;
+    }
+
+    .lead-step {
       display: grid;
       gap: 1rem;
+    }
+
+    .lead-step[hidden] {
+      display: none;
+    }
+
+    .lead-step-fields {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .lead-step-fields--split {
+      gap: 0.85rem;
+    }
+
+    @media (min-width: 540px) {
+      .lead-step-fields--split {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .step-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+
+    .step-actions .button {
+      flex: 1 1 160px;
+    }
+
+    @media (min-width: 520px) {
+      .step-actions {
+        justify-content: space-between;
+      }
+
+      .step-actions .button {
+        flex: 0 0 auto;
+      }
     }
 
     .form-group {
@@ -449,7 +562,23 @@
       box-shadow: var(--shadow-soft);
       border: 1px solid rgba(17, 28, 43, 0.05);
       display: grid;
-      gap: 0.85rem;
+      gap: 0.9rem;
+    }
+
+    .value-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: rgba(236, 35, 43, 0.14);
+      color: var(--brand-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .value-icon svg {
+      width: 24px;
+      height: 24px;
     }
 
     .value-card h3 {
@@ -667,6 +796,20 @@
       color: var(--text-main);
     }
 
+    .review-stars {
+      display: inline-flex;
+      gap: 0.25rem;
+      color: var(--brand-primary);
+      font-size: 0;
+    }
+
+    .review-stars svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+      fill: currentColor;
+    }
+
     .service-area {
       background: #fff;
     }
@@ -675,7 +818,7 @@
       display: grid;
       grid-template-columns: minmax(260px, 1fr) minmax(0, 1fr);
       gap: clamp(1.5rem, 4vw, 2.5rem);
-      align-items: start;
+      align-items: stretch;
     }
 
     .service-area-map {
@@ -688,18 +831,45 @@
       gap: 0.75rem;
     }
 
-    .service-area-map img {
-      border-radius: 18px;
+    .leaflet-map {
+      height: 320px;
       width: 100%;
-      height: auto;
-      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid rgba(17, 28, 43, 0.08);
+      overflow: hidden;
     }
 
-    .service-area-map figcaption {
+    .map-note {
       margin: 0;
+      font-size: 0.85rem;
       color: var(--text-muted);
-      font-size: 0.9rem;
     }
+
+    .map-note strong {
+      color: var(--text-main);
+    }
+
+    .map-legend {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .map-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+
 
     .county-grid {
       display: grid;
@@ -895,6 +1065,18 @@
       clip: rect(0, 0, 0, 0);
       border: 0;
     }
+    @media (min-width: 921px) {
+      .hero-inner {
+        align-items: start;
+      }
+
+      .hero-form {
+        margin-inline: initial;
+        margin-left: auto;
+        transform: translate(-2rem, -1.4rem);
+      }
+    }
+
 
     @media (max-width: 1024px) {
       nav {
@@ -940,6 +1122,7 @@
 
       .hero-form {
         margin-top: 1rem;
+        transform: none;
       }
 
       .trust-bar {
@@ -964,6 +1147,10 @@
       .hero-actions {
         flex-direction: column;
         align-items: stretch;
+      }
+
+      .hero-form .form-brand {
+        justify-content: center;
       }
 
       .hero-tagline {
@@ -1034,46 +1221,71 @@
             <a class="button primary" href="#estimate">Reserve my inspection</a>
             <a class="button secondary" href="tel:1-203-723-1372">Tap to call 203-723-1372</a>
           </div>
-          <div class="hero-tagline">
-            <img src="https://cdn.treehouseinternetgroup.com/cms_images/1253/bwlyd_logo_738w.png" alt="Brown Won't Let You Down tagline">
-          </div>
         </div>
         <div class="hero-form" id="estimate">
-          <h2>Fast-track your free roof assessment</h2>
+          <div class="form-brand">
+            <img src="https://cdn.treehouseinternetgroup.com/cms_images/1253/bwlyd_logo_738w.png" alt="Brown Won't Let You Down">
+          </div>
           <p>Answer a few questions. A Brown Roofing specialist will call shortly during business hours.</p>
-          <form class="lead-form" action="#" method="post">
-            <div class="form-group">
-              <label for="lead-name">Full name</label>
-              <input id="lead-name" name="name" type="text" autocomplete="name" required>
+          <form class="lead-form" id="leadForm" action="#" method="post">
+            <div class="step-indicator" aria-label="Roof assessment steps">
+              <span class="step-pill is-active" data-step-indicator="0">
+                <span class="step-number">1</span>
+                <span class="step-label">Contact</span>
+              </span>
+              <span class="step-pill" data-step-indicator="1">
+                <span class="step-number">2</span>
+                <span class="step-label">Project</span>
+              </span>
             </div>
-            <div class="form-group">
-              <label for="lead-phone">Phone number</label>
-              <input id="lead-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
+            <div class="lead-step" data-step="1">
+              <div class="lead-step-fields">
+                <div class="form-group">
+                  <label for="lead-name">Full name</label>
+                  <input id="lead-name" name="name" type="text" autocomplete="name" required data-focus-target>
+                </div>
+                <div class="form-group">
+                  <label for="lead-phone">Phone number</label>
+                  <input id="lead-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
+                </div>
+              </div>
+              <div class="step-actions">
+                <button class="button primary" type="button" data-next-step>Next</button>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="lead-email">Email</label>
-              <input id="lead-email" name="email" type="email" autocomplete="email" required>
+            <div class="lead-step" data-step="2" hidden aria-hidden="true">
+              <div class="lead-step-fields lead-step-fields--split">
+                <div class="form-group">
+                  <label for="lead-email">Email</label>
+                  <input id="lead-email" name="email" type="email" autocomplete="email" required data-focus-target>
+                </div>
+                <div class="form-group">
+                  <label for="lead-zip">ZIP code</label>
+                  <input id="lead-zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" required>
+                </div>
+                <div class="form-group">
+                  <label for="lead-service">I'm interested in</label>
+                  <select id="lead-service" name="service" required>
+                    <option value="" disabled selected>Select a service</option>
+                    <option value="replacement">Roof replacement</option>
+                    <option value="repair">Leak or storm repair</option>
+                    <option value="gutters">Gutters &amp; gutter guards</option>
+                    <option value="skylights">Skylights &amp; sun tunnels</option>
+                    <option value="other">Something else</option>
+                  </select>
+                </div>
+              </div>
+              <div class="lead-step-fields">
+                <div class="form-group">
+                  <label for="lead-notes">How can we help?</label>
+                  <textarea id="lead-notes" name="notes" placeholder="Example: Active leak in master bedroom, insurance claim in progress"></textarea>
+                </div>
+              </div>
+              <div class="step-actions">
+                <button class="button secondary" type="button" data-prev-step>Back</button>
+                <button class="button primary" type="submit">Schedule my inspection</button>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="lead-zip">ZIP code</label>
-              <input id="lead-zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" required>
-            </div>
-            <div class="form-group">
-              <label for="lead-service">I'm interested in</label>
-              <select id="lead-service" name="service" required>
-                <option value="" disabled selected>Select a service</option>
-                <option value="replacement">Roof replacement</option>
-                <option value="repair">Leak or storm repair</option>
-                <option value="gutters">Gutters &amp; gutter guards</option>
-                <option value="skylights">Skylights &amp; sun tunnels</option>
-                <option value="other">Something else</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="lead-notes">How can we help?</label>
-              <textarea id="lead-notes" name="notes" placeholder="Example: Active leak in master bedroom, insurance claim in progress"></textarea>
-            </div>
-            <button class="button primary" type="submit">Schedule my inspection</button>
             <p class="form-footnote">No obligation. By submitting, you authorize Brown Roofing to contact you via phone, text, and email.</p>
           </form>
         </div>
@@ -1090,39 +1302,6 @@
         <img src="https://cdn.treehouseinternetgroup.com/uploads/affiliations/logo/663df86c40730_roofingforhumanitystacked-1.jpg" alt="Roofing for Humanity">
       </div>
     </aside>
-
-    <section class="page-section" id="value">
-      <div class="section-header">
-        <h2>Why CT homeowners choose Brown Roofing first.</h2>
-        <p>Connecticut families count on fast answers, transparent pricing, and a crew that treats every home like their own. Brown Roofing makes the path from first call to finished roof feel easy.</p>
-      </div>
-      <div class="value-grid">
-        <article class="value-card">
-          <h3>Rapid triage &amp; scheduling</h3>
-          <p>Dedicated call center answers fast and dispatches project managers for same- or next-day inspections.</p>
-          <ul>
-            <li>Text photo uploads and virtual walkthroughs available</li>
-            <li>Calendar confirmation with ETA tracking</li>
-          </ul>
-        </article>
-        <article class="value-card">
-          <h3>Insurance-ready documentation</h3>
-          <p>Detailed condition reports, drone imagery, and Xactimate estimates streamline approvals.</p>
-          <ul>
-            <li>Policy guidance from claim specialists</li>
-            <li>Supplement support until payout is finalized</li>
-          </ul>
-        </article>
-        <article class="value-card">
-          <h3>Guaranteed cleanup &amp; warranties</h3>
-          <p>Crews follow The Klaus Roofing Way™—magnet sweeps, property protection, and 50-year material options.</p>
-          <ul>
-            <li>Owner walk-through before project closeout</li>
-            <li>Transferable warranty packages</li>
-          </ul>
-        </article>
-      </div>
-    </section>
 
     <section class="page-section services" id="services">
       <div class="section-header">
@@ -1185,6 +1364,60 @@
               <li>Three-point inspection after every install</li>
             </ul>
           </div>
+        </article>
+      </div>
+    </section>
+
+
+    <section class="page-section" id="value">
+      <div class="section-header">
+        <h2>Why CT homeowners choose Brown Roofing first.</h2>
+        <p>Connecticut families count on fast answers, transparent pricing, and a crew that treats every home like their own. Brown Roofing makes the path from first call to finished roof feel easy.</p>
+      </div>
+      <div class="value-grid">
+        <article class="value-card">
+          <span class="value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="8"></circle>
+              <path d="M12 8v5l3 2"></path>
+            </svg>
+          </span>
+          <h3>Rapid triage &amp; scheduling</h3>
+          <p>Dedicated call center answers fast and dispatches project managers for same- or next-day inspections.</p>
+          <ul>
+            <li>Text photo uploads and virtual walkthroughs available</li>
+            <li>Calendar confirmation with ETA tracking</li>
+          </ul>
+        </article>
+        <article class="value-card">
+          <span class="value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 3h9l3 3v15H6z"></path>
+              <path d="M9 3v4h5"></path>
+              <path d="M9 12h6"></path>
+              <path d="M9 16h4"></path>
+            </svg>
+          </span>
+          <h3>Insurance-ready documentation</h3>
+          <p>Detailed condition reports, drone imagery, and Xactimate estimates streamline approvals.</p>
+          <ul>
+            <li>Policy guidance from claim specialists</li>
+            <li>Supplement support until payout is finalized</li>
+          </ul>
+        </article>
+        <article class="value-card">
+          <span class="value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l7 3v6c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6z"></path>
+              <path d="M9.5 12.5l2.2 2.1L15 10"></path>
+            </svg>
+          </span>
+          <h3>Guaranteed cleanup &amp; warranties</h3>
+          <p>Crews follow The Klaus Roofing Way™—magnet sweeps, property protection, and 50-year material options.</p>
+          <ul>
+            <li>Owner walk-through before project closeout</li>
+            <li>Transferable warranty packages</li>
+          </ul>
         </article>
       </div>
     </section>
@@ -1261,14 +1494,35 @@
       </div>
       <div class="testimonial-grid">
         <article class="testimonial-card">
+          <div class="review-stars" aria-label="Rated 5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+          </div>
           <p>“Project Manager Bill and his crew handled unexpected rotted decking on our Derby home without missing a beat. They kept us informed the whole day—Brown won’t let you down!”</p>
           <span class="name">Jessica C. • Derby, CT</span>
         </article>
         <article class="testimonial-card">
+          <div class="review-stars" aria-label="Rated 5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+          </div>
           <p>“Inspector Chase worked directly with our adjuster, helped select IKO Nordic shingles, and the installation team delivered a flawless result. Insurance process was painless.”</p>
           <span class="name">Bill &amp; Shirley H. • Oxford, CT</span>
         </article>
         <article class="testimonial-card">
+          <div class="review-stars" aria-label="Rated 5 out of 5 stars">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .72l3.09 6.26 6.91 1.01-5 4.87 1.18 6.88L12 16.9l-6.18 3.24 1.18-6.88-5-4.87 6.91-1.01z"/></svg>
+          </div>
           <p>“Called about broken shingles—Jim matched the material, fixed the leak the same day, and even used spare shingles so the price stayed low. They’ll get every future roofing call.”</p>
           <span class="name">Virginia W. • Sandy Hook, CT</span>
         </article>
@@ -1282,8 +1536,12 @@
       </div>
       <div class="service-area-layout">
         <figure class="service-area-map">
-          <img src="https://cdn.treehouseinternetgroup.com/uploads/service_area_overlays/1253.png" alt="Map of Brown Roofing Connecticut service area">
-          <figcaption>Headquartered in Seymour, crews are dispatched daily across Fairfield, New Haven, and Litchfield Counties.</figcaption>
+          <div id="ctMap" class="leaflet-map" aria-label="Map of Brown Roofing service area"></div>
+          <figcaption class="map-note"><strong>Brown Won't Let You Down:</strong> current appointments span from Stamford up to Torrington. Use the map to explore our daily routes.</figcaption>
+          <div class="map-legend">
+            <span><span class="legend-swatch" style="background:#ec232b"></span>Active crews</span>
+            <span><span class="legend-swatch" style="background:#1f2d3a"></span>Priority response counties</span>
+          </div>
         </figure>
         <div class="county-grid">
           <article class="county-card">
@@ -1327,20 +1585,16 @@
       </div>
       <div class="gallery-grid">
         <figure class="gallery-card">
-          <img src="https://cdn.treehouseinternetgroup.com/uploads/images/145000/large/145823.jpg" alt="New architectural shingle roof installed by Brown Roofing">
-          <figcaption class="gallery-caption">Designer shingle upgrade in Stamford, CT</figcaption>
+          <img src="https://cdn.treehouseinternetgroup.com/uploads/before_after/3850/medium/671a7d72ae3fb_afteroxford.jpeg" alt="Roof Replacement in Oxford - After Photo">
+          <figcaption class="gallery-caption">Oxford, CT • Shadow Brown IKO Dynasty roof</figcaption>
         </figure>
         <figure class="gallery-card">
-          <img src="https://cdn.treehouseinternetgroup.com/uploads/images/205000/large/205835.jpg" alt="Brown Roofing team installing new gutters on a colonial home">
-          <figcaption class="gallery-caption">Seamless gutters &amp; guards in Oxford, CT</figcaption>
+          <img src="https://cdn.treehouseinternetgroup.com/uploads/before_after/3850/medium/67a3dfa271407_67a3dfa27139d.jpg" alt="Saying Goodbye to Moss and Moisture Damage in Naugatuck, CT - After Photo">
+          <figcaption class="gallery-caption">Naugatuck, CT • Moss-free Atlantic Blue refresh</figcaption>
         </figure>
         <figure class="gallery-card">
-          <img src="https://cdn.treehouseinternetgroup.com/uploads/images/175000/large/175260.jpg" alt="Brown Roofing crew replacing a roof with safety harnesses on">
-          <figcaption class="gallery-caption">Full roof replacement in Shelton, CT</figcaption>
-        </figure>
-        <figure class="gallery-card">
-          <img src="https://cdn.treehouseinternetgroup.com/uploads/images/146000/large/146556.jpg" alt="Finished Brown Roofing project showcasing skylights and clean lines">
-          <figcaption class="gallery-caption">Skylight refresh in New Milford, CT</figcaption>
+          <img src="https://cdn.treehouseinternetgroup.com/uploads/before_after/3850/medium/66df1bcbe63a2_brownroofingaftermonroect.jpeg" alt="Full Shingle Roof Replacement Monroe  CT. - After Photo">
+          <figcaption class="gallery-caption">Monroe, CT • Full shingle replacement</figcaption>
         </figure>
       </div>
     </section>
@@ -1424,6 +1678,7 @@
     </div>
   </footer>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
     const navToggle = document.querySelector('.nav-toggle');
     const nav = document.querySelector('nav');
@@ -1439,6 +1694,117 @@
         navToggle.setAttribute('aria-expanded', 'false');
       }
     });
+
+    const leadForm = document.getElementById('leadForm');
+
+    if (leadForm) {
+      const stepElements = Array.from(leadForm.querySelectorAll('[data-step]'));
+      const stepIndicators = Array.from(leadForm.querySelectorAll('[data-step-indicator]'));
+      const nextButtons = Array.from(leadForm.querySelectorAll('[data-next-step]'));
+      const prevButtons = Array.from(leadForm.querySelectorAll('[data-prev-step]'));
+      let currentStepIndex = 0;
+
+      const updateStepIndicators = (activeIndex) => {
+        stepIndicators.forEach((indicator, index) => {
+          const isActive = index === activeIndex;
+          indicator.classList.toggle('is-active', isActive);
+          indicator.classList.toggle('is-complete', index < activeIndex);
+          indicator.setAttribute('aria-current', isActive ? 'step' : 'false');
+        });
+      };
+
+      const showStep = (index, { focus = false } = {}) => {
+        if (!stepElements.length) return;
+        const clampedIndex = Math.max(0, Math.min(index, stepElements.length - 1));
+
+        stepElements.forEach((step, idx) => {
+          const isActive = idx === clampedIndex;
+          step.hidden = !isActive;
+          step.setAttribute('aria-hidden', String(!isActive));
+        });
+
+        updateStepIndicators(clampedIndex);
+        currentStepIndex = clampedIndex;
+
+        if (focus) {
+          const target = stepElements[clampedIndex].querySelector('[data-focus-target]') ||
+            stepElements[clampedIndex].querySelector('input, select, textarea');
+          if (target) {
+            try {
+              target.focus({ preventScroll: true });
+            } catch (error) {
+              target.focus();
+            }
+          }
+        }
+      };
+
+      nextButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          showStep(currentStepIndex + 1, { focus: true });
+        });
+      });
+
+      prevButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          showStep(currentStepIndex - 1, { focus: true });
+        });
+      });
+
+      leadForm.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && currentStepIndex === 0) {
+          event.preventDefault();
+          showStep(currentStepIndex + 1, { focus: true });
+        }
+      });
+
+      showStep(0, { focus: true });
+    }
+
+    const mapElement = document.getElementById('ctMap');
+    if (mapElement) {
+      const ctMap = L.map('ctMap', {
+        scrollWheelZoom: false,
+        tap: false
+      }).setView([41.6, -72.7], 8);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(ctMap);
+
+      const coverage = L.polygon([
+        [41.10, -73.75],
+        [41.20, -73.30],
+        [41.35, -73.00],
+        [41.80, -72.60],
+        [42.00, -72.00],
+        [41.95, -71.80],
+        [41.20, -71.79],
+        [40.98, -73.40]
+      ], {
+        color: '#ec232b',
+        weight: 2,
+        fillColor: '#ec232b',
+        fillOpacity: 0.08
+      }).addTo(ctMap);
+
+      coverage.bindPopup('Daily service coverage across Connecticut & Westchester County');
+
+      const markers = [
+        [41.3083, -72.9279, 'New Haven HQ'],
+        [41.0534, -73.5387, 'Stamford Crew'],
+        [41.5789, -73.4130, 'Torrington Crew']
+      ];
+
+      markers.forEach(([lat, lng, label]) => {
+        L.circleMarker([lat, lng], {
+          radius: 6,
+          color: '#1f2d3a',
+          fillColor: '#1f2d3a',
+          fillOpacity: 0.8
+        }).addTo(ctMap).bindTooltip(label);
+      });
+    }
 
     document.getElementById('currentYear').textContent = new Date().getFullYear();
   </script>
