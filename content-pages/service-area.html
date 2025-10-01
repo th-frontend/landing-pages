@@ -3,529 +3,726 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Service Area – Connecticut & Westchester County</title>
-  <meta name="description" content="Find out if we serve your city. Search by city or ZIP and filter by service." />
+  <title>Service Area – Connecticut &amp; Westchester County</title>
+  <meta name="description" content="Check whether we serve your city in Connecticut or Westchester County, NY." />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
   <style>
-    :root{
-      --bg: #f8fafc;         /* page background */
-      --panel: #ffffff;       /* cards/panels */
-      --muted: #475569;       /* secondary text */
-      --text: #0f172a;        /* primary text */
-      --brand: #0b5bd3;       /* primary blue */
-      --brand-2: #1473e6;     /* blue hover */
-      --ok: #16a34a;          /* success */
-      --warning:#b45309;      /* warning */
-      --radius: 12px;
-      --shadow: 0 10px 24px rgba(2,8,23,.06);
-      --shadow-soft: 0 6px 18px rgba(2,8,23,.05);
-      --gap: clamp(14px, 2.2vw, 22px);
-      --container: min(1100px, 94vw);
-      --border: #e2e8f0;
-      --chip: #f1f5f9;
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --ink: #101828;
+      --muted: #475467;
+      --accent: #d61f2c;
+      --accent-dark: #aa1c23;
+      --brand: #113a6a;
+      --border: #d8dee8;
+      --radius: 16px;
+      --shadow: 0 18px 36px rgba(16, 26, 53, 0.08);
+      --container: min(1100px, 92vw);
     }
-    html,body{height:100%;}
-    body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text); background:var(--bg);
-      letter-spacing:.2px;
+
+    * {
+      box-sizing: border-box;
     }
-    .container{width:var(--container); margin-inline:auto;}
 
-    /* ---------- HERO ---------- */
-    .hero{position:relative; padding: clamp(28px,5vw,54px) 0; background:linear-gradient(180deg, #ffffff 0%, #f5f7fb 100%);} 
-    .hero .shell{display:grid; grid-template-columns: 1.2fr .8fr; gap:var(--gap); align-items:center;}
-    @media (max-width: 900px){ .hero .shell{grid-template-columns:1fr;}}
-    .h1{font-size: clamp(28px, 4.2vw, 44px); line-height:1.1; margin:0 0 10px; color:#0b2149;}
-    .hero p{color:var(--muted); margin:10px 0 20px; font-size:clamp(14px,1.25vw,16px)}
-    .badges{display:flex; gap:10px; flex-wrap:wrap; margin: 10px 0 22px}
-    .badge{background:var(--chip); border:1px solid var(--border); color:#0f172a; padding:8px 10px; border-radius:999px; font-size:13px}
-    .cta-row{display:flex; gap:10px; flex-wrap:wrap}
-    .btn{border:0; padding:12px 16px; border-radius:10px; font-weight:700; cursor:pointer; box-shadow:var(--shadow-soft);}
-    .btn-primary{background:var(--brand); color:#fff}
-    .btn-primary:hover{background:var(--brand-2)}
-    .btn-ghost{background:#ffffff; color:var(--brand); border:1px solid var(--brand)}
-    .hero-card{background:#ffffff; border:1px solid var(--border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow);} 
-    .hero-stat{display:grid; grid-template-columns: auto 1fr; gap:12px; align-items:center; margin: 10px 0}
-    .hero-stat .dot{width:10px; height:10px; border-radius:50%; background:var(--ok)}
+    body {
+      margin: 0;
+      font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
 
-    /* ---------- FINDER BAR ---------- */
-    .finder{position:sticky; top:0; z-index:40; backdrop-filter:saturate(120%) blur(6px); background:#ffffffcc; border-bottom:1px solid var(--border); box-shadow:0 6px 14px rgba(2,8,23,.04);} 
-    .finder .shell{display:grid; grid-template-columns: 1.2fr .9fr .6fr auto; gap:10px; padding:12px 0;}
-    @media (max-width: 900px){ .finder .shell{grid-template-columns:1fr;}}
-    .input, select{width:100%; background:#ffffff; border:1px solid var(--border); color:var(--text); border-radius:10px; padding:12px 14px; font-size:15px}
-    .input:focus, select:focus{outline:2px solid rgba(20,115,230,.25)}
-    .submit{white-space:nowrap}
+    img {
+      max-width: 100%;
+      display: block;
+    }
 
-    /* ---------- LAYOUT: MAP + FILTERS + RESULTS ---------- */
-    .section{padding: clamp(26px, 3.6vw, 40px) 0}
-    .grid{display:grid; grid-template-columns: 320px 1fr; gap:var(--gap)}
-    @media (max-width: 1100px){ .grid{grid-template-columns:1fr;}}
+    a {
+      color: inherit;
+    }
 
-    .panel{background: var(--panel); border:1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow)}
+    .container {
+      width: var(--container);
+      margin-inline: auto;
+    }
 
-    /* Filter panel */
-    .filters{padding:14px}
-    .filters h3{margin:6px 0 10px; font-size:14px; color:#0b2149; letter-spacing:.3px}
-    .chips{display:flex; flex-wrap:wrap; gap:8px}
-    .chip{border:1px solid var(--border); background:var(--chip); padding:8px 10px; border-radius:999px; font-size:13px; cursor:pointer}
-    .chip.is-on{border-color:#bfdbfe; outline:2px solid rgba(20,115,230,.25)}
-    .filters .sep{height:1px; background:var(--border); margin:14px 0}
+    header.page-hero {
+      background: radial-gradient(circle at top left, rgba(214, 31, 44, 0.18), transparent 55%),
+        linear-gradient(180deg, #ffffff 0%, #eef2fb 100%);
+      padding: clamp(40px, 8vw, 80px) 0;
+    }
 
-    /* Map panel */
-    .map{min-height: 420px; border-radius: var(--radius); overflow:hidden; background:#eef4ff}
-    .map .placeholder{display:grid; place-items:center; color:#1e3a8a; height:100%; border:1px dashed #93c5fd}
+    .hero-shell {
+      display: grid;
+      gap: clamp(24px, 4vw, 40px);
+    }
 
-    /* Results */
-    .results-header{display:flex; align-items:center; justify-content:space-between; gap:10px; margin: 0 0 12px}
-    .results-header h2{margin:0; font-size:18px; color:#0b2149}
-    .results-tools{display:flex; gap:8px; align-items:center}
-    .select{background:#ffffff; border:1px solid var(--border); color:var(--text); border-radius:10px; padding:8px 10px;}
+    @media (min-width: 900px) {
+      .hero-shell {
+        grid-template-columns: minmax(0, 1.4fr) minmax(260px, 1fr);
+        align-items: start;
+      }
+    }
 
-    .results{display:grid; grid-template-columns: repeat(3, 1fr); gap:var(--gap)}
-    @media (max-width: 1000px){ .results{grid-template-columns: repeat(2, 1fr);} }
-    @media (max-width: 650px){ .results{grid-template-columns: 1fr;} }
+    .hero-shell h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.08;
+      color: var(--brand);
+    }
 
-    .card{background: #ffffff; border:1px solid var(--border); border-radius: var(--radius); padding:14px; display:flex; flex-direction:column; gap:8px; transition: transform .2s ease, box-shadow .2s ease}
-    .card:hover{transform: translateY(-2px); box-shadow: var(--shadow)}
-    .city{font-weight:700; color:#0b2149}
-    .county{color:var(--muted); font-size:14px}
-    .services{display:flex; flex-wrap:wrap; gap:6px}
-    .tag{background:var(--chip); border:1px solid var(--border); border-radius:999px; padding:6px 8px; font-size:12px}
-    .card .row{display:flex; gap:10px; margin-top:6px}
+    .hero-shell p {
+      margin: 12px 0 24px;
+      color: var(--muted);
+      max-width: 60ch;
+    }
 
-    /* ---------- PROOF SECTION ---------- */
-    .proof{display:grid; grid-template-columns:1fr 1fr; gap:var(--gap)}
-    @media (max-width: 900px){ .proof{grid-template-columns:1fr}}
-    .proof-card{background:#ffffff; border:1px solid var(--border); border-radius:var(--radius); padding:16px}
-    .proof small{color:var(--muted)}
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
 
-    /* ---------- FAQ ---------- */
-    details{background:#ffffff; border:1px solid var(--border); border-radius:var(--radius); padding:14px;}
-    details + details{margin-top:10px}
-    summary{cursor:pointer; font-weight:600}
+    .hero-tags span {
+      background: rgba(16, 58, 106, 0.08);
+      border: 1px solid rgba(16, 58, 106, 0.16);
+      color: var(--brand);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
 
-    /* ---------- FOOTER CTA STRIP ---------- */
-    .cta-strip{position:sticky; bottom:0; z-index:30; background:linear-gradient(90deg, rgba(20,115,230,.08), rgba(11,91,211,.08)); border-top:1px solid var(--border);} 
-    .cta-strip .shell{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 0}
-    .cta-strip strong{font-size:15px}
+    .hero-copy {
+      display: grid;
+      gap: 18px;
+    }
 
-    /* ---------- UTIL ---------- */
-    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
-    .muted{color:var(--muted)}
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero-map-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 3vw, 26px);
+      display: grid;
+      gap: 10px;
+    }
+
+    .hero-map-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hero-map {
+      height: clamp(220px, 30vw, 320px);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(17, 58, 106, 0.18);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 16px 24px rgba(214, 31, 44, 0.18);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+    }
+
+    .btn-ghost {
+      background: #fff;
+      border-color: rgba(16, 58, 106, 0.18);
+      color: var(--brand);
+    }
+
+    .finder {
+      margin-top: clamp(-32px, -5vw, -56px);
+      position: relative;
+      z-index: 5;
+    }
+
+    .finder-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(24px, 4vw, 36px);
+      display: grid;
+      gap: 18px;
+    }
+
+    .finder-card h2 {
+      margin: 0;
+      font-size: clamp(24px, 3.5vw, 32px);
+      color: var(--brand);
+    }
+
+    .finder-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    @media (min-width: 720px) {
+      .finder-form {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        align-items: end;
+      }
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font: inherit;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: rgba(214, 31, 44, 0.4);
+      box-shadow: 0 0 0 4px rgba(214, 31, 44, 0.12);
+    }
+
+    .coverage {
+      padding: clamp(40px, 7vw, 72px) 0;
+    }
+
+    .coverage-grid {
+      display: grid;
+      gap: clamp(24px, 4vw, 36px);
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    @media (min-width: 940px) {
+      .coverage-grid {
+        grid-template-columns: minmax(280px, 340px) minmax(0, 1fr);
+      }
+    }
+
+    .map-card,
+    .list-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 3vw, 28px);
+    }
+
+    #coverageMap {
+      height: 340px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(16, 58, 106, 0.18);
+    }
+
+    .list-header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .list-header p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    details.county {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 14px 18px;
+      font-weight: 700;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    summary::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+    }
+
+    details[open] summary::after {
+      transform: rotate(-135deg);
+    }
+
+    .city-grid {
+      padding: 0 18px 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .city-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    .city-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .city-name {
+      font-weight: 600;
+    }
+
+    .city-services {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .proof {
+      padding: clamp(32px, 6vw, 56px) 0;
+    }
+
+    .proof-grid {
+      display: grid;
+      gap: clamp(18px, 3vw, 28px);
+    }
+
+    @media (min-width: 720px) {
+      .proof-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .proof-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 3vw, 28px);
+    }
+
+    .proof-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .proof-card p {
+      margin: 6px 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .faq {
+      padding: clamp(32px, 6vw, 56px) 0;
+    }
+
+    .faq details {
+      margin-bottom: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .faq summary {
+      padding: 16px 20px;
+    }
+
+    .faq p {
+      padding: 0 20px 18px;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .cta-strip {
+      background: linear-gradient(135deg, var(--brand), #0c223d);
+      color: #fff;
+      padding: clamp(32px, 6vw, 52px) 0;
+    }
+
+    .cta-strip .shell {
+      display: grid;
+      gap: 16px;
+      align-items: center;
+      justify-items: center;
+      text-align: center;
+    }
+
+    @media (min-width: 720px) {
+      .cta-strip .shell {
+        grid-template-columns: 1fr auto;
+        text-align: left;
+        justify-items: start;
+      }
+    }
   </style>
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4WxB6S+qLzzFZ8aN2r1Zx+QvG2ZkG5rYwG8Z7Z1t8M=" crossorigin=""/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <!-- HERO -->
-  <header class="hero">
-    <div class="container shell">
-      <div>
-        <h1 class="h1">We service all of Connecticut & Westchester County, NY</h1>
-        <p>Same-day estimates. Lifetime, transferable warranties. Evening & weekend appointments.</p>
-        <div class="badges">
-          <span class="badge">Licensed & Insured</span>
-          <span class="badge">Financing Available</span>
-          <span class="badge">4.9★ Average Rating</span>
+  <header class="page-hero">
+    <div class="container hero-shell">
+      <div class="hero-copy">
+        <h1>Serving every corner of Connecticut and Westchester County, NY.</h1>
+        <p>Search by city, ZIP, service, or county to see how quickly we can be on site. If you do not see your community listed, give us a call—there is a strong chance we already work there.</p>
+        <div class="hero-tags">
+          <span>Same-week inspections</span>
+          <span>Emergency leak response</span>
+          <span>4.9 out of 5 homeowner reviews</span>
         </div>
-        <div class="cta-row">
-          <a href="#quote" class="btn btn-primary">Get a Free Estimate</a>
-          <a href="#results" class="btn btn-ghost">See Cities We Serve</a>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#finder">Check coverage</a>
+          <a class="btn btn-ghost" href="tel:1-203-723-1372">Call 1-203-723-1372</a>
         </div>
       </div>
-      <aside class="hero-card" aria-label="coverage summary">
-        <div class="hero-stat"><span class="dot" aria-hidden="true"></span><div>
-          <strong>Coverage</strong><br><small class="muted">We service the entire state of Connecticut and all of Westchester County, NY</small>
-        </div></div>
-        <div class="hero-stat"><span class="dot" style="background:var(--brand)" aria-hidden="true"></span><div>
-          <strong>Popular Services</strong><br><small class="muted">Basement Waterproofing • Foundation Repair • Crawl Space Repair • Concrete Leveling</small>
-        </div></div>
+      <aside class="hero-map-card" aria-label="Coverage highlight">
+        <strong style="font-size:1.05rem">Coverage snapshot</strong>
+        <p>Shaded counties show our daily service area across Connecticut and Westchester County, NY.</p>
+        <div class="hero-map" id="heroCoverageMap" role="presentation"></div>
       </aside>
     </div>
   </header>
 
-  <!-- FINDER BAR -->
-  <div class="finder" role="region" aria-label="Service area finder">
-    <div class="container shell">
-      <label class="sr-only" for="q-city">City or ZIP</label>
-      <input class="input" id="q-city" name="q-city" placeholder="Search your city or ZIP…" inputmode="search" autocomplete="postal-code" />
-
-      <label class="sr-only" for="q-service">Service</label>
-      <select id="q-service" class="select" name="q-service">
-        <option value="">All services</option>
-        <option>Basement Waterproofing</option>
-        <option>Foundation Repair</option>
-        <option>Crawl Space Repair</option>
-        <option>Concrete Leveling</option>
-        <option>Basement Finishing</option>
-      </select>
-
-      <label class="sr-only" for="q-county">County</label>
-      <select id="q-county" class="select" name="q-county">
-        <option value="">All counties</option>
-        <option>Fairfield</option>
-        <option>Hartford</option>
-        <option>Litchfield</option>
-        <option>Middlesex</option>
-        <option>New Haven</option>
-        <option>New London</option>
-        <option>Tolland</option>
-        <option>Windham</option>
-        <option>Westchester, NY</option>
-      </select>
-
-      <button class="btn btn-primary submit">Check Availability</button>
-    </div>
-  </div>
-
-  <!-- MAP + FILTERS + RESULTS -->
-  <main class="section container grid" id="results" aria-live="polite" aria-busy="false">
-    <!-- Filters -->
-    <aside class="panel filters" aria-label="Filters">
-      <h3>Filter by Service</h3>
-      <div class="chips">
-        <button class="chip is-on">All</button>
-        <button class="chip">Basement Waterproofing</button>
-        <button class="chip">Foundation Repair</button>
-        <button class="chip">Crawl Space</button>
-        <button class="chip">Concrete</button>
-        <button class="chip">Finishing</button>
-      </div>
-      <div class="sep"></div>
-      <h3>Filter by County</h3>
-      <div class="chips">
-        <button class="chip is-on">All CT</button>
-        <button class="chip">Fairfield</button>
-        <button class="chip">Hartford</button>
-        <button class="chip">Litchfield</button>
-        <button class="chip">Middlesex</button>
-        <button class="chip">New Haven</button>
-        <button class="chip">New London</button>
-        <button class="chip">Tolland</button>
-        <button class="chip">Windham</button>
-        <button class="chip">Westchester, NY</button>
-      </div>
-      <div class="sep"></div>
-      <h3>Sort</h3>
-      <div class="chips">
-        <button class="chip is-on">A → Z</button>
-        <button class="chip">Most Requested</button>
-        <button class="chip">Closest</button>
-      </div>
-    </aside>
-
-    <!-- Map + Results -->
-    <section>
-      <div class="map panel" aria-label="Interactive map">
-        <div id="map" style="height:420px"></div>
-      </div>
-      </div>
-
-      <div class="results-header" style="margin-top:12px">
-        <h2>Cities we serve <span class="muted">(<span id="count">0</span>)</span></h2>
-        <div class="results-tools">
-          <label class="sr-only" for="sort">Sort</label>
-          <select id="sort" class="select"><option>A → Z</option><option>Most requested</option><option>Closest</option></select>
+  <section class="finder" id="finder">
+    <div class="container finder-card" role="search">
+      <h2>Find out if we service your address</h2>
+      <form class="finder-form" id="coverageForm">
+        <div>
+          <label for="cityZip">City or ZIP</label>
+          <input id="cityZip" name="city" placeholder="e.g. Stamford or 06902" inputmode="search" />
         </div>
-      </div>
-
-      <div class="results" id="city-results">
-        <!-- Example card -->
-        <article class="card">
-          <div class="city">Stamford, CT</div>
-          <div class="county">Fairfield County</div>
-          <div class="services">
-            <span class="tag">Waterproofing</span>
-            <span class="tag">Foundation Repair</span>
-            <span class="tag">Concrete Leveling</span>
-          </div>
-          <div class="row">
-            <a class="btn btn-primary" href="#quote">Free Estimate</a>
-            <a class="btn btn-ghost" href="#projects">Local Projects</a>
-          </div>
-        </article>
-        <article class="card">
-          <div class="city">West Hartford, CT</div>
-          <div class="county">Hartford County</div>
-          <div class="services">
-            <span class="tag">Crawl Space</span>
-            <span class="tag">Waterproofing</span>
-          </div>
-          <div class="row">
-            <a class="btn btn-primary" href="#quote">Free Estimate</a>
-            <a class="btn btn-ghost" href="#projects">Local Projects</a>
-          </div>
-        </article>
-        <article class="card">
-          <div class="city">White Plains, NY</div>
-          <div class="county">Westchester County</div>
-          <div class="services">
-            <span class="tag">Foundation Repair</span>
-            <span class="tag">Waterproofing</span>
-            <span class="tag">Concrete</span>
-          </div>
-          <div class="row">
-            <a class="btn btn-primary" href="#quote">Free Estimate</a>
-            <a class="btn btn-ghost" href="#projects">Local Projects</a>
-          </div>
-        </article>
-        <!-- Duplicate the card markup for more cities or render server-side -->
-      </div>
-    </section>
-  </main>
-
-  <!-- PROOF SECTION -->
-  <section class="section container">
-    <div class="proof">
-      <div class="proof-card">
-        <strong>Recent jobs near you</strong>
-        <p class="muted">Norwalk, CT – Sump system & water guard • Aug 23, 2025</p>
-        <p class="muted">Danbury, CT – Foundation piering • Aug 20, 2025</p>
-        <p class="muted">Scarsdale, NY – Concrete leveling • Aug 12, 2025</p>
-      </div>
-      <div class="proof-card">
-        <strong>Reviews from your area</strong>
-        <p>“Incredible crew. Dry basement after the first storm.” <small class="muted">– New Haven, CT</small></p>
-        <p>“Professional, on time, and clean.” <small class="muted">– Greenwich, CT</small></p>
-      </div>
+        <div>
+          <label for="serviceSelect">Service</label>
+          <select id="serviceSelect" name="service">
+            <option value="">All services</option>
+            <option>Basement Waterproofing</option>
+            <option>Foundation Repair</option>
+            <option>Crawl Space Repair</option>
+            <option>Concrete Leveling</option>
+            <option>Basement Finishing</option>
+          </select>
+        </div>
+        <div>
+          <label for="countySelect">County</label>
+          <select id="countySelect" name="county">
+            <option value="">All counties</option>
+            <option>Fairfield</option>
+            <option>Hartford</option>
+            <option>Litchfield</option>
+            <option>Middlesex</option>
+            <option>New Haven</option>
+            <option>New London</option>
+            <option>Tolland</option>
+            <option>Windham</option>
+            <option>Westchester</option>
+          </select>
+        </div>
+        <div>
+          <button class="btn btn-primary" type="submit">Show matches</button>
+        </div>
+      </form>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="section container" aria-label="FAQ">
-    <details>
-      <summary>Do you service my town?</summary>
-      <p class="muted">We service every city and town in Connecticut plus Westchester County, NY. Use the search bar to confirm and book an appointment.</p>
-    </details>
-    <details>
-      <summary>Do you offer emergency service?</summary>
-      <p class="muted">Emergency availability may be limited to existing waterproofing customers. Please call to confirm current availability.</p>
-    </details>
-    <details>
-      <summary>What services are available in Westchester County?</summary>
-      <p class="muted">Basement waterproofing, foundation repair, crawl space repair, and concrete leveling are available throughout Westchester County, NY.</p>
-    </details>
+  <section class="coverage" aria-label="Coverage map and city list">
+    <div class="container coverage-grid">
+      <aside class="map-card">
+        <h2 style="margin-top:0">Coverage map</h2>
+        <p style="color:var(--muted); margin-top:6px">Explore a live view of recent service appointments across Connecticut and Westchester County.</p>
+        <div id="coverageMap" role="presentation"></div>
+      </aside>
+
+      <section class="list-card" aria-live="polite">
+        <div class="list-header">
+          <h2 style="margin:0">Cities we serve</h2>
+          <p><span id="resultCount">0</span> communities match your filters.</p>
+        </div>
+        <div id="countyList"></div>
+      </section>
+    </div>
   </section>
 
-  <!-- FOOTER CTA STRIP -->
-  <div class="cta-strip" role="region" aria-label="Book estimate">
+  <section class="proof">
+    <div class="container proof-grid">
+      <article class="proof-card">
+        <h3>Recent jobs nearby</h3>
+        <p>Norwalk, CT • Sump system &amp; WaterGuard • Aug 23, 2025</p>
+        <p>Danbury, CT • Foundation piering • Aug 20, 2025</p>
+        <p>Scarsdale, NY • Concrete leveling • Aug 12, 2025</p>
+      </article>
+      <article class="proof-card">
+        <h3>Reviews from Connecticut homeowners</h3>
+        <p>“Incredible crew. Dry basement after the first storm.” <br /><small style="color:var(--muted)">– New Haven, CT</small></p>
+        <p>“Professional, on time, and clean.” <br /><small style="color:var(--muted)">– Greenwich, CT</small></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="faq" aria-label="Frequently asked questions">
+    <div class="container">
+      <details open>
+        <summary>Do you service my town?</summary>
+        <p>Yes. We cover every city and town in Connecticut along with all of Westchester County, NY. Use the search form above to confirm and schedule.</p>
+      </details>
+      <details>
+        <summary>What services are available?</summary>
+        <p>Basement waterproofing, foundation repair, crawl space repair, concrete leveling, and basement finishing. Availability may vary by project type—call us for specifics.</p>
+      </details>
+      <details>
+        <summary>How soon can you visit?</summary>
+        <p>Most inspections are scheduled within the same week. Emergency requests are prioritised—call for immediate assistance.</p>
+      </details>
+    </div>
+  </section>
+
+  <div class="cta-strip" role="region" aria-label="Book an estimate">
     <div class="container shell">
-      <strong>Evening & weekend appointments available</strong>
-      <div class="cta-row">
-        <a class="btn btn-ghost" href="tel:1-203-405-4120">Call 1‑203‑405‑4120</a>
-        <a class="btn btn-primary" id="quote" href="#">Get a Free Estimate</a>
+      <strong>Evening and weekend appointments available.</strong>
+      <div class="hero-actions">
+        <a class="btn btn-ghost" href="tel:1-203-723-1372">Call 1-203-723-1372</a>
+        <a class="btn btn-primary" href="#finder">Request my free estimate</a>
       </div>
     </div>
   </div>
 
-  <!--
-    IMPLEMENTATION NOTES
-    - Replace Map placeholder with Leaflet; keep fixed min-height to avoid CLS.
-    - Render city cards server-side (PHP) or client-side (JSON). Use URL params to persist filters.
-    - Add GTM dataLayer push on search/filters:
-      dataLayer.push({ event:'serviceArea_search', city, zip, service });
-    - Add JSON-LD with Service + areaServed (CT + US-NY-Westchester) if desired.
-  -->
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
   <script>
-    // --- Mock dataset (replace with server data) ---
-    const CITY_DATA = [
-      // Fairfield County
-      { id: 1, city: 'Stamford', state:'CT', county:'Fairfield', lat:41.0534, lng:-73.5387, services:['Basement Waterproofing','Foundation Repair','Concrete Leveling'] },
-      { id: 2, city: 'Norwalk', state:'CT', county:'Fairfield', lat:41.1177, lng:-73.4079, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id: 3, city: 'Danbury', state:'CT', county:'Fairfield', lat:41.3948, lng:-73.4540, services:['Foundation Repair','Concrete Leveling'] },
-      { id: 4, city: 'Bridgeport', state:'CT', county:'Fairfield', lat:41.1792, lng:-73.1894, services:['Basement Waterproofing','Foundation Repair'] },
-      { id: 5, city: 'Fairfield', state:'CT', county:'Fairfield', lat:41.1408, lng:-73.2640, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id: 6, city: 'Greenwich', state:'CT', county:'Fairfield', lat:41.0262, lng:-73.6282, services:['Basement Waterproofing','Concrete Leveling'] },
-      { id: 7, city: 'Westport', state:'CT', county:'Fairfield', lat:41.1415, lng:-73.3579, services:['Basement Waterproofing','Foundation Repair'] },
-      { id: 8, city: 'Darien', state:'CT', county:'Fairfield', lat:41.0784, lng:-73.4693, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id: 9, city: 'New Canaan', state:'CT', county:'Fairfield', lat:41.1468, lng:-73.4948, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:10, city: 'Trumbull', state:'CT', county:'Fairfield', lat:41.2429, lng:-73.2007, services:['Basement Waterproofing','Concrete Leveling'] },
-      { id:11, city: 'Shelton', state:'CT', county:'Fairfield', lat:41.3165, lng:-73.0932, services:['Foundation Repair','Crawl Space Repair'] },
+    const coverageData = [
+      { id: 1, city: 'Stamford', state: 'CT', county: 'Fairfield', lat: 41.0534, lng: -73.5387, services: ['Basement Waterproofing', 'Foundation Repair', 'Concrete Leveling'] },
+      { id: 2, city: 'Bridgeport', state: 'CT', county: 'Fairfield', lat: 41.1792, lng: -73.1894, services: ['Basement Waterproofing', 'Crawl Space Repair'] },
+      { id: 3, city: 'Norwalk', state: 'CT', county: 'Fairfield', lat: 41.1177, lng: -73.4079, services: ['Basement Waterproofing', 'Foundation Repair'] },
+      { id: 4, city: 'Danbury', state: 'CT', county: 'Fairfield', lat: 41.3948, lng: -73.454, services: ['Foundation Repair', 'Concrete Leveling'] },
+      { id: 5, city: 'Greenwich', state: 'CT', county: 'Fairfield', lat: 41.0262, lng: -73.6282, services: ['Basement Waterproofing', 'Foundation Repair', 'Basement Finishing'] },
+      { id: 6, city: 'New Canaan', state: 'CT', county: 'Fairfield', lat: 41.1468, lng: -73.4948, services: ['Basement Waterproofing', 'Crawl Space Repair'] },
 
-      // Hartford County
-      { id:12, city: 'Hartford', state:'CT', county:'Hartford', lat:41.7658, lng:-72.6734, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:13, city: 'West Hartford', state:'CT', county:'Hartford', lat:41.7620, lng:-72.7420, services:['Crawl Space Repair','Basement Waterproofing'] },
-      { id:14, city: 'East Hartford', state:'CT', county:'Hartford', lat:41.7634, lng:-72.6120, services:['Basement Waterproofing','Concrete Leveling'] },
-      { id:15, city: 'New Britain', state:'CT', county:'Hartford', lat:41.6612, lng:-72.7795, services:['Foundation Repair','Concrete Leveling'] },
-      { id:16, city: 'Bristol', state:'CT', county:'Hartford', lat:41.6718, lng:-72.9493, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id:17, city: 'Manchester', state:'CT', county:'Hartford', lat:41.7759, lng:-72.5215, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:18, city: 'Glastonbury', state:'CT', county:'Hartford', lat:41.7123, lng:-72.6080, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id:19, city: 'Enfield', state:'CT', county:'Hartford', lat:41.9762, lng:-72.5918, services:['Foundation Repair','Concrete Leveling'] },
-      { id:20, city: 'Bloomfield', state:'CT', county:'Hartford', lat:41.8265, lng:-72.7301, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:21, city: 'Windsor', state:'CT', county:'Hartford', lat:41.8526, lng:-72.6437, services:['Basement Waterproofing','Concrete Leveling'] },
+      { id: 7, city: 'Hartford', state: 'CT', county: 'Hartford', lat: 41.7658, lng: -72.6734, services: ['Basement Waterproofing', 'Foundation Repair'] },
+      { id: 8, city: 'West Hartford', state: 'CT', county: 'Hartford', lat: 41.762, lng: -72.742, services: ['Basement Waterproofing', 'Crawl Space Repair'] },
+      { id: 9, city: 'East Hartford', state: 'CT', county: 'Hartford', lat: 41.7634, lng: -72.612, services: ['Foundation Repair', 'Concrete Leveling'] },
+      { id: 10, city: 'New Britain', state: 'CT', county: 'Hartford', lat: 41.6612, lng: -72.7795, services: ['Basement Waterproofing', 'Basement Finishing'] },
+      { id: 11, city: 'Glastonbury', state: 'CT', county: 'Hartford', lat: 41.7123, lng: -72.608, services: ['Basement Waterproofing', 'Crawl Space Repair'] },
+      { id: 12, city: 'Manchester', state: 'CT', county: 'Hartford', lat: 41.7759, lng: -72.5215, services: ['Foundation Repair', 'Concrete Leveling'] },
 
-      // New Haven County
-      { id:22, city: 'New Haven', state:'CT', county:'New Haven', lat:41.3083, lng:-72.9279, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:23, city: 'Waterbury', state:'CT', county:'New Haven', lat:41.5582, lng:-73.0515, services:['Foundation Repair','Concrete Leveling'] },
-      { id:24, city: 'Milford', state:'CT', county:'New Haven', lat:41.2307, lng:-73.0640, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id:25, city: 'West Haven', state:'CT', county:'New Haven', lat:41.2707, lng:-72.9460, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:26, city: 'Hamden', state:'CT', county:'New Haven', lat:41.3959, lng:-72.8968, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id:27, city: 'Meriden', state:'CT', county:'New Haven', lat:41.5382, lng:-72.8070, services:['Foundation Repair','Concrete Leveling'] },
-      { id:28, city: 'Wallingford', state:'CT', county:'New Haven', lat:41.4570, lng:-72.8231, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id: 13, city: 'Waterbury', state: 'CT', county: 'New Haven', lat: 41.5582, lng: -73.0515, services: ['Foundation Repair', 'Concrete Leveling'] },
+      { id: 14, city: 'New Haven', state: 'CT', county: 'New Haven', lat: 41.3083, lng: -72.9279, services: ['Basement Waterproofing', 'Foundation Repair'] },
+      { id: 15, city: 'Milford', state: 'CT', county: 'New Haven', lat: 41.2307, lng: -73.064, services: ['Basement Waterproofing', 'Crawl Space Repair'] },
+      { id: 16, city: 'Hamden', state: 'CT', county: 'New Haven', lat: 41.3959, lng: -72.8968, services: ['Basement Waterproofing', 'Crawl Space Repair'] },
+      { id: 17, city: 'Meriden', state: 'CT', county: 'New Haven', lat: 41.5382, lng: -72.807, services: ['Foundation Repair', 'Concrete Leveling'] },
+      { id: 18, city: 'West Haven', state: 'CT', county: 'New Haven', lat: 41.2707, lng: -72.946, services: ['Basement Waterproofing', 'Foundation Repair'] },
 
-      // Middlesex County
-      { id:29, city: 'Middletown', state:'CT', county:'Middlesex', lat:41.5623, lng:-72.6506, services:['Basement Waterproofing','Crawl Space Repair','Concrete Leveling'] },
-      { id:30, city: 'Cromwell', state:'CT', county:'Middlesex', lat:41.5951, lng:-72.6454, services:['Foundation Repair','Concrete Leveling'] },
-      { id:31, city: 'Old Saybrook', state:'CT', county:'Middlesex', lat:41.2915, lng:-72.3762, services:['Basement Waterproofing','Crawl Space Repair'] },
+      { id: 19, city: 'Middletown', state: 'CT', county: 'Middlesex', lat: 41.5623, lng: -72.6506, services: ['Basement Waterproofing', 'Crawl Space Repair', 'Concrete Leveling'] },
+      { id: 20, city: 'Cromwell', state: 'CT', county: 'Middlesex', lat: 41.5951, lng: -72.6454, services: ['Foundation Repair', 'Concrete Leveling'] },
+      { id: 21, city: 'Old Saybrook', state: 'CT', county: 'Middlesex', lat: 41.2915, lng: -72.3762, services: ['Basement Waterproofing', 'Crawl Space Repair'] },
 
-      // New London County
-      { id:32, city: 'New London', state:'CT', county:'New London', lat:41.3557, lng:-72.0995, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:33, city: 'Norwich', state:'CT', county:'New London', lat:41.5243, lng:-72.0759, services:['Foundation Repair','Concrete Leveling'] },
-      { id:34, city: 'Groton', state:'CT', county:'New London', lat:41.3501, lng:-72.0782, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id:35, city: 'Waterford', state:'CT', county:'New London', lat:41.3418, lng:-72.1356, services:['Basement Waterproofing','Foundation Repair'] },
+      { id: 22, city: 'New London', state: 'CT', county: 'New London', lat: 41.3557, lng: -72.0995, services: ['Basement Waterproofing', 'Foundation Repair'] },
+      { id: 23, city: 'Norwich', state: 'CT', county: 'New London', lat: 41.5243, lng: -72.0759, services: ['Foundation Repair', 'Concrete Leveling'] },
+      { id: 24, city: 'Groton', state: 'CT', county: 'New London', lat: 41.3501, lng: -72.0782, services: ['Basement Waterproofing', 'Crawl Space Repair'] },
+      { id: 25, city: 'Waterford', state: 'CT', county: 'New London', lat: 41.3418, lng: -72.1356, services: ['Basement Waterproofing', 'Foundation Repair'] },
 
-      // Litchfield County
-      { id:36, city: 'Torrington', state:'CT', county:'Litchfield', lat:41.8007, lng:-73.1212, services:['Foundation Repair','Concrete Leveling'] },
-      { id:37, city: 'New Milford', state:'CT', county:'Litchfield', lat:41.5770, lng:-73.4085, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id:38, city: 'Litchfield', state:'CT', county:'Litchfield', lat:41.7473, lng:-73.1887, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:39, city: 'Thomaston', state:'CT', county:'Litchfield', lat:41.6737, lng:-73.0743, services:['Foundation Repair','Concrete Leveling'] },
+      { id: 26, city: 'Torrington', state: 'CT', county: 'Litchfield', lat: 41.8007, lng: -73.1212, services: ['Foundation Repair', 'Concrete Leveling'] },
+      { id: 27, city: 'New Milford', state: 'CT', county: 'Litchfield', lat: 41.577, lng: -73.4085, services: ['Basement Waterproofing', 'Crawl Space Repair'] },
+      { id: 28, city: 'Litchfield', state: 'CT', county: 'Litchfield', lat: 41.7473, lng: -73.1887, services: ['Basement Waterproofing', 'Foundation Repair'] },
+      { id: 29, city: 'Thomaston', state: 'CT', county: 'Litchfield', lat: 41.6737, lng: -73.0743, services: ['Foundation Repair', 'Concrete Leveling'] },
 
-      // Tolland County
-      { id:40, city: 'Vernon', state:'CT', county:'Tolland', lat:41.8665, lng:-72.4495, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:41, city: 'Tolland', state:'CT', county:'Tolland', lat:41.8715, lng:-72.3687, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id:42, city: 'Ellington', state:'CT', county:'Tolland', lat:41.9037, lng:-72.4698, services:['Foundation Repair','Concrete Leveling'] },
+      { id: 30, city: 'Vernon', state: 'CT', county: 'Tolland', lat: 41.8665, lng: -72.4495, services: ['Basement Waterproofing', 'Foundation Repair'] },
+      { id: 31, city: 'Tolland', state: 'CT', county: 'Tolland', lat: 41.8715, lng: -72.3687, services: ['Basement Waterproofing', 'Crawl Space Repair'] },
+      { id: 32, city: 'Ellington', state: 'CT', county: 'Tolland', lat: 41.9037, lng: -72.4698, services: ['Foundation Repair', 'Concrete Leveling'] },
 
-      // Windham County
-      { id:43, city: 'Windham', state:'CT', county:'Windham', lat:41.6998, lng:-72.1570, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:44, city: 'Putnam', state:'CT', county:'Windham', lat:41.9151, lng:-71.9087, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id:45, city: 'Killingly', state:'CT', county:'Windham', lat:41.8415, lng:-71.8870, services:['Foundation Repair','Concrete Leveling'] },
+      { id: 33, city: 'Windham', state: 'CT', county: 'Windham', lat: 41.6998, lng: -72.157, services: ['Basement Waterproofing', 'Foundation Repair'] },
+      { id: 34, city: 'Putnam', state: 'CT', county: 'Windham', lat: 41.9151, lng: -71.9087, services: ['Basement Waterproofing', 'Crawl Space Repair'] },
+      { id: 35, city: 'Killingly', state: 'CT', county: 'Windham', lat: 41.8415, lng: -71.887, services: ['Foundation Repair', 'Concrete Leveling'] },
 
-      // Westchester County, NY
-      { id:46, city: 'White Plains', state:'NY', county:'Westchester', lat:41.0330, lng:-73.7629, services:['Foundation Repair','Concrete Leveling','Basement Waterproofing'] },
-      { id:47, city: 'Yonkers', state:'NY', county:'Westchester', lat:40.9312, lng:-73.8988, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:48, city: 'New Rochelle', state:'NY', county:'Westchester', lat:40.9115, lng:-73.7824, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id:49, city: 'Mount Vernon', state:'NY', county:'Westchester', lat:40.9126, lng:-73.8371, services:['Foundation Repair','Concrete Leveling'] },
-      { id:50, city: 'Port Chester', state:'NY', county:'Westchester', lat:41.0018, lng:-73.6657, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:51, city: 'Rye', state:'NY', county:'Westchester', lat:40.9807, lng:-73.6837, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id:52, city: 'Scarsdale', state:'NY', county:'Westchester', lat:40.9884, lng:-73.7970, services:['Basement Waterproofing','Foundation Repair'] },
-      { id:53, city: 'Mamaroneck', state:'NY', county:'Westchester', lat:40.9487, lng:-73.7325, services:['Basement Waterproofing','Concrete Leveling'] },
-      { id:54, city: 'Ossining', state:'NY', county:'Westchester', lat:41.1629, lng:-73.8615, services:['Foundation Repair','Concrete Leveling'] },
-      { id:55, city: 'Peekskill', state:'NY', county:'Westchester', lat:41.2901, lng:-73.9204, services:['Basement Waterproofing','Crawl Space Repair'] },
-      { id:56, city: 'Tarrytown', state:'NY', county:'Westchester', lat:41.0762, lng:-73.8585, services:['Basement Waterproofing','Foundation Repair'] }
+      { id: 36, city: 'White Plains', state: 'NY', county: 'Westchester', lat: 41.033, lng: -73.7629, services: ['Foundation Repair', 'Concrete Leveling', 'Basement Waterproofing'] },
+      { id: 37, city: 'Yonkers', state: 'NY', county: 'Westchester', lat: 40.9312, lng: -73.8988, services: ['Basement Waterproofing', 'Foundation Repair'] },
+      { id: 38, city: 'New Rochelle', state: 'NY', county: 'Westchester', lat: 40.9115, lng: -73.7824, services: ['Basement Waterproofing', 'Crawl Space Repair'] },
+      { id: 39, city: 'Mount Vernon', state: 'NY', county: 'Westchester', lat: 40.9126, lng: -73.8371, services: ['Foundation Repair', 'Concrete Leveling'] },
+      { id: 40, city: 'Port Chester', state: 'NY', county: 'Westchester', lat: 41.0018, lng: -73.6657, services: ['Basement Waterproofing', 'Foundation Repair'] }
     ];
 
-    // --- Map setup ---
-    const map = L.map('map', { scrollWheelZoom: false });
-    const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    const countyListEl = document.getElementById('countyList');
+    const resultCountEl = document.getElementById('resultCount');
+    const form = document.getElementById('coverageForm');
 
-    const markers = L.layerGroup().addTo(map);
+    const ctBounds = [[40.98, -73.73], [42.05, -71.78]];
+    const westchesterBounds = [[40.88, -74.1], [41.37, -73.3]];
+    const coverageBounds = L.latLngBounds(ctBounds[0], ctBounds[1]).extend(westchesterBounds[0]).extend(westchesterBounds[1]);
 
-    // Fit map to CT + Westchester bounds
-    const bounds = L.latLngBounds([
-      [40.9, -74.1], // SW (near NYC)
-      [42.05, -71.6] // NE (CT/MA/RI)
-    ]);
-    map.fitBounds(bounds, { padding: [10,10] });
+    const heroMap = L.map('heroCoverageMap', {
+      scrollWheelZoom: false,
+      dragging: false,
+      tap: false,
+      doubleClickZoom: false,
+      boxZoom: false,
+      keyboard: false
+    });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(heroMap);
+    L.rectangle(ctBounds, {
+      color: '#d61f2c',
+      weight: 1.5,
+      fillColor: '#d61f2c',
+      fillOpacity: 0.08
+    }).addTo(heroMap);
+    L.rectangle(westchesterBounds, {
+      color: '#d61f2c',
+      weight: 1.2,
+      dashArray: '6',
+      fillColor: '#d61f2c',
+      fillOpacity: 0.06
+    }).addTo(heroMap);
+    heroMap.fitBounds(coverageBounds, { padding: [12, 12] });
 
-    // --- DOM refs ---
-    const elCity = document.getElementById('q-city');
-    const elService = document.getElementById('q-service');
-    const elCounty = document.getElementById('q-county');
-    const elSubmit = document.querySelector('.finder .submit');
-    const resultsWrap = document.getElementById('city-results');
+    const resultsMap = L.map('coverageMap', { scrollWheelZoom: false, tap: false }).setView([41.5, -72.7], 8);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(resultsMap);
+    const markerGroup = L.layerGroup().addTo(resultsMap);
 
-    // Utility: normalize text
-    const norm = s => (s||'').toString().toLowerCase();
+    function groupCities(data) {
+      return data.reduce((acc, item) => {
+        const key = item.county;
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(item);
+        return acc;
+      }, {});
+    }
 
-    // Debounce
-    function debounce(fn, ms=200){ let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn.apply(this,args), ms); }; }
+    function renderList(data) {
+      countyListEl.innerHTML = '';
+      const grouped = groupCities(data);
+      const counties = Object.keys(grouped).sort();
+      resultCountEl.textContent = data.length;
 
-    // Render markers + cards
-    function render(){
-      const q = norm(elCity.value);
-      const service = elService.value;
-      let county = elCounty.value;
-      if(county === 'All counties') county = '';
-
-      const filtered = CITY_DATA.filter(r=>{
-        const matchesText = !q || norm(r.city).includes(q) || (r.state && norm(r.state).includes(q));
-        const matchesService = !service || r.services.includes(service);
-        const matchesCounty = !county || norm(r.county) === norm(county.replace(', NY',''));
-        return matchesText && matchesService && matchesCounty;
-      });
-
-      // Update markers
-      markers.clearLayers();
-      filtered.forEach(r=>{
-        const m = L.marker([r.lat, r.lng]).bindPopup(`
-          <strong>${r.city}, ${r.state}</strong><br/>
-          <small>${r.county} County</small><br/>
-          <div style="margin-top:6px">
-            ${r.services.map(s=>`<span style=\"display:inline-block;border:1px solid #e2e8f0;background:#f8fafc;border-radius:999px;padding:2px 6px;margin:2px;font-size:11px\">${s}</span>`).join(' ')}
-          </div>
-          <a href="#quote" style="display:inline-block;margin-top:8px;background:#0b5bd3;color:#fff;padding:6px 10px;border-radius:8px;text-decoration:none;font-weight:700">Free Estimate</a>
-        `);
-        markers.addLayer(m);
-      });
-
-      // Fit bounds to filtered markers (if any)
-      if(filtered.length){
-        const b = L.latLngBounds(filtered.map(r=>[r.lat, r.lng]));
-        map.fitBounds(b.pad(0.2));
-      } else {
-        map.fitBounds(bounds);
+      if (data.length === 0) {
+        const empty = document.createElement('p');
+        empty.style.color = 'var(--muted)';
+        empty.textContent = 'No matching cities. Try a different search or call us directly.';
+        countyListEl.append(empty);
+        return;
       }
 
-      // Update results list
-      resultsWrap.innerHTML = filtered.map(r=>{
-        const tags = r.services.map(s=>`<span class=\"tag\">${s.includes('Basement')? 'Waterproofing' : s}</span>`).join('');
-        return `
-          <article class=\"card\">
-            <div class=\"city\">${r.city}, ${r.state}</div>
-            <div class=\"county\">${r.county} County</div>
-            <div class=\"services\">${tags}</div>
-            <div class=\"row\">
-              <a class=\"btn btn-primary\" href=\"#quote\">Free Estimate</a>
-              <a class=\"btn btn-ghost\" href=\"#projects\">Local Projects</a>
-            </div>
-          </article>`;
-      }).join('');
+      counties.forEach(county => {
+        const details = document.createElement('details');
+        details.className = 'county';
+        details.open = counties.length <= 3;
 
-      // Update count
-      const countEl = document.getElementById('count');
-      if(countEl) countEl.textContent = filtered.length.toString();
+        const summary = document.createElement('summary');
+        summary.textContent = `${county} County (${grouped[county].length})`;
+        details.append(summary);
 
-      // Analytics hook
-      if(window.dataLayer){
-        window.dataLayer.push({
-          event:'serviceArea_filter',
-          value:{ query:q, service, county }
-        });
+        const cityGrid = document.createElement('div');
+        cityGrid.className = 'city-grid';
+
+        grouped[county]
+          .sort((a, b) => a.city.localeCompare(b.city))
+          .forEach(city => {
+            const row = document.createElement('div');
+            row.className = 'city-row';
+
+            const name = document.createElement('div');
+            name.className = 'city-name';
+            name.textContent = `${city.city}, ${city.state}`;
+            row.append(name);
+
+            const services = document.createElement('div');
+            services.className = 'city-services';
+            services.textContent = city.services.join(', ');
+            row.append(services);
+
+            cityGrid.append(row);
+          });
+
+        details.append(cityGrid);
+        countyListEl.append(details);
+      });
+    }
+
+    function applyFilters(event) {
+      if (event) event.preventDefault();
+      const search = (form.city.value || '').trim().toLowerCase();
+      const service = form.service.value || '';
+      const county = form.county.value || '';
+
+      const filtered = coverageData.filter(item => {
+        const matchesSearch = !search || `${item.city} ${item.state}`.toLowerCase().includes(search);
+        const matchesService = !service || item.services.includes(service);
+        const matchesCounty = !county || item.county.toLowerCase() === county.toLowerCase();
+        return matchesSearch && matchesService && matchesCounty;
+      });
+
+      renderList(filtered);
+      updateMap(filtered);
+    }
+
+    form.addEventListener('submit', applyFilters);
+    form.city.addEventListener('input', () => applyFilters());
+    form.service.addEventListener('change', applyFilters);
+    form.county.addEventListener('change', applyFilters);
+
+    function updateMap(data) {
+      markerGroup.clearLayers();
+
+      if (!data.length) {
+        resultsMap.fitBounds(coverageBounds, { padding: [24, 24] });
+        return;
+      }
+
+      data.forEach(item => {
+        if (typeof item.lat !== 'number' || typeof item.lng !== 'number') return;
+        const marker = L.marker([item.lat, item.lng]);
+        marker.bindPopup(`<strong>${item.city}, ${item.state}</strong><br>${item.services.join(', ')}`);
+        markerGroup.addLayer(marker);
+      });
+
+      if (markerGroup.getLayers().length) {
+        resultsMap.fitBounds(markerGroup.getBounds().extend(coverageBounds), { padding: [24, 24] });
       }
     }
 
-    // Wire up finder bar
-    const run = ()=>render();
-    elService.addEventListener('change', run);
-    elCounty.addEventListener('change', run);
-    elCity.addEventListener('input', debounce(run, 250));
-    elSubmit.addEventListener('click', (e)=>{ e.preventDefault(); render(); });
-
-    // Wire up chip filters to reflect into selects
-    document.querySelectorAll('.filters .chip').forEach(chip=>{
-      chip.addEventListener('click', ()=>{
-        const label = chip.textContent.trim();
-        // Toggle UI state
-        const siblings = chip.parentElement.querySelectorAll('.chip');
-        siblings.forEach(c=>c.classList.remove('is-on'));
-        chip.classList.add('is-on');
-        // Map label to select
-        if(['Basement Waterproofing','Foundation Repair','Crawl Space','Concrete','Finishing','All'].includes(label)){
-          elService.value = label === 'All' ? '' : (label === 'Crawl Space' ? 'Crawl Space Repair' : (label === 'Concrete' ? 'Concrete Leveling' : (label === 'Finishing' ? 'Basement Finishing' : label)));
-        }
-        if(['All CT','Fairfield','Hartford','Litchfield','Middlesex','New Haven','New London','Tolland','Windham','Westchester, NY'].includes(label)){
-          elCounty.value = label === 'All CT' ? '' : label;
-        }
-        render();
-      });
-    });
-
-    // Initial render
-    render();
+    renderList(coverageData);
+    updateMap(coverageData);
   </script>
 </body>
 </html>
