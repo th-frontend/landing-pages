@@ -227,14 +227,12 @@
       grid-template-columns: minmax(0, 1fr);
     }
 
-    @media (min-width: 940px) {
-      .coverage-grid {
-        grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
-      }
+    .coverage-body {
+      display: grid;
+      gap: clamp(24px, 4vw, 32px);
     }
 
-    .list-card,
-    .showcase-card {
+    .list-card {
       background: var(--surface);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -242,9 +240,27 @@
     }
 
     .showcase-card {
+      margin-top: clamp(24px, 4vw, 32px);
+      padding-top: clamp(16px, 3vw, 24px);
+      border-top: 1px solid var(--border);
       display: grid;
       gap: 14px;
       align-content: start;
+    }
+
+    @media (min-width: 940px) {
+      .coverage-body {
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+        align-items: start;
+      }
+
+      .showcase-card {
+        margin-top: 0;
+        padding-top: 0;
+        padding-left: clamp(20px, 3vw, 28px);
+        border-top: 0;
+        border-left: 1px solid var(--border);
+      }
     }
 
     .showcase-card[hidden] {
@@ -427,35 +443,6 @@
       font-size: 1.05rem;
     }
 
-    .city-flagship {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(214, 31, 44, 0.12);
-      color: var(--accent);
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-    }
-
-    .city-services {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .service-tag {
-      background: rgba(17, 58, 106, 0.08);
-      color: var(--brand);
-      padding: 4px 8px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      line-height: 1.2;
-    }
-
     .city-meta {
       display: grid;
       gap: 6px;
@@ -479,27 +466,6 @@
       font-weight: 700;
       color: var(--accent);
       font-size: 0.85rem;
-    }
-
-    .county-summary {
-      padding: 12px 18px 0;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    .county-summary strong {
-      color: var(--brand);
-    }
-
-    .county-summary a {
-      color: var(--accent);
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .county-summary a:hover,
-    .county-summary a:focus-visible {
-      text-decoration: underline;
     }
 
     .why {
@@ -556,42 +522,6 @@
       font-size: 0.9rem;
     }
 
-    .services {
-      padding: clamp(32px, 6vw, 64px) 0;
-    }
-
-    .services-grid {
-      display: grid;
-      gap: clamp(16px, 3vw, 22px);
-    }
-
-    @media (min-width: 720px) {
-      .services-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      }
-    }
-
-    .service-card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: clamp(18px, 3vw, 24px);
-      display: grid;
-      gap: 10px;
-    }
-
-    .service-card h3 {
-      margin: 0;
-      font-size: 1.05rem;
-      color: var(--brand);
-    }
-
-    .service-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
     .section-head {
       display: grid;
       gap: 10px;
@@ -610,39 +540,6 @@
       color: var(--muted);
       max-width: 62ch;
       justify-self: center;
-    }
-
-    .proof {
-      padding: clamp(32px, 6vw, 56px) 0;
-    }
-
-    .proof-grid {
-      display: grid;
-      gap: clamp(18px, 3vw, 28px);
-    }
-
-    @media (min-width: 720px) {
-      .proof-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .proof-card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: clamp(20px, 3vw, 28px);
-    }
-
-    .proof-card h3 {
-      margin: 0 0 10px;
-      font-size: 1.2rem;
-    }
-
-    .proof-card p {
-      margin: 6px 0;
-      color: var(--muted);
-      font-size: 0.95rem;
     }
 
     .faq {
@@ -765,23 +662,31 @@
           <h2 style="margin:0">Cities we serve</h2>
           <p><span id="resultCount">0</span> communities match your filters.</p>
         </div>
-        <div id="countyList"></div>
-      </section>
-      <aside class="showcase-card" id="searchShowcase" aria-live="polite" hidden>
-        <div class="showcase-header">
-          <h2>Project highlights</h2>
-          <p>Enter a city or ZIP to see reviews and recent projects in your area.</p>
+        <div class="coverage-body">
+          <div id="countyList"></div>
+          <aside class="showcase-card" id="searchShowcase" aria-live="polite">
+            <div class="showcase-header">
+              <h2>Project highlights near you</h2>
+              <p>See how homeowners across Connecticut and Westchester County protect basements, crawl spaces, and foundations.</p>
+            </div>
+            <div class="showcase-media" id="showcaseMedia">
+              <img src="https://cdn.treehouseinternetgroup.com/cms_images/7/customer-handshake.jpg" alt="Connecticut Basement Systems inspector meeting with a homeowner" loading="lazy" />
+            </div>
+            <ul class="showcase-list" id="showcaseList">
+              <li><strong>Review</strong><a href="https://www.connecticutbasementsystems.com/about-us/reviews.html" target="_blank" rel="noopener">4.9/5 average rating from Connecticut &amp; Westchester homeowners.</a></li>
+              <li><strong>Project</strong><a href="https://www.connecticutbasementsystems.com/about-us/photo-gallery.html" target="_blank" rel="noopener">Browse regional waterproofing, foundation, and crawl space projects.</a></li>
+              <li><strong>Before &amp; After</strong><a href="https://www.connecticutbasementsystems.com/about-us/before-after.html" target="_blank" rel="noopener">See transformations from across our service area.</a></li>
+            </ul>
+            <a class="showcase-cta" id="showcaseLink" href="https://www.connecticutbasementsystems.com/about-us/photo-gallery.html" rel="noopener" target="_blank">
+              <span class="showcase-cta-label">Explore all reviews &amp; galleries</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 17l9.2-9.2"></path>
+                <path d="M9 7h7v7"></path>
+              </svg>
+            </a>
+          </aside>
         </div>
-        <div class="showcase-media" id="showcaseMedia"></div>
-        <ul class="showcase-list" id="showcaseList"></ul>
-        <a class="showcase-cta" id="showcaseLink" href="#" rel="noopener" target="_blank" hidden>
-          <span class="showcase-cta-label">View more on ConnecticutBasementSystems.com</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M7 17l9.2-9.2"></path>
-            <path d="M9 7h7v7"></path>
-          </svg>
-        </a>
-      </aside>
+      </section>
     </div>
   </section>
 
@@ -826,53 +731,6 @@
           <p>Teams are staged in every county we serve, so travel time is short and repeat visits are easy.</p>
         </article>
       </div>
-    </div>
-  </section>
-
-  <section class="services" aria-label="Featured services">
-    <div class="container">
-      <div class="section-head">
-        <h2>Services across Connecticut &amp; Westchester</h2>
-        <p>Every installation crew brings purpose-built tools and materials for the project type you choose.</p>
-      </div>
-      <div class="services-grid">
-        <article class="service-card">
-          <h3>Basement Waterproofing</h3>
-          <p>Interior drains, sump systems, and moisture control keep your basement dry after every storm.</p>
-        </article>
-        <article class="service-card">
-          <h3>Foundation Repair</h3>
-          <p>Piers, wall bracing, and structural reinforcements stabilise settling homes and stop new cracks.</p>
-        </article>
-        <article class="service-card">
-          <h3>Crawl Space Repair</h3>
-          <p>Encapsulation, drainage, and support jacks protect air quality and the structure above.</p>
-        </article>
-        <article class="service-card">
-          <h3>Concrete Leveling</h3>
-          <p>Lightweight polyurethane lifting levels sidewalks, slabs, and pool decks without downtime.</p>
-        </article>
-        <article class="service-card">
-          <h3>Basement Finishing</h3>
-          <p>Waterproof wall, floor, and ceiling systems transform basements into healthy living space.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="proof">
-    <div class="container proof-grid">
-      <article class="proof-card">
-        <h3>Recent jobs nearby</h3>
-        <p>Norwalk, CT • Sump system &amp; WaterGuard • Aug 23, 2025</p>
-        <p>Danbury, CT • Foundation piering • Aug 20, 2025</p>
-        <p>Scarsdale, NY • Concrete leveling • Aug 12, 2025</p>
-      </article>
-      <article class="proof-card">
-        <h3>Reviews from Connecticut homeowners</h3>
-        <p>“Incredible crew. Dry basement after the first storm.” <br /><small style="color:var(--muted)">– New Haven, CT</small></p>
-        <p>“Professional, on time, and clean.” <br /><small style="color:var(--muted)">– Greenwich, CT</small></p>
-      </article>
     </div>
   </section>
 
@@ -991,15 +849,16 @@
 
     const showcaseData = new Map([
       ['DEFAULT', {
-        heading: 'Project highlights',
-        summary: 'Enter a city or ZIP to see reviews and recent projects in your area.',
+        heading: 'Project highlights near you',
+        summary: 'See how homeowners across Connecticut and Westchester County protect basements, crawl spaces, and foundations.',
         image: {
           src: 'https://cdn.treehouseinternetgroup.com/cms_images/7/customer-handshake.jpg',
           alt: 'Connecticut Basement Systems inspector meeting with a homeowner'
         },
         bullets: [
-          { type: 'Review', text: '4.9/5 average rating from homeowners across Connecticut and Westchester County.', href: 'https://www.connecticutbasementsystems.com/about-us/reviews.html' },
-          { type: 'Project', text: 'See waterproofing, foundation, and crawl space transformations across the region.', href: 'https://www.connecticutbasementsystems.com/about-us/before-after.html' }
+          { type: 'Review', text: '4.9/5 average rating from Connecticut & Westchester homeowners.', href: 'https://www.connecticutbasementsystems.com/about-us/reviews.html' },
+          { type: 'Project', text: 'Browse waterproofing, foundation, and crawl space galleries across the region.', href: 'https://www.connecticutbasementsystems.com/about-us/photo-gallery.html' },
+          { type: 'Before & After', text: 'See transformations from across our service area.', href: 'https://www.connecticutbasementsystems.com/about-us/before-after.html' }
         ],
         cta: { label: 'Explore all reviews & galleries', href: 'https://www.connecticutbasementsystems.com/about-us/photo-gallery.html' }
       }],
@@ -1208,12 +1067,6 @@
         summary.textContent = `${county} County (${grouped[county].length})`;
         details.append(summary);
 
-        const countySummary = document.createElement('div');
-        countySummary.className = 'county-summary';
-        const topService = getTopCountyService(grouped[county]);
-        countySummary.innerHTML = `<strong>${topService}</strong> is the most-requested service here. Need help fast? <a href="tel:1-203-723-1372">Call 1-203-723-1372</a>.`;
-        details.append(countySummary);
-
         const cityGrid = document.createElement('div');
         cityGrid.className = 'city-grid';
 
@@ -1232,16 +1085,12 @@
               <div class="city-main">
                 <div class="city-heading">
                   <span class="city-name">${city.city}, ${city.state}</span>
-                  ${city.flagshipService ? `<span class="city-flagship">${city.flagshipService}</span>` : ''}
-                </div>
-                <div class="city-services">
-                  ${buildServiceTags(city.services)}
                 </div>
               </div>
               <div class="city-meta">
                 ${city.responseTime ? `<span class="city-response">Typical response: ${city.responseTime}</span>` : ''}
                 ${city.reviewSnippet ? `<span class="city-review">“${city.reviewSnippet}”</span>` : ''}
-                <span class="city-cta">View city page →</span>
+                <span class="city-cta">Learn more about ${city.city} →</span>
               </div>
             `.trim();
 
@@ -1253,25 +1102,15 @@
       });
     }
 
-    function buildServiceTags(services) {
-      return services
-        .map(service => `<span class="service-tag">${service}</span>`)
-        .join('');
-    }
-
-    function getTopCountyService(items) {
-      const counts = items.reduce((acc, city) => {
-        city.services.forEach(service => {
-          acc[service] = (acc[service] || 0) + 1;
-        });
-        return acc;
-      }, {});
-      const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-      return sorted.length ? sorted[0][0] : 'Basement Waterproofing';
-    }
-
     function resetShowcase() {
-      if (!showcaseCard || !showcaseMedia || !showcaseList || !showcaseLink) return;
+      if (!showcaseCard) return;
+      const defaultData = showcaseData.get('DEFAULT');
+      if (defaultData) {
+        renderShowcase(defaultData);
+        return;
+      }
+
+      if (!showcaseMedia || !showcaseList || !showcaseLink) return;
       showcaseMedia.innerHTML = '';
       showcaseMedia.hidden = true;
       showcaseList.innerHTML = '';
@@ -1388,7 +1227,6 @@
       if (!showcaseCard) return;
       const trimmed = (rawSearch || '').trim();
       if (!trimmed) {
-        showcaseCard.hidden = true;
         resetShowcase();
         return;
       }

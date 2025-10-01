@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trenton, NJ Service Area | Quality 1st Basement Systems</title>
+  <meta name="description" content="Quality 1st Basement Systems provides basement waterproofing, foundation repair, concrete leveling, and gutter protection for homeowners in Trenton, NJ." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-navy: #0d2d5c;
+      --brand-navy-dark: #081f40;
+      --brand-blue: #1b5fc6;
+      --brand-red: #c93434;
+      --text-primary: #1d2330;
+      --text-secondary: #4c5362;
+      --surface: #ffffff;
+      --surface-muted: #f1f3f8;
+      --grid-max: 1100px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --space-0: 4px;
+      --space-1: 8px;
+      --space-2: 12px;
+      --space-3: 16px;
+      --space-4: 20px;
+      --space-5: 24px;
+      --space-6: 32px;
+      --space-7: 40px;
+      --space-8: 48px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: #f7f8fc;
+    }
+
+    a {
+      color: var(--brand-blue);
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:focus-visible {
+      text-decoration: underline;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .container {
+      width: min(var(--grid-max), 92vw);
+      margin: 0 auto;
+    }
+
+    header,
+    main,
+    footer {
+      width: 100%;
+    }
+
+    .top-bar {
+      background: var(--brand-navy-dark);
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    .top-bar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-1) 0;
+    }
+
+    .top-bar__cta {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .top-bar__cta a {
+      color: #fff;
+      padding: 6px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+
+    nav.site-nav {
+      background: #fff;
+      border-bottom: 1px solid #dde3ee;
+    }
+
+    .site-nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding: var(--space-4) 0;
+    }
+
+    .site-nav__brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--brand-navy);
+    }
+
+    .site-nav__brand span {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .site-nav__links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .site-nav__cta {
+      padding: 10px 22px;
+      border: 1px solid var(--brand-blue);
+      border-radius: var(--radius-sm);
+      color: var(--brand-blue);
+      font-weight: 600;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, rgba(8, 31, 64, 0.88) 0%, rgba(13, 45, 92, 0.75) 60%),
+                  url("https://cdn.treehouseinternetgroup.com/uploads/images/197000/medium/197639.jpg") center/cover no-repeat;
+      color: #fff;
+    }
+
+    .hero__inner {
+      display: grid;
+      gap: var(--space-6);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      padding: clamp(56px, 12vw, 120px) 0;
+    }
+
+    .hero h1 {
+      margin: 0 0 var(--space-3) 0;
+      font-size: clamp(2.4rem, 5vw, 3.4rem);
+      line-height: 1.1;
+    }
+
+    .hero p {
+      margin: 0 0 var(--space-4) 0;
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .hero__eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: var(--space-2);
+      font-weight: 600;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-4);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-1);
+      padding: 12px 28px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      border: 1px solid transparent;
+      color: #fff;
+      background: var(--brand-blue);
+    }
+
+    .btn--outline {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .hero__stats {
+      display: grid;
+      gap: var(--space-3);
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .hero__stat {
+      display: grid;
+      gap: 2px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .hero__stat strong {
+      font-size: 1.4rem;
+      color: #fff;
+    }
+
+    .contact-pane {
+      background: rgba(12, 31, 66, 0.92);
+      padding: var(--space-5);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius-sm);
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .contact-pane__list {
+      display: grid;
+      gap: var(--space-3);
+      font-size: 0.95rem;
+    }
+
+    .contact-pane__list strong {
+      display: block;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .contact-pane__actions {
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .contact-pane__actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .trust-bar {
+      background: #fff;
+      border-bottom: 1px solid #e2e5ed;
+    }
+
+    .trust-bar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      padding: var(--space-4) 0;
+    }
+
+    .trust-bar__title {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .trust-bar__logos {
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .trust-bar__logos img {
+      height: 44px;
+      filter: grayscale(25%);
+    }
+
+    .intro {
+      background: #fff;
+    }
+
+    .intro__grid {
+      display: grid;
+      gap: var(--space-6);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      padding: clamp(48px, 10vw, 84px) 0;
+    }
+
+    .intro__map iframe {
+      border: 0;
+      width: 100%;
+      height: 360px;
+    }
+
+    .intro__content {
+      display: grid;
+      gap: var(--space-4);
+    }
+
+    .intro__chips {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .intro__chips li {
+      padding: 6px 14px;
+      border: 1px solid #dbe1ef;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .intro__quote {
+      border-left: 2px solid var(--brand-red);
+      padding-left: var(--space-4);
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .project-gallery {
+      background: var(--surface-muted);
+    }
+
+    .project-gallery__inner {
+      padding: clamp(48px, 10vw, 80px) 0;
+      display: grid;
+      gap: var(--space-5);
+    }
+
+    .project-gallery__heading {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .project-gallery__heading span {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .project-gallery__grid {
+      display: grid;
+      gap: var(--space-4);
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .project-gallery figure {
+      margin: 0;
+      display: grid;
+      gap: var(--space-2);
+      background: #fff;
+      border: 1px solid #dbe1ef;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .project-gallery figcaption {
+      padding: var(--space-3);
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .services {
+      background: #fff;
+    }
+
+    .services__inner {
+      padding: clamp(56px, 10vw, 96px) 0;
+      display: grid;
+      gap: var(--space-5);
+    }
+
+    .section-heading {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .section-heading span {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 2.6rem);
+    }
+
+    .services__grid {
+      display: grid;
+      gap: var(--space-4);
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .service-card {
+      border: 1px solid #dbe1ef;
+      border-radius: var(--radius-sm);
+      padding: var(--space-4);
+      display: grid;
+      gap: var(--space-3);
+      background: #fff;
+    }
+
+    .service-card h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      color: var(--brand-navy);
+    }
+
+    .service-card ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      display: grid;
+      gap: var(--space-1);
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .testimonials {
+      background: #0c1e3f;
+      color: #fff;
+    }
+
+    .testimonials__inner {
+      padding: clamp(56px, 12vw, 100px) 0;
+      display: grid;
+      gap: var(--space-5);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      gap: var(--space-4);
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .testimonial-card {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-sm);
+      padding: var(--space-4);
+      display: grid;
+      gap: var(--space-3);
+    }
+
+    .testimonial-card blockquote {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .testimonial-card cite {
+      font-style: normal;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+    }
+
+    .faq {
+      background: #fff;
+    }
+
+    .faq__inner {
+      padding: clamp(52px, 10vw, 92px) 0;
+      display: grid;
+      gap: var(--space-5);
+    }
+
+    .faq-grid {
+      display: grid;
+      gap: var(--space-3);
+    }
+
+    details {
+      border: 1px solid #dbe1ef;
+      border-radius: var(--radius-sm);
+      background: #fff;
+      padding: var(--space-3);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--brand-navy);
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details p {
+      margin: var(--space-2) 0 0 0;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .cta {
+      background: #0d2d5c;
+      color: #fff;
+    }
+
+    .cta__inner {
+      padding: clamp(56px, 10vw, 96px) 0;
+      display: grid;
+      gap: var(--space-4);
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      align-items: center;
+    }
+
+    .cta__actions {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    footer {
+      background: #081d40;
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .footer__inner {
+      padding: clamp(48px, 8vw, 72px) 0;
+      display: grid;
+      gap: var(--space-5);
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    footer h4 {
+      margin: 0 0 var(--space-2) 0;
+      color: #fff;
+    }
+
+    footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: var(--space-2);
+      font-size: 0.95rem;
+    }
+
+    footer a {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .footer-meta {
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+      padding: var(--space-3) 0;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    @media (max-width: 720px) {
+      .site-nav__inner,
+      .top-bar__inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .site-nav__links,
+      .site-nav__cta {
+        width: 100%;
+      }
+
+      .site-nav__links {
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
+
+      .site-nav__links a {
+        padding: 6px 10px;
+        border: 1px solid #e2e5ed;
+        border-radius: var(--radius-sm);
+      }
+
+      .site-nav__cta {
+        text-align: center;
+      }
+
+      .cta__inner,
+      .hero__inner,
+      .intro__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta__actions,
+      .cta-group {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .cta__actions .btn,
+      .cta-group .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="top-bar">
+      <div class="container top-bar__inner">
+        <span>Serving Mercer County, Bucks County, and Central Jersey</span>
+        <div class="top-bar__cta">
+          <a href="tel:18442680860">Call 1-844-268-0860</a>
+          <a href="#estimate">Schedule a free inspection</a>
+        </div>
+      </div>
+    </header>
+
+    <nav class="site-nav">
+      <div class="container site-nav__inner">
+        <a class="site-nav__brand" href="#">
+          <img src="https://cdn.treehouseinternetgroup.com/cms_images/80/Q1BS-Logo.png" alt="Quality 1st Basement Systems" width="154" height="44" />
+          <span>Trenton, NJ</span>
+        </a>
+        <div class="site-nav__links">
+          <a href="#services">Services</a>
+          <a href="#projects">Projects</a>
+          <a href="#faq">FAQs</a>
+        </div>
+        <a class="site-nav__cta" href="#estimate">Get a free estimate</a>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="container hero__inner">
+          <div>
+            <div class="hero__eyebrow">Trenton service specialists</div>
+            <h1>Keep your foundation strong and your basement dry</h1>
+            <p>Quality 1st Basement Systems fixes wet basements, sinking concrete, and foundation settlement throughout Trenton. Local crews, fast scheduling, and proven Basement Systems and Supportworks products keep your home protected in every season.</p>
+            <div class="cta-group">
+              <a class="btn" href="#estimate">Book your free estimate</a>
+              <a class="btn btn--outline" href="tel:18442680860">Talk with a specialist</a>
+            </div>
+            <ul class="hero__stats">
+              <li class="hero__stat">
+                <strong>25+ years</strong>
+                Serving Central and South Jersey homeowners
+              </li>
+              <li class="hero__stat">
+                <strong>1,200 reviews</strong>
+                Average 4.8 out of 5 stars across Google and BBB
+              </li>
+              <li class="hero__stat">
+                <strong>Lifetime coverage</strong>
+                Transferable warranties on waterproofing systems
+              </li>
+            </ul>
+          </div>
+
+          <aside class="contact-pane">
+            <h2>Talk with the Trenton team today</h2>
+            <div class="contact-pane__list">
+              <div>
+                <strong>Local office</strong>
+                359 U.S. 9, Howell Township, NJ 07731
+              </div>
+              <div>
+                <strong>Office hours</strong>
+                Monday to Friday &bull; 8:00 AM - 6:00 PM
+              </div>
+            </div>
+            <div class="contact-pane__actions">
+              <a href="tel:18442680860">Call 1-844-268-0860</a>
+              <a href="mailto:info@quality1stbasements.com">Email the Trenton experts</a>
+            </div>
+            <small>HomeAdvisor Elite Service, Best Places to Work in NJ, and Foundation Supportworks dealer credentials.</small>
+          </aside>
+        </div>
+      </section>
+
+      <section class="trust-bar">
+        <div class="container trust-bar__inner">
+          <span class="trust-bar__title">Recognized for craftsmanship and service</span>
+          <ul class="trust-bar__logos">
+            <li><img src="https://cdn.treehouseinternetgroup.com/cms_images/80/fra-cred-new.png" alt="Foundation Supportworks" /></li>
+            <li><img src="https://cdn.treehouseinternetgroup.com/cms_images/80/AngiesList_SSA_2018_125x125.png" alt="Angi Super Service" /></li>
+            <li><img src="https://cdn.treehouseinternetgroup.com/cms_images/80/elite_360_Logos.jpg" alt="HomeAdvisor Elite" /></li>
+            <li><img src="https://cdn.treehouseinternetgroup.com/cms_images/80/2018_best_places_to_work_logo.png" alt="Best Places to Work" /></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="intro" id="estimate">
+        <div class="container intro__grid">
+          <div class="intro__map">
+            <iframe title="Service map for Quality 1st Basement Systems" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3049.712210860341!2d-74.74807512363172!3d40.21705357147466!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3e9995b01d411%3A0x1f2ee4dc3b2a49d1!2sTrenton%2C%20NJ!5e0!3m2!1sen!2sus!4v1697044668006!5m2!1sen!2sus"></iframe>
+          </div>
+          <div class="intro__content">
+            <div>
+              <h2>Certified crews across Mercer County</h2>
+              <p>We cover every part of Trenton and the surrounding communities of Ewing, Hamilton Square, Lawrence Township, Princeton, and across the Delaware River into Bucks County. Our teams know the local soil conditions, groundwater patterns, and zoning requirements so your project stays on schedule.</p>
+            </div>
+            <ul class="intro__chips">
+              <li>Same-week inspections</li>
+              <li>Basement waterproofing specialists</li>
+              <li>Financing available</li>
+              <li>Project walkthroughs</li>
+            </ul>
+            <p class="intro__quote">"The crew was professional, punctual, and left our basement cleaner than when they arrived. The system has kept us dry through every storm." - Olivia S., Trenton</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="project-gallery" id="projects">
+        <div class="container project-gallery__inner">
+          <div class="project-gallery__heading">
+            <span>Recent work</span>
+            <h2>Local projects that show what we can do</h2>
+          </div>
+          <div class="project-gallery__grid">
+            <figure>
+              <img src="https://cdn.treehouseinternetgroup.com/uploads/photo_gallery/thumb/579097-2025_06_10_71656pm-1.jpg" alt="Basement waterproofing install in Trenton" />
+              <figcaption>WaterGuard perimeter drains and a TripleSafe sump protect a West Trenton basement after repeated storm flooding.</figcaption>
+            </figure>
+            <figure>
+              <img src="https://cdn.treehouseinternetgroup.com/uploads/photo_gallery/thumb/560206-2024_12_19_65823am.jpg" alt="Concrete lift in Hamilton Township" />
+              <figcaption>PolyLevel injections lifted sunken front steps in Hamilton Township, restoring safe access without demolition.</figcaption>
+            </figure>
+            <figure>
+              <img src="https://cdn.treehouseinternetgroup.com/uploads/photo_gallery/thumb/559948-2025_01_13_63556pm-2.jpg" alt="Crawl space repair in Ewing" />
+              <figcaption>CleanSpace vapor barrier and SmartJack supports keep an Ewing crawl space dry and structurally sound.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="services" id="services">
+        <div class="container services__inner">
+          <div class="section-heading">
+            <span>What we fix</span>
+            <h2>Comprehensive protection for your home's foundation</h2>
+          </div>
+          <div class="services__grid">
+            <article class="service-card">
+              <h3>Basement waterproofing</h3>
+              <p>Tailored drainage, sump pumps, and humidity control for Trenton's high water table.</p>
+              <ul>
+                <li>WaterGuard perimeter drains and TripleSafe sumps</li>
+                <li>CleanSpace vapor barriers and discharge protection</li>
+                <li>SaniDry dehumidifiers sized for damp basements</li>
+              </ul>
+            </article>
+            <article class="service-card">
+              <h3>Foundation repair</h3>
+              <p>Structural stabilization for settling foundations, bowing walls, and sagging floors.</p>
+              <ul>
+                <li>Helical and push piers engineered by Supportworks</li>
+                <li>CarbonArmor and PowerBrace wall systems</li>
+                <li>SmartJack supports for crawl spaces</li>
+              </ul>
+            </article>
+            <article class="service-card">
+              <h3>Concrete leveling</h3>
+              <p>PolyLevel foam lifts and stabilizes slabs without the mess of mudjacking.</p>
+              <ul>
+                <li>Walkways, patios, garages, and pool decks</li>
+                <li>Fast-curing foam ready for use in hours</li>
+                <li>NexusPro joint sealing prevents water intrusion</li>
+              </ul>
+            </article>
+            <article class="service-card">
+              <h3>Gutter protection</h3>
+              <p>Gutter Shutter keeps heavy rain away from your foundation with a clog free system.</p>
+              <ul>
+                <li>Oversized seamless gutters with built-in covers</li>
+                <li>Heavy gauge aluminum resists warping and leaks</li>
+                <li>Downspout extensions move water away fast</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="testimonials" id="testimonials">
+        <div class="container testimonials__inner">
+          <div class="section-heading">
+            <span>Homeowner stories</span>
+            <h2>Results you can trust</h2>
+          </div>
+          <div class="testimonial-grid">
+            <article class="testimonial-card">
+              <blockquote>"Quality 1st solved our chronic basement flooding. The crew explained every step and left the basement spotless."</blockquote>
+              <cite>- Marcus P., Hamilton Township</cite>
+            </article>
+            <article class="testimonial-card">
+              <blockquote>"The foundation team installed helical piers in two days and documented everything so we could list our home with confidence."</blockquote>
+              <cite>- Alicia R., Trenton</cite>
+            </article>
+            <article class="testimonial-card">
+              <blockquote>"PolyLevel lifted our porch slabs and directed water away from the house. No concrete demo, no yard damage."</blockquote>
+              <cite>- Greg and Sandra L., Ewing</cite>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq" id="faq">
+        <div class="container faq__inner">
+          <div class="section-heading">
+            <span>Need to know</span>
+            <h2>Frequently asked questions</h2>
+          </div>
+          <div class="faq-grid">
+            <details>
+              <summary>How quickly can you inspect my home?</summary>
+              <p>We can usually schedule a Trenton site visit within three to five business days. Emergency waterproofing calls are prioritized and often handled the next day.</p>
+            </details>
+            <details>
+              <summary>Do you offer financing?</summary>
+              <p>Yes. We partner with GreenSky and other lenders to provide flexible monthly payment plans across waterproofing, foundation repair, and concrete leveling services.</p>
+            </details>
+            <details>
+              <summary>What warranties are included?</summary>
+              <p>Most waterproofing systems carry a lifetime transferable warranty, and structural repairs include Supportworks backed coverage up to 25 years.</p>
+            </details>
+            <details>
+              <summary>How tidy is the job site when work is complete?</summary>
+              <p>Our CleanSpace certified crews protect floors and belongings, handle debris haul away, and complete a walkthrough before we leave.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="container cta__inner">
+          <div>
+            <h2>Ready to protect your Trenton home?</h2>
+            <p>Request a free inspection or connect with a specialist today. We bring honest diagnostics, clear estimates, and reliable service backed by industry leading warranties.</p>
+          </div>
+          <div class="cta__actions">
+            <a class="btn" href="#estimate">Schedule my visit</a>
+            <a class="btn btn--outline" href="tel:18442680860">Call 1-844-268-0860</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer__inner">
+        <div>
+          <h4>Quality 1st Basement Systems</h4>
+          <p>Serving Trenton, Princeton, Hamilton Township, and nearby communities with basement waterproofing, foundation repair, and concrete leveling solutions that last.</p>
+        </div>
+        <div>
+          <h4>Office</h4>
+          <ul>
+            <li>359 U.S. 9, Howell Township, NJ 07731</li>
+            <li><a href="tel:18442680860">1-844-268-0860</a></li>
+            <li><a href="mailto:info@quality1stbasements.com">info@quality1stbasements.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Quick links</h4>
+          <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#projects">Project gallery</a></li>
+            <li><a href="#faq">FAQs</a></li>
+            <li><a href="#estimate">Request estimate</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-meta">
+        &copy; <span id="current-year">2024</span> Quality 1st Basement Systems. All rights reserved.
+      </div>
+    </footer>
+  </div>
+  <script>
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
