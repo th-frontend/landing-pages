@@ -900,10 +900,6 @@
       font-size: 0.95rem;
     }
 
-    .faq {
-      background: var(--bg-light);
-    }
-
     .project-gallery {
       background: var(--bg-light);
     }
@@ -926,7 +922,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
     }
 
     .gallery-caption {
@@ -934,61 +929,11 @@
       left: 0;
       right: 0;
       bottom: 0;
-      padding: 1rem 1.25rem;
-      background: linear-gradient(0deg, rgba(15, 22, 34, 0.78), transparent 75%);
+      padding: 0.85rem 1rem;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
-    }
-
-    .faq-list {
-      display: grid;
-      gap: 1rem;
-      max-width: 860px;
-      margin: 0;
-      padding: 0;
-    }
-
-    details.faq-item {
-      background: #fff;
-      border-radius: 18px;
-      border: 1px solid var(--border-soft);
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-    }
-
-    details.faq-item summary {
-      list-style: none;
-      cursor: pointer;
-      padding: 1.2rem 1.5rem;
-      font-weight: 600;
-      font-size: 1.05rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    details.faq-item summary::after {
-      content: '';
-      width: 14px;
-      height: 14px;
-      border-right: 2px solid var(--text-main);
-      border-bottom: 2px solid var(--text-main);
-      transform: rotate(45deg);
-      transition: transform 0.2s ease;
-    }
-
-    details.faq-item[open] summary::after {
-      transform: rotate(225deg);
-    }
-
-    details.faq-item .faq-body {
-      padding: 0 1.5rem 1.5rem;
-      color: var(--text-muted);
-      font-size: 0.98rem;
-      display: grid;
-      gap: 0.75rem;
     }
 
     .final-cta {
@@ -1599,38 +1544,7 @@
       </div>
     </section>
 
-    <section class="page-section faq" id="faq">
-      <div class="section-header">
-        <h2>Answers to common Connecticut roofing questions.</h2>
-        <p>Equip your family with confident answers before, during, and after your roofing project.</p>
-      </div>
-      <div class="faq-list">
-        <details class="faq-item" open>
-          <summary>How quickly can Brown Roofing inspect my roof?</summary>
-          <div class="faq-body">
-            <p>Most inspections are scheduled the same or next business day. Emergency leaks receive priority dispatch with temporary tarping if weather allows.</p>
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Do you help with homeowners insurance claims?</summary>
-          <div class="faq-body">
-            <p>Yes. Project managers document damage, meet adjusters on-site, and provide the Xactimate estimate and photos insurers expect.</p>
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>What warranties do you offer?</summary>
-          <div class="faq-body">
-            <p>Manufacturer-backed coverage up to 50 years on materials, plus Brown Roofing workmanship protection and The Klaus Roofing Way™ service guarantees.</p>
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Can I finance my roof replacement?</summary>
-          <div class="faq-body">
-            <p>Absolutely—0% APR introductory plans, low monthly payment options, and deferred interest promotions are available with quick approvals.</p>
-          </div>
-        </details>
-      </div>
-    </section>
+    
 
     <section class="final-cta">
       <h2>Ready for a watertight roof and five-star experience?</h2>
