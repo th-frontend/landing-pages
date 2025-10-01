@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brown Roofing | Connecticut Roofing & Exterior Specialists</title>
+  <meta name="description" content="Brown Roofing delivers roof replacement, leak repair, gutters, and skylights across Fairfield, New Haven, and Litchfield Counties. Family-owned since 1972.">
+  <link rel="icon" href="https://cdn.treehouseinternetgroup.com/cms_images/1253/Klaus-Favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #101828;
+      --ink-muted: #475467;
+      --fog: #f5f7fb;
+      --card: #ffffff;
+      --primary: #d61f2c;
+      --primary-dark: #a91620;
+      --accent: #ffbf3c;
+      --deep-blue: #102a43;
+      --border: #e4e7ec;
+      --shadow: 0 24px 48px rgba(16, 42, 67, 0.12);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--fog);
+      color: var(--ink);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page-shell {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(16, 24, 40, 0.08);
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.65rem clamp(1.5rem, 4vw, 3rem);
+      font-size: 0.95rem;
+      background: linear-gradient(90deg, rgba(16, 42, 67, 0.9), rgba(16, 42, 67, 0.75));
+      color: #fff;
+    }
+
+    .topline strong {
+      letter-spacing: 0.04em;
+    }
+
+    .topline a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-weight: 700;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: clamp(1rem, 3vw, 2rem) clamp(1.5rem, 4vw, 3rem);
+    }
+
+    .brand-stack {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .brand-stack img {
+      width: clamp(180px, 22vw, 248px);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+      gap: 1.5rem;
+      font-weight: 600;
+    }
+
+    .cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.75rem 1.4rem;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 999px;
+      box-shadow: 0 18px 32px rgba(214, 31, 44, 0.2);
+      font-weight: 700;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(16, 42, 67, 0.9), rgba(16, 42, 67, 0.75)),
+        url('https://cdn.treehouseinternetgroup.com/cms_images/1253/brown-roofing-5-21-25_bg.jpg') center/cover no-repeat;
+      color: #fff;
+      padding: clamp(3rem, 6vw, 5rem) 0 clamp(2rem, 5vw, 4rem);
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+      gap: clamp(2rem, 4vw, 3rem);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 4vw, 3rem);
+    }
+
+    .hero-copy {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .hero-copy .eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      font-size: clamp(2.6rem, 5vw, 3.6rem);
+      line-height: 1.08;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1.1rem;
+    }
+
+    .hero-highlights {
+      display: grid;
+      gap: 0.75rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .hero-highlights li {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 600;
+    }
+
+    .hero-highlights svg {
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: 50%;
+      padding: 0.45rem;
+      color: var(--accent);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-actions .cta-link.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      box-shadow: none;
+    }
+
+    .hero-tagline {
+      margin-top: 1.5rem;
+      max-width: clamp(180px, 45vw, 340px);
+    }
+
+    .hero-form {
+      background: rgba(255, 255, 255, 0.98);
+      color: var(--ink);
+      border-radius: 24px;
+      padding: clamp(1.75rem, 3.5vw, 2.4rem);
+      box-shadow: 0 30px 50px rgba(16, 42, 67, 0.2);
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .hero-form h2 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .hero-form p {
+      margin: 0;
+      color: var(--ink-muted);
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+    }
+
+    label {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      font: inherit;
+      padding: 0.85rem 0.95rem;
+      border-radius: 12px;
+      border: 1px solid rgba(16, 24, 40, 0.2);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      resize: vertical;
+    }
+
+    textarea {
+      min-height: 110px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(214, 31, 44, 0.18);
+    }
+
+    .submit-btn {
+      padding: 0.9rem 1.4rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .form-footnote {
+      margin: -0.5rem 0 0;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      line-height: 1.4;
+    }
+
+    .badges-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem;
+      padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+      background: #fff;
+      box-shadow: var(--shadow);
+      border-radius: 32px;
+      margin: -3rem auto 0;
+      max-width: 1100px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .badge {
+      text-align: center;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .badge img {
+      max-height: 64px;
+      margin: 0 auto;
+      filter: grayscale(100%);
+      transition: filter 0.2s ease, transform 0.2s ease;
+    }
+
+    .badge img:hover {
+      filter: grayscale(0%);
+      transform: translateY(-3px);
+    }
+
+    .badge span {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      font-weight: 600;
+    }
+
+    .page-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+      display: grid;
+      gap: clamp(2rem, 5vw, 3rem);
+    }
+
+    .section-heading {
+      display: grid;
+      gap: 0.6rem;
+      max-width: 760px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--ink-muted);
+    }
+
+    .value-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .value-card {
+      background: var(--card);
+      border-radius: 28px;
+      padding: 1.75rem;
+      border: 1px solid rgba(16, 24, 40, 0.06);
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .value-card h3 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .value-card ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--ink-muted);
+      display: grid;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.75rem;
+    }
+
+    .service-tile {
+      background: var(--card);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-rows: 200px 1fr;
+    }
+
+    .service-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .service-body {
+      padding: 1.8rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .service-pill {
+      display: inline-block;
+      background: rgba(214, 31, 44, 0.12);
+      color: var(--primary);
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .process-flow {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .process-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .process-card {
+      background: linear-gradient(160deg, #fff, #f0f4ff);
+      border-radius: 24px;
+      padding: 1.75rem;
+      border: 1px solid rgba(16, 24, 40, 0.05);
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 0.75rem;
+      position: relative;
+    }
+
+    .process-card::before {
+      content: attr(data-step);
+      position: absolute;
+      top: 1.75rem;
+      right: 1.75rem;
+      font-size: 3rem;
+      font-weight: 800;
+      color: rgba(16, 42, 67, 0.12);
+    }
+
+    .cta-panel {
+      background: linear-gradient(135deg, rgba(214, 31, 44, 0.92), rgba(16, 42, 67, 0.92)),
+        url('https://cdn.treehouseinternetgroup.com/cms_images/1253/mm-1600.jpg') center/cover no-repeat;
+      border-radius: 36px;
+      padding: clamp(3rem, 6vw, 5rem);
+      color: #fff;
+      text-align: center;
+      display: grid;
+      gap: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-panel h2 {
+      margin: 0;
+      font-size: clamp(2.3rem, 4.5vw, 3.3rem);
+    }
+
+    .cta-panel p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.05rem;
+    }
+
+    .cta-panel .hero-actions {
+      justify-content: center;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .testimonial-card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 1.75rem;
+      border: 1px solid rgba(16, 24, 40, 0.07);
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 1rem;
+    }
+
+    .testimonial-card p {
+      margin: 0;
+      color: var(--ink-muted);
+    }
+
+    .testimonial-card strong {
+      font-weight: 700;
+    }
+
+    .service-area-block {
+      display: grid;
+      gap: clamp(1.5rem, 4vw, 2.5rem);
+    }
+
+    .service-area-wrap {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) minmax(0, 1.3fr);
+      gap: clamp(1.5rem, 4vw, 2.5rem);
+    }
+
+    .map-card {
+      background: var(--card);
+      border-radius: 28px;
+      padding: 1.4rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .map-card img {
+      border-radius: 20px;
+    }
+
+    .county-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .county-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 1.4rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .county-card ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--ink-muted);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.06);
+    }
+
+    .gallery-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 1rem 1.25rem;
+      background: linear-gradient(0deg, rgba(16, 24, 40, 0.78), transparent);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    details {
+      background: #fff;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 1.2rem 1.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    summary::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-right: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+    }
+
+    details[open] summary::after {
+      transform: rotate(225deg);
+    }
+
+    details p {
+      margin: 0;
+      padding: 0 1.5rem 1.5rem;
+      color: var(--ink-muted);
+    }
+
+    .final-cta {
+      background: var(--deep-blue);
+      color: #fff;
+      text-align: center;
+      padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3rem);
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .final-cta p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    footer {
+      background: #0b1624;
+      color: rgba(255, 255, 255, 0.78);
+      padding: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-grid h4 {
+      margin: 0 0 0.75rem;
+      color: #fff;
+    }
+
+    .footer-grid ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+    }
+
+    .footer-bottom {
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      font-size: 0.9rem;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      padding: 0.25rem;
+      cursor: pointer;
+    }
+
+    .nav-toggle span,
+    .nav-toggle span::before,
+    .nav-toggle span::after {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: var(--ink);
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .nav-toggle span::before,
+    .nav-toggle span::after {
+      content: '';
+      position: absolute;
+      left: 0;
+    }
+
+    .nav-toggle span::before {
+      top: -7px;
+    }
+
+    .nav-toggle span::after {
+      top: 7px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-form {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 920px) {
+      nav ul {
+        position: absolute;
+        inset: calc(100% + 10px) clamp(1.5rem, 4vw, 3rem) auto clamp(1.5rem, 4vw, 3rem);
+        flex-direction: column;
+        align-items: stretch;
+        background: #fff;
+        padding: 1.75rem;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        transform: translateY(-12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+
+      nav ul.open {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .topline {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .service-area-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        justify-content: center;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div class="topline">
+        <strong>Family-owned since 1972 • Serving Fairfield, New Haven & Litchfield Counties</strong>
+        <a href="tel:1-203-723-1372">Call 203-723-1372</a>
+      </div>
+      <div class="nav-bar">
+        <div class="brand-stack">
+          <a href="#hero" aria-label="Brown Roofing home">
+            <img src="https://cdn.treehouseinternetgroup.com/cms_images/1253/image-2025-08-27_091602.png" alt="Brown Roofing logo">
+          </a>
+        </div>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+          <span></span>
+          <span class="sr-only">Toggle navigation</span>
+        </button>
+        <nav id="primary-nav">
+          <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#value">Why Us</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#coverage">Coverage</a></li>
+            <li><a href="#faq">FAQs</a></li>
+            <li><a class="cta-link" href="#estimate">Book Free Assessment</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="hero">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <span class="eyebrow">Trusted Connecticut roofers</span>
+            <h1>Connecticut's highest-rated roofing & gutter protection team.</h1>
+            <p>Brown Roofing delivers rapid inspections, insurance-ready documentation, and lifetime-backed installations across Fairfield, New Haven, and Litchfield Counties.</p>
+            <ul class="hero-highlights">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 13 9 17 20 6"></polyline></svg>
+                <span>4.9/5 homeowner rating with decades of reviews</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 13 9 17 20 6"></polyline></svg>
+                <span>IKO ROOFPRO &amp; GAF Certified crews offering 50-year warranty options</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 13 9 17 20 6"></polyline></svg>
+                <span>Dedicated customer success team for insurance, financing, and scheduling</span>
+              </li>
+            </ul>
+            <div class="hero-actions">
+              <a class="cta-link" href="#estimate">Reserve my inspection</a>
+              <a class="cta-link secondary" href="tel:1-203-723-1372">Tap to call 203-723-1372</a>
+            </div>
+            <img class="hero-tagline" src="https://cdn.treehouseinternetgroup.com/cms_images/1253/bwlyd_logo_738w.png" alt="Brown Won't Let You Down tagline">
+          </div>
+          <aside class="hero-form" id="estimate">
+            <h2>Fast-track your free roof assessment</h2>
+            <p>Answer a few questions and a Brown Roofing specialist will call shortly during business hours.</p>
+            <form action="#" method="post">
+              <label for="name">Full name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required>
+
+              <label for="phone">Phone number</label>
+              <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
+
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+
+              <label for="zip">ZIP code</label>
+              <input id="zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" required>
+
+              <label for="service">I'm interested in</label>
+              <select id="service" name="service" required>
+                <option value="" disabled selected>Select a service</option>
+                <option value="replacement">Roof replacement</option>
+                <option value="repair">Leak or storm repair</option>
+                <option value="gutters">Gutters &amp; gutter guards</option>
+                <option value="skylights">Skylights &amp; sun tunnels</option>
+                <option value="other">Something else</option>
+              </select>
+
+              <label for="notes">How can we help?</label>
+              <textarea id="notes" name="notes" placeholder="Example: Active leak in master bedroom, insurance claim in progress"></textarea>
+
+              <button class="submit-btn" type="submit">Schedule my inspection</button>
+              <p class="form-footnote">No obligation. By submitting, you authorize Brown Roofing to contact you via phone, text, and email.</p>
+            </form>
+          </aside>
+        </div>
+      </section>
+
+      <div class="badges-row">
+        <div class="badge">
+          <img src="https://cdn.treehouseinternetgroup.com/uploads/affiliations/logo/689335e310f67_certified.png" alt="GAF Certified">
+          <span>GAF Certified</span>
+        </div>
+        <div class="badge">
+          <img src="https://cdn.treehouseinternetgroup.com/uploads/affiliations/logo/687fb42680f16_ikorprocrafpremlogoen.png" alt="IKO ROOFPRO Craftsman Premier">
+          <span>IKO ROOFPRO</span>
+        </div>
+        <div class="badge">
+          <img src="https://cdn.treehouseinternetgroup.com/uploads/affiliations/logo/642411b635389_logo-residential-installer-certified-installer.png" alt="Velux Skylights Certified Installer">
+          <span>Velux Certified</span>
+        </div>
+        <div class="badge">
+          <img src="https://cdn.treehouseinternetgroup.com/uploads/affiliations/logo/5f578d5debd83_gutter-shutter-logo.jpg" alt="Gutter Shutter Authorized Dealer">
+          <span>Gutter Shutter Dealer</span>
+        </div>
+      </div>
+
+      <section class="page-section" id="value">
+        <div class="section-heading">
+          <h2>Why Connecticut homeowners choose Brown Roofing first.</h2>
+          <p>Connecticut families count on fast answers, transparent pricing, and a crew that treats every home like their own. Brown Roofing makes the path from first call to finished roof feel easy.</p>
+        </div>
+        <div class="value-strip">
+          <article class="value-card">
+            <h3>Rapid triage &amp; scheduling</h3>
+            <p>Dedicated call center answers fast and dispatches project managers for same- or next-day inspections.</p>
+            <ul>
+              <li>Text photo uploads and virtual walkthroughs available</li>
+              <li>Calendar confirmation with ETA tracking</li>
+            </ul>
+          </article>
+          <article class="value-card">
+            <h3>Insurance-ready documentation</h3>
+            <p>Detailed condition reports, drone imagery, and Xactimate estimates streamline approvals.</p>
+            <ul>
+              <li>Policy guidance from claim specialists</li>
+              <li>Supplement support until payout is finalized</li>
+            </ul>
+          </article>
+          <article class="value-card">
+            <h3>Guaranteed cleanup &amp; warranties</h3>
+            <p>Crews follow The Klaus Roofing Way™—magnet sweeps, property protection, and 50-year material options.</p>
+            <ul>
+              <li>Owner walk-through before project closeout</li>
+              <li>Transferable warranty packages</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section" id="services">
+        <div class="section-heading">
+          <h2>Roofing &amp; exterior solutions built for Connecticut weather.</h2>
+          <p>Precision installations, energy-efficient upgrades, and lasting protection for homes from Stamford to Torrington.</p>
+        </div>
+        <div class="services-grid">
+          <article class="service-tile">
+            <img src="https://cdn.treehouseinternetgroup.com/uploads/photo_gallery/large/595246-item_d3096f0b-fe93-486b-91b7-a9baabeedab3.jpg" alt="Completed Brown Roofing shingle replacement in Seymour, CT">
+            <div class="service-body">
+              <span class="service-pill">Full replacement</span>
+              <h3>Architectural roof replacement</h3>
+              <p>Designer shingle systems and ventilation upgrades engineered to stand up to New England winters.</p>
+              <ul>
+                <li>Ice &amp; water barrier, ridge venting, and synthetic underlayment included</li>
+                <li>IKO Dynasty &amp; Nordic impact-resistant options</li>
+              </ul>
+            </div>
+          </article>
+          <article class="service-tile">
+            <img src="https://cdn.treehouseinternetgroup.com/uploads/photo_gallery/large/514781-item_12ff981d-1745-4bdb-a60c-6167b222d102.jpg" alt="Brown Roofing technician repairing chimney flashing in Seymour, CT">
+            <div class="service-body">
+              <span class="service-pill">Leak response</span>
+              <h3>Leak &amp; storm repair specialists</h3>
+              <p>Emergency tarping, chimney flashing, and storm-damage repairs handled by rapid-response crews.</p>
+              <ul>
+                <li>Drone inspection and moisture mapping</li>
+                <li>Insurance documentation delivered within 24 hours</li>
+              </ul>
+            </div>
+          </article>
+          <article class="service-tile">
+            <img src="https://cdn.treehouseinternetgroup.com/uploads/photo_gallery/large/571129-item_49464ebd-b579-4b4e-9b8d-30b4f7484034.jpg" alt="Gutter Shutter installation on Beacon Falls, CT home">
+            <div class="service-body">
+              <span class="service-pill">Gutter guards</span>
+              <h3>Gutter Shutter protection systems</h3>
+              <p>Seamless gutters, clog-free covers, and durable brackets that match any roofing project.</p>
+              <ul>
+                <li>Lifetime no-clog, no-pull warranty</li>
+                <li>Integrated water management with roof replacement</li>
+              </ul>
+            </div>
+          </article>
+          <article class="service-tile">
+            <img src="https://cdn.treehouseinternetgroup.com/uploads/before_after/3850/medium/66888150f0974_img4383.jpeg" alt="Brand new skylights with copper flashing in Woodbridge, CT">
+            <div class="service-body">
+              <span class="service-pill">Skylights</span>
+              <h3>Skylights &amp; sun tunnels</h3>
+              <p>Velux-certified daylighting installs, leak-free flashing kits, and remote automation upgrades.</p>
+              <ul>
+                <li>Perfect pairing with roof replacements</li>
+                <li>Three-point inspection after every install</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section" id="process">
+        <div class="section-heading">
+          <h2>Your path from first call to watertight roof.</h2>
+          <p>We assign a dedicated production team as soon as you reach out—keeping every step moving without surprises.</p>
+        </div>
+        <div class="process-flow">
+          <div class="process-items">
+            <article class="process-card" data-step="01">
+              <h3>Quick discovery call</h3>
+              <p>Customer success confirms details, books your inspection, and gathers photos or insurance info within minutes.</p>
+            </article>
+            <article class="process-card" data-step="02">
+              <h3>On-site assessment &amp; proposal</h3>
+              <p>Project manager inspects the attic, decking, and exterior. You receive a same-day scope, pricing options, and financing offers.</p>
+            </article>
+            <article class="process-card" data-step="03">
+              <h3>Production &amp; follow-through</h3>
+              <p>Installation crews protect landscaping, deliver daily updates, and close out with warranties, cleanup, and final walkthrough.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section">
+        <div class="cta-panel">
+          <h2>Active leak or storm damage?</h2>
+          <p>Brown Roofing mobilizes emergency tarping and leak mitigation crews fast. Click or call—our dispatcher coordinates the rest.</p>
+          <div class="hero-actions">
+            <a class="cta-link secondary" href="tel:1-203-723-1372">Call 203-723-1372</a>
+            <a class="cta-link" href="#estimate">Book emergency inspection</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section" id="finance">
+        <div class="section-heading">
+          <h2>Financing, warranties, and guarantees for peace of mind.</h2>
+          <p>Give your household the confidence to move forward now—Brown Roofing handles the paperwork and protection.</p>
+        </div>
+        <div class="value-strip">
+          <article class="value-card">
+            <h3>Flexible financing options</h3>
+            <p>0% APR plans, low monthly payments, and deferred interest programs available with quick approvals.</p>
+            <ul>
+              <li>Apply in minutes during your appointment</li>
+              <li>No prepayment penalties</li>
+            </ul>
+          </article>
+          <article class="value-card">
+            <h3>The Klaus Roofing Way™ guarantee</h3>
+            <p>Property protection promise, daily sweep, and a final signature checklist signed by your project manager.</p>
+            <ul>
+              <li>Up to 50-year manufacturer warranties</li>
+              <li>10-year workmanship coverage backed by Brown Roofing</li>
+            </ul>
+          </article>
+          <article class="value-card">
+            <h3>Dedicated support team</h3>
+            <p>From HOA docs to permitting and insurance supplements, our office handles the details so homeowners can relax.</p>
+            <ul>
+              <li>Weekly communication until completion</li>
+              <li>Photo and video updates for out-of-town owners</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section" id="testimonials">
+        <div class="section-heading">
+          <h2>Connecticut homeowners who now recommend Brown Roofing.</h2>
+          <p>Real stories from neighbors who trusted our crews with their homes.</p>
+        </div>
+        <div class="story-grid">
+          <article class="testimonial-card">
+            <p>“Project Manager Bill and his crew handled unexpected rotted decking on our Derby home without missing a beat. They kept us informed the whole day—Brown won’t let you down!”</p>
+            <strong>Jessica C. • Derby, CT</strong>
+          </article>
+          <article class="testimonial-card">
+            <p>“Inspector Chase worked directly with our adjuster, helped select IKO Nordic shingles, and the installation team delivered a flawless result. Insurance process was painless.”</p>
+            <strong>Bill &amp; Shirley H. • Oxford, CT</strong>
+          </article>
+          <article class="testimonial-card">
+            <p>“Called about broken shingles—Jim matched the material, fixed the leak the same day, and even used spare shingles so the price stayed low. They’ll get every future roofing call.”</p>
+            <strong>Virginia W. • Sandy Hook, CT</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-section service-area-block" id="coverage">
+        <div class="section-heading">
+          <h2>Proudly serving Western &amp; Central Connecticut.</h2>
+          <p>From shoreline homes to mountain properties, Brown Roofing protects communities across Fairfield, Litchfield, and New Haven Counties.</p>
+        </div>
+        <div class="service-area-wrap">
+          <figure class="map-card">
+            <img src="https://cdn.treehouseinternetgroup.com/uploads/service_area_overlays/1253.png" alt="Map of Brown Roofing Connecticut service area">
+            <figcaption>Headquartered in Seymour, crews are dispatched daily across Fairfield, New Haven, and Litchfield Counties.</figcaption>
+          </figure>
+          <div class="county-groups">
+            <article class="county-card">
+              <h3>Fairfield County</h3>
+              <ul>
+                <li>Bridgeport</li>
+                <li>Stamford</li>
+                <li>Danbury</li>
+                <li>Fairfield</li>
+                <li>Norwalk</li>
+              </ul>
+            </article>
+            <article class="county-card">
+              <h3>New Haven County</h3>
+              <ul>
+                <li>New Haven</li>
+                <li>Waterbury</li>
+                <li>Milford</li>
+                <li>Cheshire</li>
+                <li>Guilford</li>
+              </ul>
+            </article>
+            <article class="county-card">
+              <h3>Litchfield County</h3>
+              <ul>
+                <li>New Milford</li>
+                <li>Torrington</li>
+                <li>Woodbury</li>
+                <li>Litchfield</li>
+                <li>Roxbury</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section" id="projects">
+        <div class="section-heading">
+          <h2>Recent Connecticut roofing transformations.</h2>
+          <p>Peek at a few Brown Roofing crews in action on real homes across the state.</p>
+        </div>
+        <div class="gallery-grid">
+          <figure class="gallery-item">
+            <img src="https://cdn.treehouseinternetgroup.com/uploads/images/145000/large/145823.jpg" alt="Designer shingle upgrade in Stamford, CT">
+            <figcaption class="gallery-caption">Designer shingle upgrade in Stamford, CT</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="https://cdn.treehouseinternetgroup.com/uploads/images/205000/large/205835.jpg" alt="Seamless gutters and guards in Oxford, CT">
+            <figcaption class="gallery-caption">Seamless gutters &amp; guards in Oxford, CT</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="https://cdn.treehouseinternetgroup.com/uploads/images/175000/large/175260.jpg" alt="Full roof replacement in Shelton, CT">
+            <figcaption class="gallery-caption">Full roof replacement in Shelton, CT</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="https://cdn.treehouseinternetgroup.com/uploads/images/146000/large/146556.jpg" alt="Skylight refresh in New Milford, CT">
+            <figcaption class="gallery-caption">Skylight refresh in New Milford, CT</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="page-section" id="faq">
+        <div class="section-heading">
+          <h2>Answers to common Connecticut roofing questions.</h2>
+          <p>Equip your family with confident answers before, during, and after your roofing project.</p>
+        </div>
+        <div class="faq-list">
+          <details open>
+            <summary>How quickly can Brown Roofing inspect my roof?</summary>
+            <p>Most inspections are scheduled the same or next business day. Emergency leaks receive priority dispatch with temporary tarping if weather allows.</p>
+          </details>
+          <details>
+            <summary>Do you help with homeowners insurance claims?</summary>
+            <p>Yes. Project managers document damage, meet adjusters on-site, and provide the Xactimate estimate and photos insurers expect.</p>
+          </details>
+          <details>
+            <summary>What warranties do you offer?</summary>
+            <p>Manufacturer-backed coverage up to 50 years on materials, plus Brown Roofing workmanship protection and The Klaus Roofing Way™ service guarantees.</p>
+          </details>
+          <details>
+            <summary>Can I finance my roof replacement?</summary>
+            <p>Absolutely—0% APR introductory plans, low monthly payment options, and deferred interest promotions are available with quick approvals.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <img src="https://cdn.treehouseinternetgroup.com/cms_images/1253/bwlyd_logo_738w.png" alt="Brown Won't Let You Down" style="margin: 0 auto; max-width: clamp(200px, 35vw, 320px);">
+        <h2>Ready for a watertight roof and five-star experience?</h2>
+        <p>Join thousands of Connecticut homeowners who trust Brown Roofing for leak relief, roof replacement, gutters, and skylights.</p>
+        <div class="hero-actions" style="justify-content: center;">
+          <a class="cta-link" href="#estimate">Start my project</a>
+          <a class="cta-link secondary" href="tel:1-203-723-1372">Call 203-723-1372</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <h4>Brown Roofing Company, Inc.</h4>
+          <p>Since 1972, Brown Roofing has installed leak-free roofing, gutters, and skylights for homeowners throughout Connecticut.</p>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:1-203-723-1372">203-723-1372</a></li>
+            <li><a href="mailto:info@brownroofing.org">info@brownroofing.org</a></li>
+            <li>12 Progress Ave, Seymour, CT 06483</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Coverage</h4>
+          <ul>
+            <li>Fairfield • New Haven • Litchfield Counties</li>
+            <li>Residential, commercial &amp; multi-family</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Stay connected</h4>
+          <ul>
+            <li><a href="https://www.facebook.com/BrownRoofingCt">Facebook</a></li>
+            <li><a href="https://www.instagram.com/brownroofingct/">Instagram</a></li>
+            <li><a href="https://www.linkedin.com/company/brown-roofing-company-inc/">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="currentYear"></span> Brown Roofing Company, Inc. All rights reserved.</span>
+        <a class="cta-link" href="#estimate">Book a free inspection</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('#primary-nav ul');
+
+    navToggle.addEventListener('click', () => {
+      const open = navMenu.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(open));
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('nav') && !event.target.closest('.nav-toggle')) {
+        navMenu.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
